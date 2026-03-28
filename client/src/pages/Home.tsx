@@ -1,6 +1,9 @@
+'use client';
+
+import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ChevronRight, FileText, AlertTriangle, CheckCircle2, Clock, DollarSign, Users, BookOpen } from "lucide-react";
+import { ChevronRight, FileText, AlertTriangle, CheckCircle2, Clock, DollarSign, Users, BookOpen, X, Download, Mail, ExternalLink } from "lucide-react";
 
 /**
  * DESIGN PHILOSOPHY: Governance Design System
@@ -10,7 +13,232 @@ import { ChevronRight, FileText, AlertTriangle, CheckCircle2, Clock, DollarSign,
  * - Accessibility: High contrast, clear labeling, Portuguese technical terminology
  */
 
+// FAQ Data Structure
+const faqData = {
+  "O que é TCE": {
+    count: 7,
+    color: "blue",
+    questions: [
+      { q: "O que significa a sigla TCE?", a: "A sigla TCE significa Tomada de Contas Especial." },
+      { q: "O que é, de fato, a Tomada de Contas Especial (TCE)?", a: "É um processo administrativo muito formal e rigoroso. O objetivo exclusivo da TCE é apurar fatos, quantificar o prejuízo (dano) causado aos cofres públicos da União e identificar quem foram os responsáveis por causar esse prejuízo para conseguir o dinheiro de volta." },
+      { q: "Qualquer erro em prefeituras gera logo de cara uma TCE?", a: "Não. A TCE é tratada como uma 'medida de exceção'. Isso significa que ela é a última alternativa do governo. Antes de instaurar (abrir) uma TCE, as autoridades têm a obrigação de tentar resolver o problema com medidas mais amigáveis e administrativas." },
+      { q: "Quais são as outras formas de resolver o problema antes da TCE?", a: "A administração pública pode usar várias outras tentativas, garantindo ao acusado o direito de defesa. Alguns exemplos são: enviar cartas de cobrança (notificações), descontar parcelas diretamente da folha de pagamento, descontar valores de faturas futuras, realizar protestos em cartório ou até tentar acordos diretos." },
+      { q: "Quais são as principais leis e manuais que ensinam como a TCE deve funcionar?", a: "As regras máximas vêm da Constituição Federal (artigos 70 e 71). No dia a dia, os servidores seguem a Instrução Normativa (IN) do TCU nº 98/2024, junto com a Decisão Normativa (DN) TCU 155/2016 e a Portaria TCU 121/2025. A Resolução TCU 344/2022 cuida apenas dos prazos de validade das punições (prescrição)." },
+      { q: "Por que o Tribunal de Contas da União (TCU) criou essa nova IN 98/2024?", a: "A regra antiga (a IN 71/2012) já tinha 12 anos e estava desatualizada. O Supremo Tribunal Federal (STF) tomou uma decisão nova determinando que as dívidas da TCE podem 'caducar' (prescrever) se o governo demorar muito para julgar. O TCU precisou criar a IN 98/2024 para modernizar, dar mais agilidade e criar regras de prescrição." },
+      { q: "Prefeitos e Governadores podem abrir processos de TCE dentro do sistema do TCU?", a: "Não. Os gestores de municípios e estados que recebem o dinheiro apenas prestam contas e informam ao governo federal se encontrarem roubos ou problemas graves. Apenas os repassadores federais do recurso (como Ministérios e órgãos do Governo Federal) podem instaurar a TCE no sistema eletrônico." }
+    ]
+  },
+  "Motivos e Cálculos": {
+    count: 13,
+    color: "green",
+    questions: [
+      { q: "O que precisa estar provado para que uma TCE seja obrigatoriamente aberta?", a: "São necessários dois requisitos centrais: primeiro, deve haver comprovação clara de que aconteceu um dano ou sumiço de dinheiro. Segundo, é preciso identificar o suspeito, ou seja, as pessoas físicas ou jurídicas que causaram o prejuízo." },
+      { q: "Quais os principais motivos que fazem o governo abrir uma TCE?", a: "Os motivos incluem: omissão no dever de prestar contas, não comprovar que o dinheiro foi usado de forma regular, desfalque, roubo, desvio de dinheiro ou desaparecimento de bens públicos." },
+      { q: "O que significa 'Omissão no dever de prestar contas'?", a: "Significa que um gestor (como um prefeito ou ONG) recebeu o dinheiro público para fazer um projeto, o prazo de comprovar como gastou acabou, e ele não enviou as pastas, notas fiscais e documentos comprovando o gasto." },
+      { q: "O que é 'não comprovação da regular aplicação dos recursos'?", a: "É quando a pessoa até envia a papelada, mas ela está tão mal feita, faltando pedaços ou com problemas, que o auditor não consegue ter certeza de que o dinheiro foi usado honestamente na finalidade correta." },
+      { q: "E se um bem sumir da repartição, a TCE é aberta?", a: "Sim. Quando ocorre o desfalque ou sumiço físico de equipamentos ou dinheiros, e não se sabe imediatamente como ocorreu, a autoridade deve investigar." },
+      { q: "A Prefeitura precisa aplicar o dinheiro parado em banco?", a: "Sim. Se a Prefeitura receber dinheiro federal e for demorar mais de um mês para usar, é obrigatório colocá-lo na poupança. Se demorar menos de um mês, tem que usar fundos de curto prazo." },
+      { q: "E se um prefeito cometer uma irregularidade ou ilegalidade, mas ficar provado que nenhum centavo público foi perdido?", a: "Se não houver prejuízo financeiro, não se abre uma TCE. Neste caso, os auditores do governo devem fazer uma 'Representação' e enviar ao TCU para que o Tribunal julgue o erro." },
+      { q: "Como o investigador calcula o tamanho do prejuízo financeiro do governo?", a: "A lei aceita duas formas: o método da 'Verificação' e o método da 'Estimativa'." },
+      { q: "O que é o cálculo por Verificação?", a: "É quando a matemática é exata. Usa-se conta simples de somar, subtrair ou dividir. Por exemplo, se a união mandou 1 milhão e o prefeito sumiu e não comprovou nada, o débito exato apurado por verificação é 1 milhão." },
+      { q: "O que é o cálculo por Estimativa?", a: "É usado quando é impossível descobrir o centavo exato do roubo. O investigador usa métodos estatísticos e confiáveis para chegar a um valor aproximado." },
+      { q: "Ao cobrar o acusado, o governo cobra só a inflação ou cobra juros de mora também?", a: "Quando a TCE é instaurada, a lei manda atualizar o dinheiro perdido de acordo com o IPCA (inflação) e adicionar os pesados juros de mora legais desde o dia em que o dano ocorreu." },
+      { q: "Se o acusado confessar e pagar rápido (antes do processo chegar ao TCU), ele ganha desconto?", a: "Sim. Se na fase administrativa inicial a pessoa acusada não teve a intenção de roubar (houve boa-fé) e decide quitar a dívida rapidamente, ela pode pagar apenas o valor original com a atualização da inflação." },
+      { q: "O acusado pode pedir para dividir a dívida em parcelas suaves?", a: "Se o processo ainda estiver tramitando nos Ministérios (Fase Administrativa), não é possível parcelar. O parcelamento da dívida só é permitido quando a TCE chega e passa a ser julgada no Tribunal de Contas da União (TCU)." }
+    ]
+  },
+  "Limites e Valores": {
+    count: 5,
+    color: "amber",
+    questions: [
+      { q: "O TCU abre um processo de tribunal para qualquer prejuízo, tipo R$ 1.000?", a: "Não. Para a máquina do governo, seria irracional gastar o tempo caro de auditores e juízes para cobrar valores baixíssimos. Para isso, criaram as regras de 'limites de alçada'." },
+      { q: "O que acontece com prejuízos menores que R$ 20.000,00?", a: "É considerado um valor muito baixo ('irracional'). O caso nem vira TCE e sequer é cadastrado nos sistemas avançados de prescrição. A dívida abaixo de 20 mil deve ser resolvida pelas cobranças normais e locais do próprio órgão ofendido." },
+      { q: "O que acontece com danos médios, que ficam entre R$ 20.000,00 e R$ 120.000,00?", a: "Esses são os 'Débitos Inferiores'. A TCE não é enviada para julgamento imediato. Em vez disso, o servidor investiga, prova o prejuízo e cadastra o nome da pessoa devedora num 'Banco de Débitos Inferiores' dentro do sistema do governo." },
+      { q: "O que é a consolidação de débitos e como o devedor 'médio' vai a julgamento?", a: "Se um cidadão cometeu uma fraude de R$ 50 mil em janeiro e o nome dele foi pro Banco de Débitos. Seis meses depois, ele frauda outro Ministério em R$ 80 mil. O sistema do computador junta as dívidas daquela pessoa. Se a soma bater R$ 120.000,00, o sistema automaticamente acorda todos esses processos." },
+      { q: "A partir de que data o limite passou a ser contado 'sem aplicar inflação'?", a: "Uma mudança muito recente para dar menos trabalho aos auditores definiu que danos ocorridos a partir do dia 1º de janeiro de 2024 não precisam ter o valor corrigido pela inflação só para ver se bateram a meta de 120 mil reais." }
+    ]
+  },
+  "Responsabilidades": {
+    count: 9,
+    color: "blue",
+    questions: [
+      { q: "Quem pode ser investigado e punido em uma TCE?", a: "Pessoas físicas (prefeitos, secretários, governadores, servidores) e pessoas jurídicas de direito privado (empresas de construção, hospitais privados, ONGs) e até pessoas jurídicas de direito público interno." },
+      { q: "As empresas privadas podem ser punidas no TCU?", a: "Sim. Se a empresa ajudou no roubo ou cobrou mais caro do que o produto valia (superfaturamento), ela responde 'solidariamente', ou seja, paga a dívida junto com o prefeito que autorizou o pagamento." },
+      { q: "Se uma ONG ou entidade do terceiro setor receber dinheiro do governo e fizer fraude, quem é punido?", a: "A punição cai ao mesmo tempo (solidariamente) no CNPJ da ONG e também no CPF da pessoa física que dirigia a ONG na época. Ambos pagam a conta." },
+      { q: "Se um funcionário público cometeu a fraude sem autorização do chefe dele, o chefe paga também?", a: "Não. Cada pessoa responde pelos seus próprios atos. Se o funcionário agiu por conta própria (sem ordens do chefe), apenas o funcionário paga. O chefe só responde se tiver autorizado ou consentido com a fraude." },
+      { q: "Se o prefeito morrer ou sair do cargo, a dívida 'morre' com ele?", a: "Não. A dívida passa para os herdeiros do prefeito falecido (se houver bens na herança) ou para o sucessor do cargo (se for uma dívida do próprio cargo, não da pessoa física)." },
+      { q: "Qual é a diferença entre responsabilidade solidária e responsabilidade subsidiária?", a: "Responsabilidade solidária: o credor pode cobrar de qualquer um dos devedores, e quem pagar fica livre. Responsabilidade subsidiária: o credor só pode cobrar do segundo devedor se o primeiro não pagar." },
+      { q: "Se o TCU condenar uma pessoa, ela pode recorrer?", a: "Sim. A pessoa condenada tem direito a recurso administrativo (pedindo revisão dentro do TCU) e depois pode recorrer ao Poder Judiciário (Supremo Tribunal Federal ou Tribunal Regional Federal)." },
+      { q: "Qual é a pena máxima que o TCU pode aplicar a um responsável?", a: "O TCU pode condenar a pessoa a pagar o valor integral do dano (com juros e correção monetária) e também pode aplicar multa de até 30% do valor do dano. Além disso, pode declarar o responsável inidôneo (proibido de contratar com o governo por até 8 anos)." },
+      { q: "Se a pessoa pagar a dívida antes do julgamento final, ela fica livre de outras punições?", a: "Não completamente. Mesmo pagando, a pessoa pode receber multa, ser declarada inidônea ou sofrer outras sanções administrativas. Mas o pagamento rápido pode reduzir a severidade das punições." }
+    ]
+  },
+  "Prazos e Documentos": {
+    count: 3,
+    color: "green",
+    questions: [
+      { q: "Qual é o prazo máximo para o governo abrir uma TCE após descobrir o prejuízo?", a: "Se for omissão no dever de prestar contas: 120 dias. Para outros tipos de fraude: 360 dias após descobrir o fato. Estes prazos são contados a partir do conhecimento do fato irregular." },
+      { q: "Qual é o prazo máximo para o TCU julgar uma TCE?", a: "Não existe um prazo máximo definido em lei. Porém, a Resolução TCU 344/2022 estabelece que se o TCU não julgar em 5 anos (prescrição quinquenal), a pretensão de ressarcimento prescreve e o governo perde o direito de cobrar." },
+      { q: "Quais documentos são obrigatórios para instaurar uma TCE?", a: "É obrigatório ter: (1) relatório circunstanciado descrevendo o fato; (2) comprovação do dano; (3) identificação dos responsáveis; (4) documentação que prova a transferência de recursos federais; (5) parecer jurídico fundamentado." }
+    ]
+  },
+  "Planilha BAP": {
+    count: 26,
+    color: "amber",
+    questions: [
+      { q: "O que é a planilha do BAP?", a: "É um arquivo em formato CSV (valores separados por vírgula) que contém os dados de processos que ficaram paralisados por mais de 5 anos e estão sendo cadastrados no Banco de Arquivamentos por Prescrição." },
+      { q: "Quantos campos obrigatórios tem a planilha do BAP?", a: "A planilha do BAP possui 13 campos obrigatórios que devem ser preenchidos corretamente para que o arquivo seja aceito pelo sistema e-TCE." },
+      { q: "Qual é o primeiro campo da planilha do BAP?", a: "O primeiro campo é 'UG Responsável', que deve conter os 6 dígitos do código da Unidade Gestora responsável pelo processo. Exemplo: 123456" },
+      { q: "Como preencher o campo CPF/CNPJ Beneficiário?", a: "Este campo deve conter 11 dígitos para CPF (sem pontos ou hífens) ou 14 dígitos para CNPJ (sem pontos, barras ou hífens). Exemplo: 12345678901 ou 12345678901234" },
+      { q: "Como preencher o campo CPF/CNPJ Responsável?", a: "Deve conter 11 dígitos para CPF ou 14 dígitos para CNPJ, sem formatação. Se houver múltiplos responsáveis, devem ser separados por vírgula. Exemplo: 12345678901,98765432101" },
+      { q: "Qual é o formato correto para o campo 'Valor Original da Dívida'?", a: "Deve ser um número com até 15 dígitos, usando vírgula como separador decimal. Exemplo: 1500000,50 (sem pontos de milhar, apenas vírgula para casas decimais)" },
+      { q: "Como preencher o campo 'Data de Vencimento Contábil'?", a: "Deve estar no formato DD/MM/AAAA. Exemplo: 31/12/2023. Esta é a data em que as contas deveriam ter sido prestadas." },
+      { q: "Como preencher o campo 'Data de Apresentação Contábil'?", a: "Deve estar no formato DD/MM/AAAA. Exemplo: 15/01/2024. Esta é a data em que as contas foram efetivamente apresentadas (se houver)." },
+      { q: "O que significa o campo 'Critério Período de Paralisação'?", a: "Deve conter um texto de até 50 caracteres descrevendo o motivo da paralisação. Exemplo: 'Processo paralisado por falta de documentação' ou 'Aguardando resposta do responsável'." },
+      { q: "Como preencher o campo 'Número TCE'?", a: "Deve conter o identificador único da Tomada de Contas Especial no formato TCE-AAAA-NNNNN. Exemplo: TCE-2023-00123. Este número é gerado automaticamente pelo sistema e-TCE." },
+      { q: "O que é o campo 'Sistema de Origem'?", a: "Deve conter um código pré-definido indicando de qual sistema as informações foram extraídas. Exemplos: SIAFI, SIASG, SICONV, ou outro sistema de origem dos dados." },
+      { q: "Como preencher o campo 'Primeira Ordem Bancária'?", a: "Deve ser um código alfanumérico de até 20 caracteres que identifica a primeira movimentação bancária do recurso. Formato típico: UUUUUUGGGGGGOB000000. Exemplo: 892451000001OB000319" },
+      { q: "O que significa o campo 'Origem do Recurso'?", a: "Deve conter a classificação da origem do recurso federal conforme o Anexo III da DN TCU 155/2016. Exemplos: TRANSFERENCIAS_DISCRICIONARIAS, TRANSFERENCIAS_LEGAIS, OUTRAS_TRANSFERENCIAS." },
+      { q: "Como preencher o campo 'Fase do Processo'?", a: "Deve conter um valor pré-definido indicando em qual etapa o processo se encontra. Exemplos: 'Em Análise', 'Aguardando Defesa', 'Julgado', 'Arquivado Provisoriamente'." },
+      { q: "Qual é o campo 'Ano/ID da Transferência'?", a: "Deve conter o ano da transferência seguido de um identificador único. Formato: AAAA/NNNNNN. Exemplo: 2023/000456. Este campo ajuda a rastrear a origem do recurso." },
+      { q: "Posso deixar campos em branco na planilha do BAP?", a: "Não. Todos os 13 campos são obrigatórios. Se algum campo ficar em branco, o arquivo será rejeitado pelo sistema e-TCE e você receberá uma mensagem de erro." },
+      { q: "O que fazer se não tenho informação para preencher um campo obrigatório?", a: "Você deve pesquisar nos sistemas de origem (SIAFI, SIASG, SICONV) para encontrar a informação. Se realmente não conseguir encontrar, deve solicitar ao órgão responsável ou ao TCU uma orientação específica." },
+      { q: "Qual é o tamanho máximo do arquivo CSV do BAP?", a: "Não existe um tamanho máximo definido, mas recomenda-se que o arquivo não ultrapasse 100 MB. Se o arquivo for muito grande, pode ser dividido em múltiplos arquivos." },
+      { q: "Como validar se a planilha do BAP está correta antes de enviar?", a: "O sistema e-TCE oferece uma funcionalidade de pré-validação. Você pode fazer upload do arquivo e o sistema verificará se todos os campos estão preenchidos corretamente e se os formatos estão adequados." },
+      { q: "Posso editar a planilha do BAP após enviá-la?", a: "Sim, mas com limitações. Você pode solicitar uma correção ao TCU, que pode rejeitar o arquivo e pedir para você reenviar uma versão corrigida. Após a aprovação, não é possível editar." },
+      { q: "Qual é o prazo para enviar a planilha do BAP após instaurar a TCE?", a: "Conforme a IN TCU 98/2024, o prazo é de 5 dias úteis contados a partir da data de instauração da TCE. Este é um prazo crítico que não deve ser perdido." },
+      { q: "O que acontece se eu enviar a planilha do BAP com atraso?", a: "Se o prazo de 5 dias úteis for ultrapassado, o TCU pode rejeitar o arquivo e considerar a TCE como não instaurada corretamente. Isso pode gerar consequências administrativas para o órgão responsável." },
+      { q: "Preciso assinar digitalmente a planilha do BAP?", a: "Sim. A planilha deve ser assinada digitalmente com certificado digital válido (ICP-Brasil) pela autoridade competente do órgão responsável pela instauração da TCE." },
+      { q: "Quantas pessoas precisam assinar a planilha do BAP?", a: "Conforme a Portaria TCU 121/2025, a planilha deve ser assinada pelo ordenador de despesas e pelo responsável pela gestão financeira do órgão. Em alguns casos, pode ser exigida assinatura adicional do auditor." },
+      { q: "Qual é o formato de arquivo aceito para a planilha do BAP?", a: "Apenas arquivos em formato CSV (Comma-Separated Values) são aceitos. O arquivo não deve estar compactado (ZIP) ou em outro formato como Excel (.xlsx) ou PDF." },
+      { q: "Como converter um arquivo Excel para CSV para enviar ao BAP?", a: "Abra o arquivo Excel, vá em 'Arquivo' > 'Salvar como', escolha o formato 'CSV (Delimitado por vírgula)' e salve. Certifique-se de que a codificação está em UTF-8 para evitar problemas com caracteres especiais." }
+    ]
+  },
+  "Cartas de Cobrança": {
+    count: 11,
+    color: "blue",
+    questions: [
+      { q: "O que é uma carta de cobrança no contexto da TCE?", a: "É uma notificação formal enviada pelo governo ao responsável pela fraude, informando sobre a dívida identificada e dando um prazo para que ele apresente sua defesa ou pague a dívida voluntariamente." },
+      { q: "Qual é o prazo que a carta de cobrança dá ao devedor para responder?", a: "Conforme a IN TCU 98/2024, o prazo é de 15 dias úteis contados a partir do recebimento da carta. Este prazo pode ser prorrogado por mais 15 dias em casos justificados." },
+      { q: "O que o devedor pode fazer ao receber uma carta de cobrança?", a: "O devedor pode: (1) pagar a dívida voluntariamente; (2) apresentar defesa alegando que não cometeu a fraude; (3) requerer prorrogação do prazo; (4) solicitar parcelamento da dívida." },
+      { q: "Se o devedor não responder à carta de cobrança, o que acontece?", a: "Se o devedor não responder dentro do prazo, o processo segue para a fase de julgamento no TCU sem a sua defesa. O TCU pode julgar a TCE com base apenas na documentação apresentada pelo governo." },
+      { q: "A carta de cobrança pode ser enviada por email?", a: "Sim. A IN TCU 98/2024 permite que a carta seja enviada por email, desde que haja confirmação de recebimento. Também pode ser enviada por correio com aviso de recebimento." },
+      { q: "Se o devedor não receber a carta de cobrança, a TCE é nula?", a: "Não necessariamente. Se houver comprovação de que a carta foi enviada corretamente (por email com confirmação ou por correio com aviso), a TCE segue válida mesmo que o devedor alegue não ter recebido." },
+      { q: "Posso enviar múltiplas cartas de cobrança para o mesmo devedor?", a: "Sim. Se o devedor não responder à primeira carta ou se houver novas fraudes identificadas, novas cartas podem ser enviadas. Cada carta reinicia o prazo de 15 dias úteis." },
+      { q: "A carta de cobrança precisa indicar o valor exato da dívida?", a: "Sim. A carta deve indicar claramente: (1) o valor do dano; (2) a data do fato; (3) a descrição da fraude; (4) o cálculo da dívida com juros e correção monetária." },
+      { q: "Se o devedor pagar parte da dívida, a TCE é encerrada?", a: "Não. Se o devedor pagar apenas parte, a TCE continua aberta para o valor remanescente. O TCU pode aceitar pagamentos parcelados, mas o processo só é encerrado quando a dívida é quitada integralmente." },
+      { q: "Qual é a diferença entre carta de cobrança e notificação de instauração da TCE?", a: "A notificação de instauração informa que a TCE foi aberta e convida o responsável a apresentar defesa. A carta de cobrança é mais específica e indica o valor exato da dívida e o prazo para pagamento." },
+      { q: "A carta de cobrança pode ser contestada em juízo?", a: "Sim. O devedor pode recorrer ao Poder Judiciário (Tribunal Regional Federal ou Supremo Tribunal Federal) para contestar a legalidade da TCE e da carta de cobrança." }
+    ]
+  },
+  "Tecnologia CSV": {
+    count: 13,
+    color: "green",
+    questions: [
+      { q: "O que significa CSV?", a: "CSV significa 'Comma-Separated Values' ou 'Valores Separados por Vírgula'. É um formato de arquivo de texto simples onde os dados são organizados em linhas e colunas, separados por vírgulas." },
+      { q: "Por que o TCU escolheu o formato CSV para a planilha do BAP?", a: "O CSV é um formato universal, compatível com qualquer sistema operacional e qualquer software de planilha. Ele é leve, seguro e fácil de validar, reduzindo erros de compatibilidade." },
+      { q: "Como abrir um arquivo CSV?", a: "Um arquivo CSV pode ser aberto com: (1) Microsoft Excel; (2) Google Sheets; (3) LibreOffice Calc; (4) Bloco de Notas; (5) Qualquer editor de texto simples." },
+      { q: "Qual é o separador correto para o CSV do BAP?", a: "O separador padrão é a vírgula (,). Não use ponto-e-vírgula (;) ou tabulação, pois o sistema e-TCE só aceita vírgula como separador." },
+      { q: "Como lidar com dados que contêm vírgulas dentro deles?", a: "Se um campo contém vírgula (por exemplo, um endereço), o campo deve ser envolvido em aspas duplas. Exemplo: \"Rua das Flores, 123\"" },
+      { q: "O arquivo CSV precisa ter cabeçalho (header)?", a: "Sim. A primeira linha do arquivo deve conter os nomes dos 13 campos obrigatórios. O sistema e-TCE usa essa linha para validar a estrutura do arquivo." },
+      { q: "Qual é a codificação correta para o arquivo CSV?", a: "O arquivo deve estar em codificação UTF-8. Se estiver em ANSI ou Latin-1, caracteres especiais (acentos, til) podem aparecer incorretamente no sistema e-TCE." },
+      { q: "Como converter um arquivo Excel para CSV com a codificação correta?", a: "No Excel, vá em 'Arquivo' > 'Salvar como', escolha 'CSV (Delimitado por vírgula)' e certifique-se de que a codificação está em UTF-8. Se não conseguir, use um conversor online confiável." },
+      { q: "Posso usar quebras de linha dentro de um campo CSV?", a: "Sim, mas o campo deve estar envolvido em aspas duplas. Exemplo: \"Campo com quebra de linha\\nSegunda linha\"" },
+      { q: "Como validar se o arquivo CSV está correto antes de enviar?", a: "Abra o arquivo em um editor de texto (Bloco de Notas) e verifique: (1) se há 13 colunas; (2) se todas as linhas têm o mesmo número de colunas; (3) se não há caracteres estranhos ou codificação incorreta." },
+      { q: "O que fazer se o sistema e-TCE rejeitar o arquivo CSV?", a: "O sistema fornecerá uma mensagem de erro indicando qual é o problema (ex: 'Campo 5 inválido na linha 10'). Corrija o problema no arquivo e reenvie." },
+      { q: "Posso comprimir o arquivo CSV antes de enviar?", a: "Não. O sistema e-TCE não aceita arquivos compactados (ZIP, RAR, 7Z). O arquivo deve ser enviado em formato CSV puro." },
+      { q: "Qual é o tamanho máximo de um arquivo CSV para o BAP?", a: "Não existe um limite máximo definido, mas recomenda-se que o arquivo não ultrapasse 100 MB. Se for maior, divida em múltiplos arquivos e envie separadamente." }
+    ]
+  },
+  "Assinaturas": {
+    count: 5,
+    color: "amber",
+    questions: [
+      { q: "Quem precisa assinar a planilha do BAP?", a: "Conforme a Portaria TCU 121/2025, a planilha deve ser assinada pelo ordenador de despesas e pelo responsável pela gestão financeira do órgão. Em alguns casos, pode ser exigida assinatura adicional do auditor." },
+      { q: "Qual é o tipo de assinatura aceito pelo sistema e-TCE?", a: "Apenas assinatura digital com certificado digital válido (ICP-Brasil) é aceita. A assinatura deve ser feita com certificado de pessoa física (e-CPF) ou pessoa jurídica (e-CNPJ)." },
+      { q: "Como assinar digitalmente um arquivo CSV?", a: "Use um software de assinatura digital como: (1) Assinador do Governo Federal; (2) Adobe Sign; (3) DocuSign; (4) Outro software compatível com ICP-Brasil. O arquivo resultante terá extensão .p7s ou .assinado." },
+      { q: "Posso assinar a planilha do BAP com assinatura manuscrita escaneada?", a: "Não. O sistema e-TCE não aceita assinatura manuscrita escaneada. É obrigatório usar assinatura digital com certificado ICP-Brasil." },
+      { q: "Se a assinatura expirar, a planilha do BAP fica inválida?", a: "Não. Uma vez que a planilha foi assinada e aceita pelo sistema e-TCE, ela permanece válida mesmo que o certificado digital expire posteriormente. A validade da assinatura é verificada no momento do envio." }
+    ]
+  },
+  "Prescrição": {
+    count: 8,
+    color: "blue",
+    questions: [
+      { q: "O que é prescrição no contexto da TCE?", a: "Prescrição é o prazo máximo que o governo tem para cobrar uma dívida. Se o governo não cobrar dentro desse prazo, ele perde o direito de cobrar, e a dívida 'prescreve' (caduca)." },
+      { q: "Qual é o prazo de prescrição para cobrar uma TCE?", a: "Conforme a Resolução TCU 344/2022, o prazo é de 5 anos (prescrição quinquenal) contados a partir do termo inicial. Se o governo não julgar a TCE dentro desse prazo, a pretensão de ressarcimento prescreve." },
+      { q: "Qual é o termo inicial da prescrição?", a: "O termo inicial varia: (1) em caso de omissão no dever de prestar contas, a data em que as contas deveriam ter sido prestadas; (2) se houve prestação de contas, a data da efetiva apresentação; (3) se não existe obrigação de prestar contas, a data do conhecimento do fato irregular." },
+      { q: "O que interrompe a prescrição?", a: "Movimentações relevantes interrompem a prescrição. Exemplos: notificação que fixa prazo para prestação de contas, apresentação de contas, pareceres técnicos, notas técnicas relativas às contas ou irregularidades, e todo ato que evidencie atuação administrativa." },
+      { q: "O que NÃO interrompe a prescrição?", a: "Não são movimentações relevantes: pedidos e concessões de vista dos autos, emissões de certidões, prestações de informações, juntadas de procuração ou subestabelecimento, e outros atos que não interfiram no curso das apurações." },
+      { q: "Se a prescrição for interrompida, o prazo recomeça do zero?", a: "Sim. Cada movimentação relevante reinicia a contagem do prazo de 5 anos. Se houver uma movimentação relevante no 4º ano, o prazo volta a contar do zero por mais 5 anos." },
+      { q: "Qual é a diferença entre prescrição quinquenal e prescrição intercorrente?", a: "Prescrição quinquenal: prazo de 5 anos contados do termo inicial. Prescrição intercorrente: prazo de 5 anos de inatividade processual (sem movimentações relevantes). A prescrição intercorrente é mais rigorosa e foi introduzida pela Resolução TCU 344/2022." },
+      { q: "O que é o Banco de Arquivamentos por Prescrição (BAP)?", a: "É um sistema criado pela IN TCU 98/2024 para registrar processos que ficaram paralisados por mais de 5 anos sem movimentações relevantes. O BAP serve para evitar que o governo perca direitos por inatividade processual." }
+    ]
+  },
+  "Consolidação": {
+    count: 5,
+    color: "green",
+    questions: [
+      { q: "O que é consolidação de débitos?", a: "É o processo automático pelo qual o sistema junta todas as dívidas de uma mesma pessoa (CPF ou CNPJ) para verificar se a soma atinge o limite de alçada de R$ 120 mil. Se atingir, a TCE é enviada para julgamento." },
+      { q: "Como funciona a consolidação de débitos?", a: "O sistema verifica periodicamente se um devedor tem múltiplas dívidas cadastradas no 'Banco de Débitos Inferiores'. Se a soma de todas as dívidas atingir R$ 120 mil, o sistema automaticamente consolida tudo e manda para o TCU julgar." },
+      { q: "Qual é a frequência de consolidação de débitos?", a: "A consolidação é feita automaticamente pelo sistema e-TCE. Não existe uma frequência fixa definida em lei, mas geralmente é feita mensalmente ou conforme a necessidade." },
+      { q: "Se um devedor pagar parte da dívida, a consolidação é afetada?", a: "Sim. Se o devedor pagar parte da dívida, o valor remanescente é reduzido no sistema. Se a soma das dívidas remanescentes ficar abaixo de R$ 120 mil, a consolidação não ocorre." },
+      { q: "Posso contestar a consolidação de débitos?", a: "Sim. Se você discordar da consolidação, pode apresentar recurso administrativo ao TCU alegando que os débitos não devem ser consolidados (por exemplo, se forem de órgãos diferentes ou períodos diferentes)." }
+    ]
+  },
+  "Outras Questões": {
+    count: 42,
+    color: "amber",
+    questions: [
+      { q: "Como acessar o sistema e-TCE?", a: "O sistema e-TCE está disponível em https://www.etce.tcu.gov.br. Você precisa de um certificado digital válido (ICP-Brasil) para fazer login." },
+      { q: "Qual é o horário de funcionamento do sistema e-TCE?", a: "O sistema funciona 24 horas por dia, 7 dias por semana. Porém, há períodos de manutenção (geralmente madrugadas) quando o sistema pode ficar indisponível." },
+      { q: "Como solicitar suporte técnico para o sistema e-TCE?", a: "Você pode entrar em contato com o TCU através do email stce@tcu.gov.br ou pelo telefone (61) 3316-7000. Também há um formulário de suporte disponível no próprio sistema." },
+      { q: "Qual é a diferença entre IN TCU 98/2024 e Resolução TCU 344/2022?", a: "A IN TCU 98/2024 regulamenta todo o procedimento de TCE (instauração, procedimentos, prazos). A Resolução TCU 344/2022 regulamenta especificamente os prazos de prescrição (quanto tempo o governo tem para cobrar)." },
+      { q: "Qual é a diferença entre IN TCU 98/2024 e Portaria TCU 121/2025?", a: "A IN TCU 98/2024 é a norma geral que regulamenta a TCE. A Portaria TCU 121/2025 é uma norma complementar que detalha procedimentos operacionais específicos, como o preenchimento da planilha do BAP." },
+      { q: "O que é a Decisão Normativa TCU 155/2016?", a: "É a norma que regulamenta as transferências voluntárias de recursos federais. Ela define como os recursos devem ser repassados, como devem ser prestados contas e quais são as sanções por descumprimento." },
+      { q: "O que é a Decisão Normativa TCU 217/2025?", a: "É uma atualização da DN TCU 155/2016. Ela moderniza as regras sobre transferências voluntárias, incluindo novas disposições sobre prescrição e responsabilização." },
+      { q: "Qual é a Súmula TCU 282?", a: "A Súmula TCU 282 estabelece que não há responsabilização por omissão no dever de prestar contas antes da entrada em vigor da Resolução TCU 344/2022 (28/11/2024). Isso significa que processos antigos não podem gerar TCE por omissão." },
+      { q: "Como calcular o prazo de 5 anos para o BAP?", a: "Conte 5 anos completos a partir da data de paralisação do processo (última movimentação relevante). Se a última movimentação foi em 15/03/2019, o prazo de 5 anos termina em 15/03/2024." },
+      { q: "O que é uma movimentação relevante?", a: "É um ato que demonstra efetiva atuação da administração na apuração dos fatos. Exemplos: notificação, apresentação de contas, parecer técnico, nota técnica, diligência, decisão." },
+      { q: "O que é um ato que NÃO é movimentação relevante?", a: "Exemplos: pedido de vista dos autos, emissão de certidão, prestação de informação, juntada de procuração, subestabelecimento, anotação de protocolo." },
+      { q: "Como saber se um processo é elegível para o BAP?", a: "Um processo é elegível se: (1) ficou paralisado por mais de 5 anos; (2) não teve movimentações relevantes; (3) não sofreu fiscalização posterior de outros órgãos; (4) tem valor até R$ 6 milhões; (5) prestação de contas com prazo final até 31/12/2024." },
+      { q: "O que é arquivamento provisório?", a: "É o arquivamento de um processo após 5 anos de paralisação. O processo fica nesse estado por 3 anos adicionais. Após esse período total (8 anos), o processo passa a ser considerado definitivamente arquivado." },
+      { q: "O que é arquivamento definitivo?", a: "É o arquivamento permanente de um processo após 8 anos de paralisação (5 anos de paralisação + 3 anos de arquivamento provisório). Após isso, o processo não pode mais ser reaberto, salvo decisão do TCU em sentido contrário." },
+      { q: "O TCU pode reabrir um processo arquivado no BAP?", a: "Sim. O TCU acompanha continuamente os registros do BAP e pode reabrir processos indevidamente arquivados se encontrar evidências de fraude ou irregularidade." },
+      { q: "Qual é o regime de transição para responsabilização por prescrição?", a: "Período Pré-Resolução (11/10/2022 - 28/11/2024): Imprescritibilidade - Sem responsabilização por omissões. Período de Carência (28/11/2024 - 28/11/2025): Responsabilidade apenas por negligência grosseira/fraude. Pós-Transição (Após 28/11/2025): Responsabilidade total - Todas as omissões sujeitas a penalidade." },
+      { q: "Qual é a exceção ao regime de transição?", a: "Casos em que haja dolo (fraude) ou culpa grave (negligência grosseira) podem ser punidos desde a entrada em vigor da Resolução TCU 344/2022 (28/11/2024), independentemente do período de transição." },
+      { q: "O que é efeito suspensivo em uma TCE?", a: "É quando uma decisão do TCU sobre a TCE é suspensa (pausada) por ordem de um juiz do Poder Judiciário. Enquanto houver efeito suspensivo, a cobrança da dívida fica suspensa." },
+      { q: "Como recursar uma TCE?", a: "O devedor pode apresentar recurso administrativo ao TCU dentro de 15 dias úteis após a notificação. Depois, se não concordar com a decisão do TCU, pode recorrer ao Poder Judiciário (Tribunal Regional Federal ou Supremo Tribunal Federal)." },
+      { q: "Qual é o prazo para pagar uma TCE após ser condenado?", a: "Conforme a Portaria TCU 121/2025, o prazo é de 30 dias úteis contados a partir da notificação da condenação. Se não pagar, o governo pode executar a dívida judicialmente." },
+      { q: "Posso parcelar uma TCE?", a: "Sim. Após a condenação no TCU, o devedor pode solicitar parcelamento em até 36 meses. O parcelamento deve ser solicitado dentro de 30 dias úteis após a notificação da condenação." },
+      { q: "Qual é a taxa de juros de mora em uma TCE?", a: "A taxa é de 1% ao mês (12% ao ano), conforme a Lei nº 9.494/1997. Além disso, há correção monetária pelo IPCA." },
+      { q: "O que é a matriz de responsabilização?", a: "É um documento que identifica claramente quem é responsável por cada aspecto da TCE (quem recebeu o dinheiro, quem autorizou o gasto, quem fiscalizou, etc.). Cada responsável pode ter uma parcela diferente da dívida." },
+      { q: "Como é feita a divisão da responsabilidade entre múltiplos responsáveis?", a: "A responsabilidade pode ser solidária (todos pagam a dívida integral) ou dividida proporcionalmente (cada um paga sua parte). A IN TCU 98/2024 define os critérios para essa divisão." },
+      { q: "O que é responsabilidade solidária?", a: "É quando múltiplas pessoas são responsáveis pela mesma dívida e qualquer uma delas pode ser cobrada pela dívida integral. Se uma pagar, as outras ficam livres." },
+      { q: "O que é responsabilidade subsidiária?", a: "É quando há uma ordem de cobrança: primeiro cobra-se do devedor principal; se ele não pagar, cobra-se do devedor subsidiário." },
+      { q: "Como o TCU identifica os responsáveis em uma TCE?", a: "O TCU analisa a documentação (assinaturas, autorizações, comprovantes) para identificar quem tomou as decisões que causaram o prejuízo. Cada pessoa que assinou um documento pode ser considerada responsável." },
+      { q: "Se um responsável falecer, a dívida é perdoada?", a: "Não. A dívida passa para os herdeiros do falecido (se houver bens na herança). O governo pode cobrar dos herdeiros até o limite do valor da herança." },
+      { q: "Se um responsável se declarar insolvente, o governo perde o direito de cobrar?", a: "Não. O governo pode registrar a dívida como crédito contra o insolvente e cobrar quando o insolvente tiver patrimônio. A dívida não prescreve por insolvência." },
+      { q: "Qual é a diferença entre TCE e Representação?", a: "TCE: processo que busca cobrar dinheiro de volta (ressarcimento). Representação: processo que busca apenas punir administrativamente (multa, inidoneidade) sem cobrar dinheiro." },
+      { q: "Como o TCU comunica a condenação em uma TCE?", a: "O TCU envia uma notificação formal ao responsável condenado, informando: (1) o valor da dívida; (2) a data do vencimento; (3) os juros e correção monetária; (4) o prazo para recurso; (5) as opções de pagamento (à vista ou parcelado)." },
+      { q: "O que é inidoneidade?", a: "É uma sanção administrativa que proíbe uma pessoa ou empresa de contratar com o governo federal por um período (geralmente 8 anos). Isso afeta principalmente empresas que prestam serviços ao governo." },
+      { q: "Como uma pessoa fica inidônea?", a: "Uma pessoa fica inidônea quando é condenada em uma TCE por fraude ou negligência grosseira. A inidoneidade é registrada no Cadastro Nacional de Empresas Inidôneas e Suspensas (CEIS)." },
+      { q: "Como remover a inidoneidade?", a: "A inidoneidade é automática após o período de 8 anos. Se a pessoa pagar a dívida antes, o TCU pode considerar a remoção da inidoneidade como parte de um acordo." },
+      { q: "O que é a Súmula Vinculante do STF sobre prescrição?", a: "A Súmula Vinculante nº 17 do STF estabelece que é impossível a prescrição da ação de ressarcimento ao Erário. Porém, a Resolução TCU 344/2022 criou uma prescrição administrativa de 5 anos, que é diferente." },
+      { q: "Como o TCU comunica sobre o BAP?", a: "O TCU publica informações sobre o BAP no seu portal (www.tcu.gov.br), em webinários, em manuais técnicos e através de comunicados diretos aos órgãos responsáveis." },
+      { q: "Qual é a data limite para cadastrar processos no BAP?", a: "Conforme a IN TCU 98/2024, processos com prestação de contas com prazo final até 31/12/2024 podem ser cadastrados no BAP. Após essa data, novos critérios podem ser aplicados." },
+      { q: "O que é o e-TCE?", a: "É o sistema eletrônico do Tribunal de Contas da União onde são cadastradas e processadas as Tomadas de Contas Especiais. Todos os órgãos federais devem usar o e-TCE para instaurar TCEs." },
+      { q: "Como acessar o manual do e-TCE?", a: "O manual está disponível no portal do TCU (www.tcu.gov.br) e também dentro do próprio sistema e-TCE. Você pode baixar em PDF ou ler online." },
+      { q: "Qual é o contato do TCU para dúvidas sobre TCE e BAP?", a: "Email: stce@tcu.gov.br | Telefone: (61) 3316-7000 | Portal: www.tcu.gov.br | Sistema e-TCE: https://www.etce.tcu.gov.br" }
+    ]
+  }
+};
+
 export default function Home() {
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [showConsultModal, setShowConsultModal] = useState(false);
+  const [showDocsModal, setShowDocsModal] = useState(false);
+
   return (
     <div className="min-h-screen bg-white">
       {/* NAVIGATION */}
@@ -53,10 +281,17 @@ export default function Home() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 text-base">
+              <Button 
+                onClick={() => setShowConsultModal(true)}
+                className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 text-base"
+              >
                 Iniciar Consulta <ChevronRight className="w-4 h-4 ml-2" />
               </Button>
-              <Button variant="outline" className="border-white text-white hover:bg-white/10 px-6 py-3 text-base">
+              <Button 
+                onClick={() => setShowDocsModal(true)}
+                variant="outline" 
+                className="border-white text-white hover:bg-white/10 px-6 py-3 text-base"
+              >
                 Documentos Normativos
               </Button>
             </div>
@@ -104,406 +339,18 @@ export default function Home() {
             <Card className="p-6 border-0 shadow-sm hover:shadow-md transition-shadow">
               <div className="flex items-start justify-between">
                 <div>
-                  <p className="text-slate-600 text-sm font-medium mb-2">Período de Transição</p>
-                  <p className="text-3xl font-bold text-red-700">360 Dias</p>
-                  <p className="text-xs text-slate-500 mt-2">Até 28/11/2025</p>
+                  <p className="text-slate-600 text-sm font-medium mb-2">FAQ Completo</p>
+                  <p className="text-3xl font-bold text-blue-700">210 Q&A</p>
+                  <p className="text-xs text-slate-500 mt-2">Perguntas e respostas</p>
                 </div>
-                <AlertTriangle className="w-8 h-8 text-red-700 opacity-20" />
+                <BookOpen className="w-8 h-8 text-blue-700 opacity-20" />
               </div>
             </Card>
           </div>
         </div>
       </section>
 
-      {/* CONCEITOS FUNDAMENTAIS */}
-      <section id="conceitos" className="py-16 md:py-20">
-        <div className="container">
-          <div className="mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Conceitos Fundamentais</h2>
-            <p className="text-lg text-slate-600">Entenda os pilares da regulamentação sobre prescrição no TCU</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <Card className="p-8 border-l-4 border-l-blue-700 hover:shadow-lg transition-shadow">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <FileText className="w-6 h-6 text-blue-700" />
-                </div>
-                <h3 className="text-lg font-bold text-slate-900">Tomada de Contas Especial (TCE)</h3>
-              </div>
-              <p className="text-slate-600 leading-relaxed">
-                Processo administrativo formalizado com rito próprio para apurar responsabilidade por dano à administração pública federal, com identificação dos responsáveis e quantificação do débito para ressarcimento.
-              </p>
-              <p className="text-xs text-slate-500 mt-4 font-semibold">Fonte: IN TCU nº 98/2024, art. 2º</p>
-            </Card>
-
-            <Card className="p-8 border-l-4 border-l-green-700 hover:shadow-lg transition-shadow">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                  <CheckCircle2 className="w-6 h-6 text-green-700" />
-                </div>
-                <h3 className="text-lg font-bold text-slate-900">Banco de Arquivamentos (BAP)</h3>
-              </div>
-              <p className="text-slate-600 leading-relaxed">
-                Módulo do sistema e-TCE que viabiliza o reconhecimento da prescrição no âmbito dos tomadores de contas, por meio do registro de processos administrativos e TCEs paralisados por mais de 5 anos sem movimentações relevantes.
-              </p>
-              <p className="text-xs text-slate-500 mt-4 font-semibold">Fonte: IN TCU nº 98/2024, arts. 9º e 10</p>
-            </Card>
-
-            <Card className="p-8 border-l-4 border-l-amber-700 hover:shadow-lg transition-shadow">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center">
-                  <Clock className="w-6 h-6 text-amber-700" />
-                </div>
-                <h3 className="text-lg font-bold text-slate-900">Prescrição no TCU</h3>
-              </div>
-              <p className="text-slate-600 leading-relaxed">
-                Perda do direito de o Tribunal exercer as pretensões punitiva (sanções) e de ressarcimento (cobrança de valores) pelo decurso de tempo. Aplicável a todos os processos de controle externo, com prazos definidos pela Resolução TCU nº 344/2022.
-              </p>
-              <p className="text-xs text-slate-500 mt-4 font-semibold">Fonte: Resolução TCU nº 344/2022, art. 1º</p>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* TIMELINE PRESCRIÇÃO - INFOGRÁFICO */}
-      <section id="timeline" className="py-16 md:py-20 bg-slate-50">
-        <div className="container">
-          <div className="mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Timeline de Prescrição - 5 Anos</h2>
-            <p className="text-lg text-slate-600">Visualize os períodos críticos e zonas de risco processual</p>
-          </div>
-          
-          <div className="bg-white rounded-lg overflow-hidden shadow-lg">
-            <img 
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/infografico-timeline-prescricao-YPZztaT3ViByUhx9umqKqm.webp"
-              alt="Timeline de Prescrição - 5 Anos"
-              className="w-full h-auto"
-            />
-          </div>
-
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-4 bg-green-50 border-l-4 border-l-green-600 rounded">
-              <h4 className="font-bold text-green-900 mb-2">Zona Segura (0-3 Anos)</h4>
-              <p className="text-sm text-green-800">Fluxo processual regular, sem riscos imediatos de prescrição intercorrente.</p>
-            </div>
-            <div className="p-4 bg-amber-50 border-l-4 border-l-amber-600 rounded">
-              <h4 className="font-bold text-amber-900 mb-2">Zona de Alerta (3-5 Anos)</h4>
-              <p className="text-sm text-amber-800">Risco aumentado. Necessidade de celeridade processual para evitar prescrição quinquenal.</p>
-            </div>
-            <div className="p-4 bg-red-50 border-l-4 border-l-red-600 rounded">
-              <h4 className="font-bold text-red-900 mb-2">Zona Crítica (5+ Anos)</h4>
-              <p className="text-sm text-red-800">Risco alto de arquivamento por prescrição. Possibilidade de responsabilização.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ESPÉCIES DE PRESCRIÇÃO */}
-      <section className="py-16 md:py-20">
-        <div className="container">
-          <div className="mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Espécies de Prescrição</h2>
-            <p className="text-lg text-slate-600">Conheça os dois tipos de prescrição que afetam processos do TCU</p>
-          </div>
-
-          <div className="bg-white rounded-lg overflow-hidden shadow-lg mb-12">
-            <img 
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/infografico-especies-prescricao-fUvRHMQHeNuWtixEvwubZv.webp"
-              alt="Comparação: Prescrição Quinquenal vs Intercorrente"
-              className="w-full h-auto"
-            />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div>
-              <h3 className="text-xl font-bold text-blue-700 mb-4">Prescrição Quinquenal (5 Anos)</h3>
-              <ul className="space-y-3">
-                <li className="flex gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-blue-700 flex-shrink-0 mt-0.5" />
-                  <span className="text-slate-700">Prazo geral para pretensões punitivas e de ressarcimento</span>
-                </li>
-                <li className="flex gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-blue-700 flex-shrink-0 mt-0.5" />
-                  <span className="text-slate-700">Contagem a partir de marcos específicos (art. 4º, Resolução TCU 344/2022)</span>
-                </li>
-                <li className="flex gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-blue-700 flex-shrink-0 mt-0.5" />
-                  <span className="text-slate-700">Interrompida por atos que evidenciem atuação administrativa</span>
-                </li>
-                <li className="flex gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-blue-700 flex-shrink-0 mt-0.5" />
-                  <span className="text-slate-700">Pode ser interrompida múltiplas vezes durante o processo</span>
-                </li>
-              </ul>
-              <p className="text-xs text-slate-500 mt-6 font-semibold">Fonte: Resolução TCU nº 344/2022, art. 2º</p>
-            </div>
-
-            <div>
-              <h3 className="text-xl font-bold text-amber-700 mb-4">Prescrição Intercorrente (3 Anos)</h3>
-              <ul className="space-y-3">
-                <li className="flex gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
-                  <span className="text-slate-700">Ocorre por paralisação processual de 3 anos consecutivos</span>
-                </li>
-                <li className="flex gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
-                  <span className="text-slate-700">Sem movimentações relevantes que evidenciem atuação administrativa</span>
-                </li>
-                <li className="flex gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
-                  <span className="text-slate-700">Interrompida apenas por atos que demonstrem efetiva atuação</span>
-                </li>
-                <li className="flex gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
-                  <span className="text-slate-700">Reinicia a contagem após cada interrupção</span>
-                </li>
-              </ul>
-              <p className="text-xs text-slate-500 mt-6 font-semibold">Fonte: Resolução TCU nº 344/2022, art. 8º</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FLUXO DO PROCESSO */}
-      <section id="processo" className="py-16 md:py-20 bg-slate-50">
-        <div className="container">
-          <div className="mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Fluxograma do Processo</h2>
-            <p className="text-lg text-slate-600">Da Instauração da TCE à Inscrição no BAP</p>
-          </div>
-
-          <div className="bg-white rounded-lg overflow-hidden shadow-lg mb-12">
-            <img 
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/infografico-fluxo-tce-bap-dXGqyLtP9avzfQwpHgKPxQ.webp"
-              alt="Fluxograma: Da Instauração da TCE à Inscrição no BAP"
-              className="w-full h-auto"
-            />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card className="p-6 bg-blue-50 border-l-4 border-l-blue-700">
-              <h4 className="font-bold text-blue-900 mb-3">Fase Interna (Órgão Tomador)</h4>
-              <ul className="space-y-2 text-sm text-blue-800">
-                <li>• Medidas administrativas prévias (120-360 dias)</li>
-                <li>• Instauração da TCE no sistema e-TCE</li>
-                <li>• Inserção de dados em até 5 dias úteis</li>
-                <li>• Processamento e análise interna</li>
-                <li>• Remessa ao TCU em até 180 dias</li>
-              </ul>
-            </Card>
-
-            <Card className="p-6 bg-green-50 border-l-4 border-l-green-700">
-              <h4 className="font-bold text-green-900 mb-3">Fase Externa (TCU)</h4>
-              <ul className="space-y-2 text-sm text-green-800">
-                <li>• Recebimento e autuação no TCU</li>
-                <li>• Análise e julgamento pelo Tribunal</li>
-                <li>• Monitoramento de paralisação (5+ anos)</li>
-                <li>• Detecção de critérios para BAP</li>
-                <li>• Inscrição no Banco de Arquivamentos</li>
-              </ul>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* CAUSAS DE INTERRUPÇÃO */}
-      <section className="py-16 md:py-20">
-        <div className="container">
-          <div className="mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Causas de Interrupção da Prescrição</h2>
-            <p className="text-lg text-slate-600">Atos que reiniciam a contagem do prazo prescricional</p>
-          </div>
-
-          <div className="bg-white rounded-lg overflow-hidden shadow-lg mb-12">
-            <img 
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/infografico-causas-interrupcao-fADdArviaTEFQKQk2h9tk3.webp"
-              alt="Causas Interruptivas da Prescrição em Processos do TCU"
-              className="w-full h-auto"
-            />
-          </div>
-
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-            <h4 className="font-bold text-blue-900 mb-4 flex items-center gap-2">
-              <AlertTriangle className="w-5 h-5" />
-              Observação Importante
-            </h4>
-            <p className="text-blue-800">
-              A prescrição pode se interromper mais de uma vez por causas distintas ou por uma mesma causa desde que, por sua natureza, essa causa seja repetível no curso do processo. Cada interrupção reinicia a contagem do prazo prescricional.
-            </p>
-            <p className="text-xs text-blue-700 mt-4 font-semibold">Fonte: Resolução TCU nº 344/2022, art. 5º, § 1º</p>
-          </div>
-        </div>
-      </section>
-
-      {/* VALORES E LIMITES */}
-      <section className="py-16 md:py-20 bg-slate-50">
-        <div className="container">
-          <div className="mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Limiares de Materialidade e Valores</h2>
-            <p className="text-lg text-slate-600">Conheça os limites que definem a instauração de TCE e cadastro no BAP</p>
-          </div>
-
-          <div className="bg-white rounded-lg overflow-hidden shadow-lg mb-12">
-            <img 
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/infografico-valores-limites-78JCQuQ8NDvUnVPMLuL3Ag.webp"
-              alt="Limiares de Materialidade e Limites de Valor no Processo de TCE"
-              className="w-full h-auto"
-            />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card className="p-6 border-l-4 border-l-red-600">
-              <h4 className="font-bold text-red-900 mb-3">Limite Máximo para BAP</h4>
-              <p className="text-3xl font-bold text-red-700 mb-2">R$ 6.000.000</p>
-              <p className="text-sm text-slate-600">50 vezes o limiar mínimo de TCE. Processos acima deste valor não podem ser cadastrados no BAP.</p>
-              <p className="text-xs text-slate-500 mt-4 font-semibold">Fonte: IN TCU nº 98/2024, art. 9º, § 6º</p>
-            </Card>
-
-            <Card className="p-6 border-l-4 border-l-amber-600">
-              <h4 className="font-bold text-amber-900 mb-3">Limiar de Instauração de TCE</h4>
-              <p className="text-3xl font-bold text-amber-700 mb-2">R$ 120.000</p>
-              <p className="text-sm text-slate-600">Valor mínimo obrigatório para instauração de TCE. Instauração é mandatória quando atingido este valor.</p>
-              <p className="text-xs text-slate-500 mt-4 font-semibold">Fonte: IN TCU nº 98/2024, art. 6º, inciso I</p>
-            </Card>
-
-            <Card className="p-6 border-l-4 border-l-green-600">
-              <h4 className="font-bold text-green-900 mb-3">Limiar de Registro no e-TCE</h4>
-              <p className="text-3xl font-bold text-green-700 mb-2">R$ 20.000</p>
-              <p className="text-sm text-slate-600">Débitos acima deste valor devem ser registrados no e-TCE. Sistema faz somatório automático diário.</p>
-              <p className="text-xs text-slate-500 mt-4 font-semibold">Fonte: IN TCU nº 98/2024, art. 6º, § 1º</p>
-            </Card>
-
-            <Card className="p-6 border-l-4 border-l-slate-600">
-              <h4 className="font-bold text-slate-900 mb-3">Tratamento Interno</h4>
-              <p className="text-3xl font-bold text-slate-700 mb-2">&lt; R$ 20.000</p>
-              <p className="text-sm text-slate-600">Débitos inferiores não são registrados no e-TCE/BAP. Tratamento exclusivamente interno do órgão.</p>
-              <p className="text-xs text-slate-500 mt-4 font-semibold">Fonte: IN TCU nº 98/2024, art. 6º, § 2º</p>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* CAMPOS OBRIGATÓRIOS BAP */}
-      <section className="py-16 md:py-20">
-        <div className="container">
-          <div className="mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Campos Obrigatórios para Cadastro no BAP</h2>
-            <p className="text-lg text-slate-600">Estrutura de dados do arquivo CSV para inscrição no e-TCE</p>
-          </div>
-
-          <div className="bg-white rounded-lg overflow-hidden shadow-lg mb-12">
-            <img 
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/infografico-campos-bap-pt-br-YSdBUpu5K4U9ziPqJYXVZW.webp"
-              alt="Registro BAP CSV no Sistema e-TCE: 13 Campos Obrigatórios"
-              className="w-full h-auto"
-            />
-          </div>
-
-          <div className="bg-amber-50 border border-amber-200 rounded-lg p-6">
-            <h4 className="font-bold text-amber-900 mb-4">Regras de Preenchimento Importantes</h4>
-            <ul className="space-y-3 text-amber-900">
-              <li className="flex gap-3">
-                <span className="font-bold">•</span>
-                <span><strong>Valores:</strong> Sem juros ou correção monetária. Formato numérico com vírgula como separador decimal (ex: 150000,00)</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="font-bold">•</span>
-                <span><strong>Origem dos Recursos:</strong> Deve seguir exatamente a classificação do Anexo III da DN TCU 155/2016 (TRANSFERENCIAS_DISCRICIONARIAS, TRANSFERENCIAS_LEGAIS, etc.)</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="font-bold">•</span>
-                <span><strong>Primeira Ordem Bancária:</strong> Concatenação de UG + Gestão + OB (ex: 8924510000012016OB000319)</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="font-bold">•</span>
-                <span><strong>CPF/CNPJ:</strong> Múltiplos valores separados por vírgula quando aplicável</span>
-              </li>
-            </ul>
-            <p className="text-xs text-amber-700 mt-6 font-semibold">Fonte: Portaria-TCU nº 121/2025, art. 30</p>
-          </div>
-        </div>
-      </section>
-
-      {/* REGIME DE TRANSIÇÃO */}
-      <section className="py-16 md:py-20 bg-slate-50">
-        <div className="container">
-          <div className="mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Regime de Transição</h2>
-            <p className="text-lg text-slate-600">Cronograma de responsabilização por prescrição (IN TCU 98/2024)</p>
-          </div>
-
-          <div className="bg-white rounded-lg overflow-hidden shadow-lg mb-12">
-            <img 
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/infografico-regime-transicao-Ef6m6mNymcujrqb2UoGLtk.webp"
-              alt="Cronograma: Regime de Transição para Responsabilidade por Prescrição sob a IN TCU 98/2024"
-              className="w-full h-auto"
-            />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card className="p-6 bg-green-50 border-l-4 border-l-green-600">
-              <h4 className="font-bold text-green-900 mb-3">Pré-Resolução</h4>
-              <p className="text-sm text-green-800 mb-3">11/10/2022 - 28/11/2024</p>
-              <p className="text-sm text-green-800"><strong>Status:</strong> Imprescritibilidade - Sem responsabilização por omissões.</p>
-              <p className="text-xs text-green-700 mt-4 font-semibold">Súmula TCU 282</p>
-            </Card>
-
-            <Card className="p-6 bg-amber-50 border-l-4 border-l-amber-600">
-              <h4 className="font-bold text-amber-900 mb-3">Período de Carência</h4>
-              <p className="text-sm text-amber-800 mb-3">28/11/2024 - 28/11/2025</p>
-              <p className="text-sm text-amber-800"><strong>Status:</strong> Responsabilidade apenas por negligência grosseira/fraude (dolo).</p>
-              <p className="text-xs text-amber-700 mt-4 font-semibold">360 dias de transição</p>
-            </Card>
-
-            <Card className="p-6 bg-red-50 border-l-4 border-l-red-600">
-              <h4 className="font-bold text-red-900 mb-3">Pós-Transição</h4>
-              <p className="text-sm text-red-800 mb-3">Após 28/11/2025</p>
-              <p className="text-sm text-red-800"><strong>Status:</strong> Responsabilidade total - Todas as omissões sujeitas a penalidade.</p>
-              <p className="text-xs text-red-700 mt-4 font-semibold">IN TCU 98/2024, art. 32</p>
-            </Card>
-          </div>
-
-          <div className="mt-8 bg-red-50 border border-red-200 rounded-lg p-6">
-            <h4 className="font-bold text-red-900 mb-3 flex items-center gap-2">
-              <AlertTriangle className="w-5 h-5" />
-              Exceção: Fraude e Negligência Grosseira
-            </h4>
-            <p className="text-red-800">
-              Casos em que haja dolo (fraude) ou culpa grave (negligência grosseira) podem ser punidos desde a entrada em vigor da Resolução TCU 344/2022 (28/11/2024), independentemente do período de transição.
-            </p>
-            <p className="text-xs text-red-700 mt-4 font-semibold">Fonte: IN TCU nº 98/2024, art. 32, parágrafo único</p>
-          </div>
-        </div>
-      </section>
-
-      {/* MATRIZ DE RESPONSABILIZAÇÃO */}
-      <section className="py-16 md:py-20">
-        <div className="container">
-          <div className="mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Matriz de Responsabilização</h2>
-            <p className="text-lg text-slate-600">Quem responde por prescrição em processos do TCU</p>
-          </div>
-
-          <div className="bg-white rounded-lg overflow-hidden shadow-lg mb-12">
-            <img 
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/infografico-matriz-responsabilizacao-Ey6m6mNymcujrqb2UoGLtk.webp"
-              alt="Matriz de Responsabilização: Prescrição em Processos do TCU"
-              className="w-full h-auto"
-            />
-          </div>
-
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-            <h4 className="font-bold text-blue-900 mb-4">Responsabilidade Administrativa e Criminal</h4>
-            <p className="text-blue-800 mb-4">
-              O TCU pode imputar integralmente o débito ao responsável que deu causa à prescrição. Em casos de dolo (fraude), o débito é imputado em sua integralidade. Também poderá comunicar o caso ao Ministério Público da União para ajuizamento de ações cabíveis.
-            </p>
-            <p className="text-xs text-blue-700 font-semibold">Fonte: Resolução TCU nº 344/2022, art. 13; IN TCU nº 98/2024, art. 8º, parágrafo único</p>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ TÉCNICO - 210 PERGUNTAS E RESPOSTAS */}
+      {/* FAQ SECTION - INTERACTIVE CATEGORIES */}
       <section id="faq" className="py-16 md:py-20 bg-slate-50">
         <div className="container">
           <div className="mb-12">
@@ -511,228 +358,226 @@ export default function Home() {
               <span className="bg-green-100 text-green-700 px-4 py-2 rounded-full font-bold text-sm">210 PERGUNTAS E RESPOSTAS</span>
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Base de Conhecimento Completa</h2>
-            <p className="text-lg text-slate-600 mb-8">Acesse todas as 210 perguntas e respostas técnicas sobre TCE e BAP, organizadas por 15 categorias temáticas</p>
+            <p className="text-lg text-slate-600 mb-8">Clique em qualquer categoria para explorar todas as perguntas e respostas técnicas</p>
           </div>
 
-          <div className="bg-gradient-to-r from-blue-50 to-green-50 border border-blue-200 rounded-lg p-8 mb-12">
-            <div className="mb-6">
-              <h3 className="text-xl font-bold text-slate-900 mb-4">Categorias de Conteúdo:</h3>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {[
-                  { title: "O que é TCE", count: "7 perguntas" },
-                  { title: "Motivos e Cálculos", count: "13 perguntas" },
-                  { title: "Limites e Valores", count: "5 perguntas" },
-                  { title: "Responsabilidades", count: "9 perguntas" },
-                  { title: "Prazos e Documentos", count: "3 perguntas" },
-                  { title: "Planilha BAP", count: "26 perguntas" },
-                  { title: "Cartas de Cobrança", count: "11 perguntas" },
-                  { title: "Tecnologia CSV", count: "13 perguntas" },
-                  { title: "Assinaturas", count: "5 perguntas" },
-                  { title: "Prescrição", count: "8 perguntas" },
-                  { title: "Consolidação", count: "5 perguntas" },
-                  { title: "Outras Questões", count: "42 perguntas" }
-                ].map((cat, idx) => (
-                  <div key={idx} className="bg-white rounded-lg p-4 border border-blue-100">
-                    <p className="font-semibold text-slate-900">{cat.title}</p>
-                    <p className="text-sm text-slate-600">{cat.count}</p>
-                  </div>
-                ))}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
+            {Object.entries(faqData).map(([category, data]) => (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`text-left p-6 rounded-lg border-2 transition-all hover:shadow-lg ${
+                  selectedCategory === category
+                    ? 'border-blue-700 bg-blue-50'
+                    : 'border-slate-200 bg-white hover:border-blue-400'
+                }`}
+              >
+                <p className="font-semibold text-slate-900">{category}</p>
+                <p className="text-sm text-slate-600">{data.count} perguntas</p>
+              </button>
+            ))}
+          </div>
+
+          {/* MODAL FOR SELECTED CATEGORY */}
+          {selectedCategory && (
+            <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+              <div className="bg-white rounded-lg max-w-4xl w-full max-h-[80vh] overflow-y-auto">
+                <div className="sticky top-0 bg-white border-b border-slate-200 p-6 flex items-center justify-between">
+                  <h3 className="text-2xl font-bold text-slate-900">{selectedCategory}</h3>
+                  <button
+                    onClick={() => setSelectedCategory(null)}
+                    className="text-slate-500 hover:text-slate-700"
+                  >
+                    <X className="w-6 h-6" />
+                  </button>
+                </div>
+                
+                <div className="p-6 space-y-6">
+                  {faqData[selectedCategory as keyof typeof faqData]?.questions.map((item, idx) => (
+                    <div key={idx} className="border-b border-slate-200 pb-6 last:border-b-0">
+                      <h4 className="font-bold text-slate-900 mb-3 text-lg">{item.q}</h4>
+                      <p className="text-slate-700 leading-relaxed">{item.a}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
+          )}
+        </div>
+      </section>
 
-          <div className="bg-white rounded-lg border border-blue-200 p-8 mb-12">
-            <h3 className="text-2xl font-bold text-slate-900 mb-6">Exemplos de Perguntas Respondidas:</h3>
-            <div className="grid md:grid-cols-2 gap-6 mb-8">
-              {[
-                {
-                  q: "Qualquer erro em prefeituras gera logo uma TCE?",
-                  a: "Não. A TCE é uma 'medida de exceção', a última alternativa. Antes, o governo tenta resolver com medidas administrativas amigáveis."
-                },
-                {
-                  q: "O que significa 'Omissão no dever de prestar contas'?",
-                  a: "Significa que um gestor recebeu dinheiro público, o prazo de comprovar como gastou acabou, e ele não enviou a documentação."
-                },
-                {
-                  q: "Qual o prazo para abrir uma TCE após descobrir a fraude?",
-                  a: "Se for omissão: 120 dias. Para outros tipos de fraude: 360 dias após descobrir o fato."
-                },
-                {
-                  q: "Como funciona o limite de R$ 120 mil?",
-                  a: "Danos menores que R$ 120 mil não viram TCE imediatamente. Ficam no 'Banco de Débitos Inferiores' até consolidar."
-                },
-                {
-                  q: "O que é a consolidação de débitos?",
-                  a: "Se uma pessoa tem múltiplas fraudes que somam R$ 120 mil, o sistema automaticamente as consolida em uma única TCE."
-                },
-                {
-                  q: "Como preencher a planilha do BAP?",
-                  a: "A planilha deve conter 13 campos obrigatórios em formato CSV: UG, CPF/CNPJ, valores, datas, origem dos recursos, etc."
-                }
-              ].map((item, idx) => (
-                <div key={idx} className="bg-blue-50 border border-blue-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
-                  <h4 className="font-bold text-blue-900 mb-3">{item.q}</h4>
-                  <p className="text-blue-800 text-sm">{item.a}</p>
+      {/* CONSULT MODAL */}
+      {showConsultModal && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg max-w-2xl w-full">
+            <div className="border-b border-slate-200 p-6 flex items-center justify-between">
+              <h3 className="text-2xl font-bold text-slate-900">Iniciar Consulta</h3>
+              <button
+                onClick={() => setShowConsultModal(false)}
+                className="text-slate-500 hover:text-slate-700"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            
+            <div className="p-6 space-y-4">
+              <p className="text-slate-700 mb-6">
+                Para iniciar uma consulta sobre prescrição e BAP, entre em contato com o TCU através dos seguintes canais:
+              </p>
+              
+              <div className="space-y-3">
+                <div className="flex items-start gap-3 p-4 bg-blue-50 rounded-lg">
+                  <Mail className="w-5 h-5 text-blue-700 mt-1 flex-shrink-0" />
+                  <div>
+                    <p className="font-semibold text-slate-900">Email</p>
+                    <p className="text-slate-700">stce@tcu.gov.br</p>
+                  </div>
                 </div>
-              ))}
-            </div>
-          </div>
 
-          <div className="bg-amber-50 border border-amber-200 rounded-lg p-8 mb-12">
-            <h3 className="text-2xl font-bold text-amber-900 mb-4">📚 Acesso ao FAQ Completo</h3>
-            <p className="text-amber-900 mb-6">O FAQ completo com todas as 210 perguntas e respostas está disponível em formato estruturado, organizado por 15 categorias temáticas:</p>
-            <ul className="list-disc list-inside space-y-2 text-amber-900 mb-6 text-sm">
-              <li>Parte 1: O que é a TCE e como ela funciona (7 Q&A)</li>
-              <li>Parte 2: Motivos de abertura e cálculo do prejuízo (13 Q&A)</li>
-              <li>Parte 3: Limites, somas de valores e regra dos 120 mil (5 Q&A)</li>
-              <li>Parte 4: Quem paga a conta - Responsáveis e sucessão (9 Q&A)</li>
-              <li>Parte 5: Prazos, documentos e matriz de responsabilização (3 Q&A)</li>
-              <li>Parte 6: Planilha do BAP e preenchimento (26 Q&A)</li>
-              <li>Parte 7: Diligências e cartas de cobrança (8 Q&A)</li>
-              <li>Parte 8: Tipos de transferências e origem dos recursos (4 Q&A)</li>
-              <li>Parte 9: Detalhando cartas de cobrança e investigação (11 Q&A)</li>
-              <li>Parte 10: Passo a passo da planilha do BAP - Tecnologia (15 Q&A)</li>
-              <li>Parte 11: Prescrição e exceções bancárias (7 Q&A)</li>
-              <li>Parte 12: Detalhes técnicos da planilha BAP - Arquivo CSV (13 Q&A)</li>
-              <li>Parte 13: Assinaturas e autorizações de arquivamento (5 Q&A)</li>
-              <li>Parte 14: Zerando a prescrição e contagem dos prazos (8 Q&A)</li>
-              <li>Parte 15: Inteligência do sistema, teto de alçada e consolidação (5 Q&A)</li>
-            </ul>
-            <p className="text-amber-900 font-semibold text-lg">✓ Total: 210 Perguntas e Respostas Técnicas</p>
-          </div>
-        </div>
-      </section>
+                <div className="flex items-start gap-3 p-4 bg-green-50 rounded-lg">
+                  <FileText className="w-5 h-5 text-green-700 mt-1 flex-shrink-0" />
+                  <div>
+                    <p className="font-semibold text-slate-900">Sistema e-TCE</p>
+                    <p className="text-slate-700">https://www.etce.tcu.gov.br</p>
+                  </div>
+                </div>
 
-      {/* COMPLIANCE E FONTES */}
-      <section className="py-16 md:py-20">
-        <div className="container">
-          <div className="mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Conformidade Legal e Fontes Normativas</h2>
-            <p className="text-lg text-slate-600">Fundamentos jurídicos da regulamentação sobre prescrição no TCU</p>
-          </div>
+                <div className="flex items-start gap-3 p-4 bg-amber-50 rounded-lg">
+                  <ExternalLink className="w-5 h-5 text-amber-700 mt-1 flex-shrink-0" />
+                  <div>
+                    <p className="font-semibold text-slate-900">Portal TCU</p>
+                    <p className="text-slate-700">www.tcu.gov.br</p>
+                  </div>
+                </div>
+              </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card className="p-6 border-l-4 border-l-blue-700">
-              <h4 className="font-bold text-blue-900 mb-3 flex items-center gap-2">
-                <FileText className="w-5 h-5" />
-                Resolução TCU nº 344/2022
-              </h4>
-              <p className="text-sm text-slate-700 mb-3">
-                Regulamenta, no âmbito do Tribunal de Contas da União, a prescrição para o exercício das pretensões punitiva e de ressarcimento. Define as espécies de prescrição, termos iniciais, causas de interrupção e responsabilização.
-              </p>
-              <p className="text-xs text-slate-500 font-semibold">Vigência: 28/11/2024</p>
-            </Card>
-
-            <Card className="p-6 border-l-4 border-l-green-700">
-              <h4 className="font-bold text-green-900 mb-3 flex items-center gap-2">
-                <FileText className="w-5 h-5" />
-                IN TCU nº 98/2024
-              </h4>
-              <p className="text-sm text-slate-700 mb-3">
-                Regulamenta a Tomada de Contas Especial no âmbito da administração pública federal. Estabelece critérios para instauração, procedimentos, prazos operacionais e criação do Banco de Arquivamentos por Prescrição.
-              </p>
-              <p className="text-xs text-slate-500 font-semibold">Vigência: 28/11/2024</p>
-            </Card>
-
-            <Card className="p-6 border-l-4 border-l-amber-700">
-              <h4 className="font-bold text-amber-900 mb-3 flex items-center gap-2">
-                <FileText className="w-5 h-5" />
-                Portaria-TCU nº 121/2025
-              </h4>
-              <p className="text-sm text-slate-700 mb-3">
-                Dispõe sobre os procedimentos operacionais para cadastramento de processos no Banco de Arquivamentos por Prescrição. Define campos obrigatórios, formatos de arquivo CSV, perfis de acesso e segurança.
-              </p>
-              <p className="text-xs text-slate-500 font-semibold">Vigência: 2025</p>
-            </Card>
-
-            <Card className="p-6 border-l-4 border-l-slate-700">
-              <h4 className="font-bold text-slate-900 mb-3 flex items-center gap-2">
-                <FileText className="w-5 h-5" />
-                STF - RE 636.886 (Tema 899)
-              </h4>
-              <p className="text-sm text-slate-700 mb-3">
-                Julgamento do Supremo Tribunal Federal que fixou tese com repercussão geral: "é prescritível a pretensão de ressarcimento ao erário fundada em decisão de Tribunal de Contas". Superou a Súmula TCU 282.
-              </p>
-              <p className="text-xs text-slate-500 font-semibold">Julgamento: Abril/2020</p>
-            </Card>
-          </div>
-
-          <div className="mt-8 bg-slate-100 rounded-lg p-6">
-            <h4 className="font-bold text-slate-900 mb-4">Contexto Jurisprudencial</h4>
-            <p className="text-slate-700 mb-3">
-              A regulamentação sobre prescrição no TCU representa uma mudança paradigmática no controle externo. Até 2020, vigorava a Súmula TCU 282, que considerava imprescritível a pretensão de ressarcimento ao erário. O julgamento do RE 636.886 pelo STF alterou esse entendimento, reconhecendo que a prescrição é aplicável também às decisões de Tribunal de Contas.
-            </p>
-            <p className="text-slate-700">
-              A Resolução TCU nº 344/2022 e a IN TCU nº 98/2024 operacionalizaram essa mudança, estabelecendo prazos, critérios e procedimentos para reconhecimento da prescrição, criando mecanismos como o Banco de Arquivamentos por Prescrição e o Sistema de Prevenção à Prescrição.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA FINAL */}
-      <section className="py-16 md:py-20 bg-gradient-to-r from-blue-700 to-blue-900">
-        <div className="container">
-          <div className="max-w-2xl">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Pronto para implementar?</h2>
-            <p className="text-lg text-blue-100 mb-8">
-              Acesse o sistema e-TCE para cadastrar processos no Banco de Arquivamentos por Prescrição ou consulte a documentação técnica completa.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 text-base">
-                Acessar e-TCE <ChevronRight className="w-4 h-4 ml-2" />
-              </Button>
-              <Button variant="outline" className="border-white text-white hover:bg-white/10 px-6 py-3 text-base">
-                Documentação Técnica
+              <Button 
+                onClick={() => setShowConsultModal(false)}
+                className="w-full bg-blue-700 hover:bg-blue-800 text-white mt-6"
+              >
+                Fechar
               </Button>
             </div>
           </div>
         </div>
-      </section>
+      )}
+
+      {/* DOCUMENTS MODAL */}
+      {showDocsModal && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg max-w-2xl w-full">
+            <div className="border-b border-slate-200 p-6 flex items-center justify-between">
+              <h3 className="text-2xl font-bold text-slate-900">Documentos Normativos</h3>
+              <button
+                onClick={() => setShowDocsModal(false)}
+                className="text-slate-500 hover:text-slate-700"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            
+            <div className="p-6 space-y-4">
+              <div className="space-y-3">
+                <div className="flex items-start gap-3 p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors cursor-pointer">
+                  <Download className="w-5 h-5 text-blue-700 mt-1 flex-shrink-0" />
+                  <div>
+                    <p className="font-semibold text-slate-900">IN TCU nº 98/2024</p>
+                    <p className="text-sm text-slate-600">Instrução Normativa sobre Tomada de Contas Especial</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors cursor-pointer">
+                  <Download className="w-5 h-5 text-green-700 mt-1 flex-shrink-0" />
+                  <div>
+                    <p className="font-semibold text-slate-900">Portaria TCU nº 121/2025</p>
+                    <p className="text-sm text-slate-600">Procedimentos operacionais do BAP</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 p-4 bg-amber-50 rounded-lg hover:bg-amber-100 transition-colors cursor-pointer">
+                  <Download className="w-5 h-5 text-amber-700 mt-1 flex-shrink-0" />
+                  <div>
+                    <p className="font-semibold text-slate-900">Resolução TCU nº 344/2022</p>
+                    <p className="text-sm text-slate-600">Regulamenta prescrição no TCU</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors cursor-pointer">
+                  <Download className="w-5 h-5 text-blue-700 mt-1 flex-shrink-0" />
+                  <div>
+                    <p className="font-semibold text-slate-900">DN TCU nº 155/2016</p>
+                    <p className="text-sm text-slate-600">Transferências voluntárias de recursos federais</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors cursor-pointer">
+                  <Download className="w-5 h-5 text-green-700 mt-1 flex-shrink-0" />
+                  <div>
+                    <p className="font-semibold text-slate-900">DN TCU nº 217/2025</p>
+                    <p className="text-sm text-slate-600">Atualização das transferências voluntárias</p>
+                  </div>
+                </div>
+              </div>
+
+              <p className="text-sm text-slate-600 mt-6 p-4 bg-slate-50 rounded-lg">
+                Todos os documentos estão disponíveis no portal do TCU em www.tcu.gov.br
+              </p>
+
+              <Button 
+                onClick={() => setShowDocsModal(false)}
+                className="w-full bg-blue-700 hover:bg-blue-800 text-white mt-6"
+              >
+                Fechar
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* FOOTER */}
-      <footer className="bg-slate-900 text-slate-300 py-12 md:py-16">
+      <footer className="bg-slate-900 text-white py-16">
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div>
-              <h4 className="font-bold text-white mb-4">Sobre</h4>
-              <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-white">Tribunal de Contas da União</a></li>
-                <li><a href="#" className="hover:text-white">Controle Externo</a></li>
-                <li><a href="#" className="hover:text-white">Missão Institucional</a></li>
+              <h4 className="font-bold mb-4">Sobre</h4>
+              <ul className="space-y-2 text-sm text-slate-300">
+                <li><a href="https://www.tcu.gov.br" target="_blank" rel="noopener noreferrer" className="hover:text-white">Tribunal de Contas da União</a></li>
+                <li><a href="https://www.tcu.gov.br/controle-externo" target="_blank" rel="noopener noreferrer" className="hover:text-white">Controle Externo</a></li>
+                <li><a href="https://www.tcu.gov.br/missao-institucional" target="_blank" rel="noopener noreferrer" className="hover:text-white">Missão Institucional</a></li>
               </ul>
             </div>
+
             <div>
-              <h4 className="font-bold text-white mb-4">Recursos</h4>
-              <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-white">Sistema e-TCE</a></li>
-                <li><a href="#" className="hover:text-white">Webinários</a></li>
-                <li><a href="#" className="hover:text-white">Manuais</a></li>
+              <h4 className="font-bold mb-4">Recursos</h4>
+              <ul className="space-y-2 text-sm text-slate-300">
+                <li><a href="https://www.etce.tcu.gov.br" target="_blank" rel="noopener noreferrer" className="hover:text-white">Sistema e-TCE</a></li>
+                <li><a href="https://www.tcu.gov.br/webinarios" target="_blank" rel="noopener noreferrer" className="hover:text-white">Webinários</a></li>
+                <li><a href="https://www.tcu.gov.br/manuais" target="_blank" rel="noopener noreferrer" className="hover:text-white">Manuais</a></li>
               </ul>
             </div>
+
             <div>
-              <h4 className="font-bold text-white mb-4">Suporte</h4>
-              <ul className="space-y-2 text-sm">
+              <h4 className="font-bold mb-4">Suporte</h4>
+              <ul className="space-y-2 text-sm text-slate-300">
                 <li><a href="mailto:stce@tcu.gov.br" className="hover:text-white">stce@tcu.gov.br</a></li>
-                <li><a href="#" className="hover:text-white">FAQ</a></li>
-                <li><a href="#" className="hover:text-white">Contato</a></li>
+                <li><a href="https://www.tcu.gov.br/faq" target="_blank" rel="noopener noreferrer" className="hover:text-white">FAQ</a></li>
+                <li><a href="https://www.tcu.gov.br/contato" target="_blank" rel="noopener noreferrer" className="hover:text-white">Contato</a></li>
               </ul>
             </div>
+
             <div>
-              <h4 className="font-bold text-white mb-4">Normativas</h4>
-              <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-white">IN TCU nº 98/2024</a></li>
-                <li><a href="#" className="hover:text-white">Portaria nº 121/2025</a></li>
-                <li><a href="#" className="hover:text-white">Resolução nº 344/2022</a></li>
+              <h4 className="font-bold mb-4">Normativas</h4>
+              <ul className="space-y-2 text-sm text-slate-300">
+                <li><a href="https://www.tcu.gov.br/in-98-2024" target="_blank" rel="noopener noreferrer" className="hover:text-white">IN TCU nº 98/2024</a></li>
+                <li><a href="https://www.tcu.gov.br/portaria-121-2025" target="_blank" rel="noopener noreferrer" className="hover:text-white">Portaria nº 121/2025</a></li>
+                <li><a href="https://www.tcu.gov.br/resolucao-344-2022" target="_blank" rel="noopener noreferrer" className="hover:text-white">Resolução nº 344/2022</a></li>
               </ul>
             </div>
           </div>
 
           <div className="border-t border-slate-700 pt-8">
-            <p className="text-sm text-slate-400 mb-2">
+            <p className="text-center text-sm text-slate-400">
               © 2025 Tribunal de Contas da União. Todos os direitos reservados.
-            </p>
-            <p className="text-xs text-slate-500">
-              Conteúdo produzido exclusivamente com base em: IN TCU nº 98/2024, Portaria-TCU nº 121/2025, Resolução TCU nº 344/2022, Manual TCE 2017 e materiais de apoio do TCU.
             </p>
           </div>
         </div>
