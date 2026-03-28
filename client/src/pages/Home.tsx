@@ -534,6 +534,48 @@ export default function Home() {
         </div>
       )}
 
+      {/* VIDEO SECTION */}
+      <section className="py-20 bg-gradient-to-br from-blue-50 to-green-50">
+        <div className="container">
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-8 text-center">
+              <h2 className="text-4xl font-bold text-slate-900 mb-4">TCE - Seguindo o Dinheiro</h2>
+              <p className="text-lg text-slate-600">Entenda como o Tribunal de Contas da União acompanha e controla os recursos públicos federais</p>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-blue-200">
+              <div className="aspect-video bg-slate-900 flex items-center justify-center">
+                <video 
+                  controls 
+                  className="w-full h-full"
+                  poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080'%3E%3Crect fill='%231e40af' width='1920' height='1080'/%3E%3C/svg%3E"
+                >
+                  <source src="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/TCE__Seguindo_o_Dinheiro_0ded1dfd.mp4" type="video/mp4" />
+                  Seu navegador não suporta o elemento de vídeo.
+                </video>
+              </div>
+            </div>
+
+            <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+              <Card className="p-6 border-l-4 border-l-blue-700">
+                <h3 className="font-bold text-slate-900 mb-2">Controle Externo</h3>
+                <p className="text-sm text-slate-600">Como o TCU fiscaliza a aplicação dos recursos federais em todo o país</p>
+              </Card>
+
+              <Card className="p-6 border-l-4 border-l-green-700">
+                <h3 className="font-bold text-slate-900 mb-2">Rastreabilidade</h3>
+                <p className="text-sm text-slate-600">Acompanhamento detalhado de cada transferência de recursos públicos</p>
+              </Card>
+
+              <Card className="p-6 border-l-4 border-l-amber-700">
+                <h3 className="font-bold text-slate-900 mb-2">Responsabilização</h3>
+                <p className="text-sm text-slate-600">Identificação e punição de irregularidades e desvios de recursos</p>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* FOOTER */}
       <footer className="bg-slate-900 text-white py-16">
         <div className="container">
