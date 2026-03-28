@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ChevronRight, FileText, AlertTriangle, CheckCircle2, Clock, DollarSign, Users, BookOpen, X, Download, Mail, ExternalLink } from "lucide-react";
+import { ChevronRight, FileText, AlertTriangle, CheckCircle2, Clock, DollarSign, Users, BookOpen, X, Download, Mail, ExternalLink, Headphones, Play } from "lucide-react";
 
 /**
  * DESIGN PHILOSOPHY: Governance Design System
@@ -238,6 +238,7 @@ export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [showConsultModal, setShowConsultModal] = useState(false);
   const [showDocsModal, setShowDocsModal] = useState(false);
+  const [isPlayingPodcast, setIsPlayingPodcast] = useState(false);
 
   return (
     <div className="min-h-screen bg-white">
@@ -533,6 +534,106 @@ export default function Home() {
           </div>
         </div>
       )}
+
+      {/* VIDEOS AND PODCASTS SECTION */}
+      <section className="py-20 bg-gradient-to-br from-slate-50 to-slate-100">
+        <div className="container">
+          <div className="mb-12 text-center">
+            <h2 className="text-4xl font-bold text-slate-900 mb-4">Vídeos e Podcasts</h2>
+            <p className="text-lg text-slate-600">Conteúdo audiovisual para aprofundar seu conhecimento sobre TCE, BAP e Prescrição</p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* PODCAST CARD */}
+            <Card className="overflow-hidden border-2 border-green-200 hover:shadow-lg transition-shadow">
+              <div className="bg-gradient-to-br from-green-600 to-green-700 p-8 text-white">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
+                    <Headphones className="w-8 h-8" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold">Podcast</h3>
+                    <p className="text-green-100">Áudio educativo</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-8">
+                <h4 className="text-xl font-bold text-slate-900 mb-2">Como a IN 98 evita a Prescrição</h4>
+                <p className="text-slate-600 mb-6">Entenda os mecanismos legais que a Instrução Normativa TCU nº 98/2024 implementou para prevenir a prescrição de processos de Tomada de Contas Especial.</p>
+
+                <div className="bg-slate-50 rounded-lg p-4 mb-6">
+                  <audio 
+                    controls 
+                    className="w-full"
+                    controlsList="nodownload"
+                  >
+                    <source src="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/Como_a_IN_98_evita_a_prescrição_9f4067a1.m4a" type="audio/mp4" />
+                    Seu navegador não suporta o elemento de áudio.
+                  </audio>
+                </div>
+
+                <div className="space-y-3 text-sm text-slate-600">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-green-600" />
+                    <span>Duração: ~15 minutos</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-green-600" />
+                    <span>Formato: MP4 Audio</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-green-600" />
+                    <span>Produção: TCU</span>
+                  </div>
+                </div>
+              </div>
+            </Card>
+
+            {/* RECOMMENDED VIDEOS CARD */}
+            <Card className="overflow-hidden border-2 border-blue-200 hover:shadow-lg transition-shadow">
+              <div className="bg-gradient-to-br from-blue-600 to-blue-700 p-8 text-white">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
+                    <Play className="w-8 h-8" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold">Webinários</h3>
+                    <p className="text-blue-100">Sessões ao vivo</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-8">
+                <h4 className="text-xl font-bold text-slate-900 mb-4">Série TCE em Foco</h4>
+                <p className="text-slate-600 mb-6">Webinários especializados sobre os temas mais importantes relacionados ao BAP e Prevenção à Prescrição.</p>
+
+                <div className="space-y-3">
+                  <div className="p-4 bg-blue-50 rounded-lg border-l-4 border-l-blue-600">
+                    <p className="font-semibold text-slate-900 text-sm">TCE em Foco: O que muda com a IN 98/2024</p>
+                    <p className="text-xs text-slate-600 mt-1">Principais alterações e impactos</p>
+                  </div>
+
+                  <div className="p-4 bg-blue-50 rounded-lg border-l-4 border-l-blue-600">
+                    <p className="font-semibold text-slate-900 text-sm">TCE em Foco: Banco de Arquivamento por Prescrição</p>
+                    <p className="text-xs text-slate-600 mt-1">Critérios e procedimentos do BAP</p>
+                  </div>
+
+                  <div className="p-4 bg-blue-50 rounded-lg border-l-4 border-l-blue-600">
+                    <p className="font-semibold text-slate-900 text-sm">TCE em Foco: Prescrição no TCU</p>
+                    <p className="text-xs text-slate-600 mt-1">Regras de prescrição e exceções</p>
+                  </div>
+                </div>
+
+                <Button className="w-full mt-6 bg-blue-700 hover:bg-blue-800 text-white">
+                  <ExternalLink className="w-4 h-4 mr-2" />
+                  Acessar Webinários
+                </Button>
+              </div>
+            </Card>
+          </div>
+        </div>
+      </section>
 
       {/* VIDEO SECTION */}
       <section className="py-20 bg-gradient-to-br from-blue-50 to-green-50">
