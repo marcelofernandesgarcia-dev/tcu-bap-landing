@@ -576,15 +576,11 @@ export default function Home() {
                 <div className="space-y-3 text-sm text-slate-600">
                   <div className="flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-600" />
-                    <span>Duração: ~15 minutos</span>
+                    <span>Duração: 1 minuto e 53 segundos</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-600" />
-                    <span>Formato: MP4 Audio</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-green-600" />
-                    <span>Produção: TCU</span>
+                    <span>Formato: M4A Audio</span>
                   </div>
                 </div>
               </div>
@@ -609,23 +605,23 @@ export default function Home() {
                 <p className="text-slate-600 mb-6">Webinários especializados sobre os temas mais importantes relacionados ao BAP e Prevenção à Prescrição.</p>
 
                 <div className="space-y-3">
-                  <div className="p-4 bg-blue-50 rounded-lg border-l-4 border-l-blue-600">
+                  <a href="https://www.tcu.gov.br/webinarios" target="_blank" rel="noopener noreferrer" className="block p-4 bg-blue-50 rounded-lg border-l-4 border-l-blue-600 hover:bg-blue-100 transition-colors">
                     <p className="font-semibold text-slate-900 text-sm">TCE em Foco: O que muda com a IN 98/2024</p>
                     <p className="text-xs text-slate-600 mt-1">Principais alterações e impactos</p>
-                  </div>
+                  </a>
 
-                  <div className="p-4 bg-blue-50 rounded-lg border-l-4 border-l-blue-600">
+                  <a href="https://www.tcu.gov.br/webinarios" target="_blank" rel="noopener noreferrer" className="block p-4 bg-blue-50 rounded-lg border-l-4 border-l-blue-600 hover:bg-blue-100 transition-colors">
                     <p className="font-semibold text-slate-900 text-sm">TCE em Foco: Banco de Arquivamento por Prescrição</p>
                     <p className="text-xs text-slate-600 mt-1">Critérios e procedimentos do BAP</p>
-                  </div>
+                  </a>
 
-                  <div className="p-4 bg-blue-50 rounded-lg border-l-4 border-l-blue-600">
+                  <a href="https://www.tcu.gov.br/webinarios" target="_blank" rel="noopener noreferrer" className="block p-4 bg-blue-50 rounded-lg border-l-4 border-l-blue-600 hover:bg-blue-100 transition-colors">
                     <p className="font-semibold text-slate-900 text-sm">TCE em Foco: Prescrição no TCU</p>
                     <p className="text-xs text-slate-600 mt-1">Regras de prescrição e exceções</p>
-                  </div>
+                  </a>
                 </div>
 
-                <Button className="w-full mt-6 bg-blue-700 hover:bg-blue-800 text-white">
+                <Button className="w-full mt-6 bg-blue-700 hover:bg-blue-800 text-white" onClick={() => window.open('https://www.tcu.gov.br/webinarios', '_blank')}>
                   <ExternalLink className="w-4 h-4 mr-2" />
                   Acessar Webinários
                 </Button>
@@ -642,6 +638,7 @@ export default function Home() {
             <div className="mb-8 text-center">
               <h2 className="text-4xl font-bold text-slate-900 mb-4">TCE - Seguindo o Dinheiro</h2>
               <p className="text-lg text-slate-600">Entenda como o Tribunal de Contas da União acompanha e controla os recursos públicos federais</p>
+              <p className="text-sm text-slate-500 mt-2">Duração: 6 minutos e 4 segundos</p>
             </div>
 
             <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-blue-200">
@@ -672,6 +669,68 @@ export default function Home() {
                 <h3 className="font-bold text-slate-900 mb-2">Responsabilização</h3>
                 <p className="text-sm text-slate-600">Identificação e punição de irregularidades e desvios de recursos</p>
               </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SOURCES SECTION */}
+      <section className="py-16 bg-white border-t border-slate-200">
+        <div className="container">
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-8">
+              <h2 className="text-3xl font-bold text-slate-900 mb-2">Fontes e Referências</h2>
+              <p className="text-slate-600 mb-6">Este material foi produzido considerando as informações disponíveis no site do Tribunal de Contas da União (www.tcu.gov.br) e documentos oficiais.</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Card className="p-6 border-l-4 border-l-blue-700">
+                <h3 className="font-bold text-slate-900 mb-3">Documentos Normativos</h3>
+                <ul className="space-y-2 text-sm text-slate-600">
+                  <li>• Instrução Normativa TCU nº 98/2024</li>
+                  <li>• Portaria TCU nº 121/2025</li>
+                  <li>• Resolução TCU nº 344/2022</li>
+                  <li>• Decisão Normativa TCU nº 155/2016</li>
+                  <li>• Decisão Normativa TCU nº 217/2025</li>
+                </ul>
+              </Card>
+
+              <Card className="p-6 border-l-4 border-l-green-700">
+                <h3 className="font-bold text-slate-900 mb-3">Recursos Oficiais</h3>
+                <ul className="space-y-2 text-sm text-slate-600">
+                  <li>• Portal TCU: <a href="https://www.tcu.gov.br" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">www.tcu.gov.br</a></li>
+                  <li>• Sistema e-TCE: <a href="https://www.etce.tcu.gov.br" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">www.etce.tcu.gov.br</a></li>
+                  <li>• Webinários TCE em Foco</li>
+                  <li>• Manuais e Guias Técnicos</li>
+                  <li>• FAQ Oficial do TCU</li>
+                </ul>
+              </Card>
+
+              <Card className="p-6 border-l-4 border-l-amber-700">
+                <h3 className="font-bold text-slate-900 mb-3">Conteúdo Audiovisual</h3>
+                <ul className="space-y-2 text-sm text-slate-600">
+                  <li>• Vídeo: TCE - Seguindo o Dinheiro</li>
+                  <li>• Podcast: Como a IN 98 evita a Prescrição</li>
+                  <li>• Série de Webinários TCE em Foco</li>
+                  <li>• Apresentações de Treinamento</li>
+                </ul>
+              </Card>
+
+              <Card className="p-6 border-l-4 border-l-slate-700">
+                <h3 className="font-bold text-slate-900 mb-3">Contato e Suporte</h3>
+                <ul className="space-y-2 text-sm text-slate-600">
+                  <li>• Email: <a href="mailto:stce@tcu.gov.br" className="text-blue-600 hover:underline">stce@tcu.gov.br</a></li>
+                  <li>• Telefone: (61) 3316-7000</li>
+                  <li>• Endereço: Brasília - DF</li>
+                  <li>• Site: www.tcu.gov.br</li>
+                </ul>
+              </Card>
+            </div>
+
+            <div className="mt-8 p-6 bg-blue-50 rounded-lg border border-blue-200">
+              <p className="text-sm text-slate-700">
+                <strong>Aviso Legal:</strong> Este material é de caráter informativo e foi desenvolvido com base em informações públicas disponíveis no site do Tribunal de Contas da União. Para informações oficiais e vinculantes, consulte sempre os documentos normativos originais e o portal do TCU.
+              </p>
             </div>
           </div>
         </div>
