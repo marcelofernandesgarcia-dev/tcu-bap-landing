@@ -394,8 +394,8 @@ export default function Home() {
 
           <div className="bg-white rounded-lg overflow-hidden shadow-lg mb-12">
             <img 
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/infografico-campos-bap-ftGttfiK54Rhk4L5fz2rhF.webp"
-              alt="e-TCE: Estrutura de Dados para Registro BAP CSV - 13 Campos Obrigatórios"
+              src="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/infografico-campos-bap-pt-br-YSdBUpu5K4U9ziPqJYXVZW.webp"
+              alt="Registro BAP CSV no Sistema e-TCE: 13 Campos Obrigatórios"
               className="w-full h-auto"
             />
           </div>
