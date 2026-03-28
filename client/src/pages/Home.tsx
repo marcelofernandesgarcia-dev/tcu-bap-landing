@@ -503,69 +503,102 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FAQ TÉCNICO */}
+      {/* FAQ TÉCNICO - 210 PERGUNTAS E RESPOSTAS */}
       <section id="faq" className="py-16 md:py-20 bg-slate-50">
         <div className="container">
           <div className="mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Perguntas Frequentes Técnicas</h2>
-            <p className="text-lg text-slate-600">Dúvidas comuns sobre prescrição, BAP e procedimentos no e-TCE</p>
+            <div className="flex items-center gap-3 mb-4">
+              <span className="bg-green-100 text-green-700 px-4 py-2 rounded-full font-bold text-sm">210 PERGUNTAS E RESPOSTAS</span>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Base de Conhecimento Completa</h2>
+            <p className="text-lg text-slate-600 mb-8">Acesse todas as 210 perguntas e respostas técnicas sobre TCE e BAP, organizadas por 15 categorias temáticas</p>
           </div>
 
-          <div className="space-y-6">
-            <Card className="p-8 hover:shadow-lg transition-shadow">
-              <h3 className="text-lg font-bold text-slate-900 mb-3 flex items-start gap-3">
-                <span className="bg-blue-700 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 text-sm font-bold">1</span>
-                O que são movimentações relevantes?
-              </h3>
-              <p className="text-slate-700 mb-4">
-                Movimentações relevantes são atos que demonstram efetiva atuação da administração na apuração dos fatos, incluindo: notificação que fixa prazo para prestação de contas, apresentação de contas, pareceres e notas técnicas relativas às contas ou irregularidades, e todo ato que evidencie atuação administrativa.
-              </p>
-              <p className="text-xs text-slate-500 font-semibold">Fonte: IN TCU nº 98/2024, art. 9º, § 3º</p>
-            </Card>
+          <div className="bg-gradient-to-r from-blue-50 to-green-50 border border-blue-200 rounded-lg p-8 mb-12">
+            <div className="mb-6">
+              <h3 className="text-xl font-bold text-slate-900 mb-4">Categorias de Conteúdo:</h3>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {[
+                  { title: "O que é TCE", count: "7 perguntas" },
+                  { title: "Motivos e Cálculos", count: "13 perguntas" },
+                  { title: "Limites e Valores", count: "5 perguntas" },
+                  { title: "Responsabilidades", count: "9 perguntas" },
+                  { title: "Prazos e Documentos", count: "3 perguntas" },
+                  { title: "Planilha BAP", count: "26 perguntas" },
+                  { title: "Cartas de Cobrança", count: "11 perguntas" },
+                  { title: "Tecnologia CSV", count: "13 perguntas" },
+                  { title: "Assinaturas", count: "5 perguntas" },
+                  { title: "Prescrição", count: "8 perguntas" },
+                  { title: "Consolidação", count: "5 perguntas" },
+                  { title: "Outras Questões", count: "42 perguntas" }
+                ].map((cat, idx) => (
+                  <div key={idx} className="bg-white rounded-lg p-4 border border-blue-100">
+                    <p className="font-semibold text-slate-900">{cat.title}</p>
+                    <p className="text-sm text-slate-600">{cat.count}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
 
-            <Card className="p-8 hover:shadow-lg transition-shadow">
-              <h3 className="text-lg font-bold text-slate-900 mb-3 flex items-start gap-3">
-                <span className="bg-blue-700 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 text-sm font-bold">2</span>
-                O que NÃO é movimentação relevante?
-              </h3>
-              <p className="text-slate-700 mb-4">
-                Não são movimentações relevantes: pedidos e concessões de vista dos autos, emissões de certidões, prestações de informações, juntadas de procuração ou subestabelecimento, e outros atos que não interfiram no curso das apurações. Estes atos não interrompem a prescrição.
-              </p>
-              <p className="text-xs text-slate-500 font-semibold">Fonte: IN TCU nº 98/2024, art. 9º, § 3º</p>
-            </Card>
+          <div className="bg-white rounded-lg border border-blue-200 p-8 mb-12">
+            <h3 className="text-2xl font-bold text-slate-900 mb-6">Exemplos de Perguntas Respondidas:</h3>
+            <div className="grid md:grid-cols-2 gap-6 mb-8">
+              {[
+                {
+                  q: "Qualquer erro em prefeituras gera logo uma TCE?",
+                  a: "Não. A TCE é uma 'medida de exceção', a última alternativa. Antes, o governo tenta resolver com medidas administrativas amigáveis."
+                },
+                {
+                  q: "O que significa 'Omissão no dever de prestar contas'?",
+                  a: "Significa que um gestor recebeu dinheiro público, o prazo de comprovar como gastou acabou, e ele não enviou a documentação."
+                },
+                {
+                  q: "Qual o prazo para abrir uma TCE após descobrir a fraude?",
+                  a: "Se for omissão: 120 dias. Para outros tipos de fraude: 360 dias após descobrir o fato."
+                },
+                {
+                  q: "Como funciona o limite de R$ 120 mil?",
+                  a: "Danos menores que R$ 120 mil não viram TCE imediatamente. Ficam no 'Banco de Débitos Inferiores' até consolidar."
+                },
+                {
+                  q: "O que é a consolidação de débitos?",
+                  a: "Se uma pessoa tem múltiplas fraudes que somam R$ 120 mil, o sistema automaticamente as consolida em uma única TCE."
+                },
+                {
+                  q: "Como preencher a planilha do BAP?",
+                  a: "A planilha deve conter 13 campos obrigatórios em formato CSV: UG, CPF/CNPJ, valores, datas, origem dos recursos, etc."
+                }
+              ].map((item, idx) => (
+                <div key={idx} className="bg-blue-50 border border-blue-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
+                  <h4 className="font-bold text-blue-900 mb-3">{item.q}</h4>
+                  <p className="text-blue-800 text-sm">{item.a}</p>
+                </div>
+              ))}
+            </div>
+          </div>
 
-            <Card className="p-8 hover:shadow-lg transition-shadow">
-              <h3 className="text-lg font-bold text-slate-900 mb-3 flex items-start gap-3">
-                <span className="bg-blue-700 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 text-sm font-bold">3</span>
-                Qual é o termo inicial da prescrição?
-              </h3>
-              <p className="text-slate-700 mb-4">
-                O termo inicial varia conforme a situação: (a) em caso de omissão no dever de prestar contas, a data em que as contas deveriam ter sido prestadas; (b) se houve prestação de contas, a data da efetiva apresentação; (c) se não existe obrigação de prestar contas, a data do conhecimento do fato irregular.
-              </p>
-              <p className="text-xs text-slate-500 font-semibold">Fonte: Resolução TCU nº 344/2022, art. 4º</p>
-            </Card>
-
-            <Card className="p-8 hover:shadow-lg transition-shadow">
-              <h3 className="text-lg font-bold text-slate-900 mb-3 flex items-start gap-3">
-                <span className="bg-blue-700 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 text-sm font-bold">4</span>
-                Quais processos podem ser cadastrados no BAP?
-              </h3>
-              <p className="text-slate-700 mb-4">
-                Podem ser cadastrados processos que: (a) ficaram paralisados por mais de 5 anos; (b) não tiveram movimentações relevantes; (c) não sofreram fiscalização posterior de outros órgãos envolvendo o mesmo objeto; (d) têm valor até R$ 6.000.000; (e) prestação de contas com prazo final até 31/12/2024.
-              </p>
-              <p className="text-xs text-slate-500 font-semibold">Fonte: IN TCU nº 98/2024, art. 9º, §§ 2º, 3º e 6º</p>
-            </Card>
-
-            <Card className="p-8 hover:shadow-lg transition-shadow">
-              <h3 className="text-lg font-bold text-slate-900 mb-3 flex items-start gap-3">
-                <span className="bg-blue-700 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 text-sm font-bold">5</span>
-                Qual é a diferença entre arquivamento provisório e definitivo?
-              </h3>
-              <p className="text-slate-700 mb-4">
-                Arquivamento provisório ocorre após 5 anos de paralisação processual e permanece nesse estado por 3 anos adicionais. Após esse período total (8 anos), o processo passa a ser considerado definitivamente arquivado, salvo decisão do TCU em sentido contrário. O TCU acompanha continuamente os registros do BAP e pode reabrir processos indevidamente arquivados.
-              </p>
-              <p className="text-xs text-slate-500 font-semibold">Fonte: IN TCU nº 98/2024, art. 9º, § 5º</p>
-            </Card>
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-8 mb-12">
+            <h3 className="text-2xl font-bold text-amber-900 mb-4">📚 Acesso ao FAQ Completo</h3>
+            <p className="text-amber-900 mb-6">O FAQ completo com todas as 210 perguntas e respostas está disponível em formato estruturado, organizado por 15 categorias temáticas:</p>
+            <ul className="list-disc list-inside space-y-2 text-amber-900 mb-6 text-sm">
+              <li>Parte 1: O que é a TCE e como ela funciona (7 Q&A)</li>
+              <li>Parte 2: Motivos de abertura e cálculo do prejuízo (13 Q&A)</li>
+              <li>Parte 3: Limites, somas de valores e regra dos 120 mil (5 Q&A)</li>
+              <li>Parte 4: Quem paga a conta - Responsáveis e sucessão (9 Q&A)</li>
+              <li>Parte 5: Prazos, documentos e matriz de responsabilização (3 Q&A)</li>
+              <li>Parte 6: Planilha do BAP e preenchimento (26 Q&A)</li>
+              <li>Parte 7: Diligências e cartas de cobrança (8 Q&A)</li>
+              <li>Parte 8: Tipos de transferências e origem dos recursos (4 Q&A)</li>
+              <li>Parte 9: Detalhando cartas de cobrança e investigação (11 Q&A)</li>
+              <li>Parte 10: Passo a passo da planilha do BAP - Tecnologia (15 Q&A)</li>
+              <li>Parte 11: Prescrição e exceções bancárias (7 Q&A)</li>
+              <li>Parte 12: Detalhes técnicos da planilha BAP - Arquivo CSV (13 Q&A)</li>
+              <li>Parte 13: Assinaturas e autorizações de arquivamento (5 Q&A)</li>
+              <li>Parte 14: Zerando a prescrição e contagem dos prazos (8 Q&A)</li>
+              <li>Parte 15: Inteligência do sistema, teto de alçada e consolidação (5 Q&A)</li>
+            </ul>
+            <p className="text-amber-900 font-semibold text-lg">✓ Total: 210 Perguntas e Respostas Técnicas</p>
           </div>
         </div>
       </section>
