@@ -246,10 +246,13 @@ export default function Home() {
       <nav className="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
         <div className="container flex items-center justify-between h-16">
           <div className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-blue-700 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">TCU</span>
+            <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-green-600 rounded-lg flex items-center justify-center flex-shrink-0">
+              <span className="text-white font-bold text-xs">SIACT</span>
             </div>
-            <span className="font-bold text-slate-900">BAP & Prescrição</span>
+            <div>
+              <p className="font-bold text-slate-900 text-sm">SIACT</p>
+              <p className="text-xs text-slate-500">TCE • PRESCRIÇÃO • BAP</p>
+            </div>
           </div>
           <div className="hidden md:flex gap-6">
             <a href="#conceitos" className="text-sm text-slate-600 hover:text-blue-700">Conceitos</a>
@@ -423,7 +426,7 @@ export default function Home() {
             
             <div className="p-6 space-y-4">
               <p className="text-slate-700 mb-6">
-                Para iniciar uma consulta sobre prescrição e BAP, entre em contato com o TCU através dos seguintes canais:
+                Este estudo foi desenvolvido pelo <strong>SIACT</strong> com base em informações do TCU. Para consultas oficiais sobre prescrição e BAP, entre em contato com o Tribunal de Contas da União através dos seguintes canais:
               </p>
               
               <div className="space-y-3">
@@ -521,7 +524,7 @@ export default function Home() {
               </div>
 
               <p className="text-sm text-slate-600 mt-6 p-4 bg-slate-50 rounded-lg">
-                Todos os documentos estão disponíveis no portal do TCU em www.tcu.gov.br
+                <strong>Desenvolvido pelo SIACT:</strong> Este estudo compilou todos os documentos normativos do TCU. Todos estão disponíveis no portal oficial em www.tcu.gov.br
               </p>
 
               <Button 
@@ -680,7 +683,8 @@ export default function Home() {
           <div className="max-w-4xl mx-auto">
             <div className="mb-8">
               <h2 className="text-3xl font-bold text-slate-900 mb-2">Fontes e Referências</h2>
-              <p className="text-slate-600 mb-6">Este material foi produzido considerando as informações disponíveis no site do Tribunal de Contas da União (www.tcu.gov.br) e documentos oficiais.</p>
+              <p className="text-slate-600 mb-2">Este estudo foi desenvolvido pelo <strong>SIACT - Sistema Inteligente de Análise e Controle de Transferências</strong> com base em informações públicas disponíveis no site do Tribunal de Contas da União (www.tcu.gov.br) e documentos oficiais.</p>
+              <p className="text-slate-600 mb-6"><em>Foco: TCE • PRESCRIÇÃO • BAP</em></p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -729,7 +733,7 @@ export default function Home() {
 
             <div className="mt-8 p-6 bg-blue-50 rounded-lg border border-blue-200">
               <p className="text-sm text-slate-700">
-                <strong>Aviso Legal:</strong> Este material é de caráter informativo e foi desenvolvido com base em informações públicas disponíveis no site do Tribunal de Contas da União. Para informações oficiais e vinculantes, consulte sempre os documentos normativos originais e o portal do TCU.
+                <strong>Aviso Legal:</strong> Este material é de caráter informativo e foi desenvolvido pelo SIACT com base em informações públicas disponíveis no site do Tribunal de Contas da União. Para informações oficiais e vinculantes, consulte sempre os documentos normativos originais e o portal do TCU.
               </p>
             </div>
           </div>
@@ -778,8 +782,11 @@ export default function Home() {
           </div>
 
           <div className="border-t border-slate-700 pt-8">
+            <p className="text-center text-sm text-slate-400 mb-2">
+              Estudo desenvolvido pelo <strong>SIACT - Sistema Inteligente de Análise e Controle de Transferências</strong>
+            </p>
             <p className="text-center text-sm text-slate-400">
-              © 2025 Tribunal de Contas da União. Todos os direitos reservados.
+              Com base em informações públicas do Tribunal de Contas da União. © 2025 TCU. Todos os direitos reservados.
             </p>
           </div>
         </div>
