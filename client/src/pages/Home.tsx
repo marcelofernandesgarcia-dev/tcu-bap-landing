@@ -761,6 +761,49 @@ export default function Home() {
         </div>
       </section>
 
+      {/* SECOND VIDEO SECTION */}
+      <section className="py-20 bg-gradient-to-br from-green-50 to-blue-50">
+        <div className="container">
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-8 text-center">
+              <h2 className="text-4xl font-bold text-slate-900 mb-4">Portaria TCU nº 121/2025</h2>
+              <p className="text-lg text-slate-600">Conheça os detalhes e implicações da nova Portaria do Tribunal de Contas da União que regulamenta o Banco de Arquivamentos por Prescrição</p>
+              <p className="text-sm text-slate-500 mt-2">Duração: 6 minutos</p>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-green-200">
+              <div className="aspect-video bg-slate-900 flex items-center justify-center">
+                <video 
+                  controls 
+                  className="w-full h-full"
+                  poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080'%3E%3Crect fill='%23059669' width='1920' height='1080'/%3E%3C/svg%3E"
+                >
+                  <source src="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/Portaria_TCU_121_2025_adba0a58.mp4" type="video/mp4" />
+                  Seu navegador não suporta o elemento de vídeo.
+                </video>
+              </div>
+            </div>
+
+            <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+              <Card className="p-6 border-l-4 border-l-green-700">
+                <h3 className="font-bold text-slate-900 mb-2">Regulamentação BAP</h3>
+                <p className="text-sm text-slate-600">Normas e procedimentos para cadastramento de processos no Banco de Arquivamentos por Prescrição</p>
+              </Card>
+
+              <Card className="p-6 border-l-4 border-l-blue-700">
+                <h3 className="font-bold text-slate-900 mb-2">Critérios de Elegibilidade</h3>
+                <p className="text-sm text-slate-600">Requisitos técnicos e legais que processos devem atender para serem arquivados por prescrição</p>
+              </Card>
+
+              <Card className="p-6 border-l-4 border-l-amber-700">
+                <h3 className="font-bold text-slate-900 mb-2">Implementação Prática</h3>
+                <p className="text-sm text-slate-600">Passos operacionais para instauração e acompanhamento via sistema e-TCE</p>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* SOURCES SECTION */}
       <section className="py-16 bg-white border-t border-slate-200">
         <div className="container">
