@@ -631,6 +631,48 @@ export default function Home() {
               </div>
             </Card>
 
+            {/* THIRD PODCAST CARD */}
+            <Card className="overflow-hidden border-2 border-green-200 hover:shadow-lg transition-shadow">
+              <div className="bg-gradient-to-br from-green-600 to-green-700 p-8 text-white">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
+                    <Headphones className="w-8 h-8" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold">Podcast</h3>
+                    <p className="text-green-100">Áudio educativo</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-8">
+                <h4 className="text-xl font-bold text-slate-900 mb-2">O Novo Cerco Digital ao Dinheiro Público</h4>
+                <p className="text-slate-600 mb-6">Explore as estratégias digitais de controle e fiscalização do dinheiro público implementadas pelo TCU através do e-TCE e dos novos mecanismos de rastreabilidade de transferências voluntárias.</p>
+
+                <div className="bg-slate-50 rounded-lg p-4 mb-6">
+                  <audio 
+                    controls 
+                    className="w-full"
+                    controlsList="nodownload"
+                  >
+                    <source src="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/O_novo_cerco_digital_ao_dinheiro_público_abc3dfec.m4a" type="audio/mp4" />
+                    Seu navegador não suporta o elemento de áudio.
+                  </audio>
+                </div>
+
+                <div className="space-y-3 text-sm text-slate-600">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-green-600" />
+                    <span>Duração: 27 minutos e 6 segundos</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-green-600" />
+                    <span>Formato: M4A Audio</span>
+                  </div>
+                </div>
+              </div>
+            </Card>
+
             {/* RECOMMENDED VIDEOS CARD */}
             <Card className="overflow-hidden border-2 border-blue-200 hover:shadow-lg transition-shadow">
               <div className="bg-gradient-to-br from-blue-600 to-blue-700 p-8 text-white">
