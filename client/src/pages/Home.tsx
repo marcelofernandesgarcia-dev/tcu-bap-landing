@@ -840,18 +840,14 @@ export default function Home() {
                   
                   <div className="grid grid-cols-2 gap-6 mb-6">
                     {/* PDF Block */}
-                    <a href="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/Novo_Ecossistema_IN_98_2024_db62d122.pdf" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-3 hover:opacity-80 transition-opacity">
-                      <div className="w-full bg-blue-600 rounded-lg h-32 hover:bg-blue-700 transition-colors cursor-pointer flex items-center justify-center">
-                        <span className="text-white font-bold text-lg">PDF</span>
-                      </div>
+                    <a href="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/Novo_Ecossistema_IN_98_2024_db62d122.pdf" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-3 hover:opacity-90 transition-opacity">
+                      <img src="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/preview_pptx-01_e4591f4e.png" alt="PDF Preview" className="w-full rounded-lg h-40 object-cover hover:shadow-lg transition-shadow cursor-pointer" />
                       <p className="text-sm font-semibold text-slate-900 text-center">Baixar PDF</p>
                     </a>
 
                     {/* PPTX Block */}
-                    <a href="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/Novo_Ecossistema_IN_98_2024_2e435404.pptx" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-3 hover:opacity-80 transition-opacity">
-                      <div className="w-full bg-orange-600 rounded-lg h-32 hover:bg-orange-700 transition-colors cursor-pointer flex items-center justify-center">
-                        <span className="text-white font-bold text-lg">PPTX</span>
-                      </div>
+                    <a href="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/Novo_Ecossistema_IN_98_2024_2e435404.pptx" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-3 hover:opacity-90 transition-opacity">
+                      <img src="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/preview_pptx-01_e4591f4e.png" alt="PPTX Preview" className="w-full rounded-lg h-40 object-cover hover:shadow-lg transition-shadow cursor-pointer" />
                       <p className="text-sm font-semibold text-slate-900 text-center">Baixar PPTX</p>
                     </a>
                   </div>
