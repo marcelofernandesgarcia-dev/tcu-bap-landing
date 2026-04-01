@@ -836,17 +836,30 @@ export default function Home() {
                   <p className="text-blue-100">Documentos técnicos e apresentações</p>
                 </div>
                 <div className="p-6">
-                  <p className="text-slate-600 mb-4 text-sm">Acesse os documentos completos sobre o novo ecossistema regulatório, incluindo apresentações, análises técnicas e guias de implementação.</p>
-                  <div className="space-y-3">
-                    <a href="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/Novo_Ecossistema_IN_98_2024_db62d122.pdf" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
-                      <FileText className="w-5 h-5 text-blue-700" />
-                      <span className="text-sm font-medium text-slate-900">PDF Completo (17 MB)</span>
+                  <div className="grid grid-cols-2 gap-4">
+                    {/* PDF Preview */}
+                    <a href="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/Novo_Ecossistema_IN_98_2024_db62d122.pdf" target="_blank" rel="noopener noreferrer" className="group relative overflow-hidden rounded-lg border-2 border-blue-200 hover:border-blue-500 transition-all hover:shadow-lg">
+                      <img src="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/preview-pdf-novo-ecossistema-FhZhnK4xnaKprpBVtXEQde.webp" alt="PDF Preview" className="w-full h-48 object-cover" />
+                      <div className="absolute inset-0 bg-blue-600 bg-opacity-0 group-hover:bg-opacity-40 transition-all flex items-center justify-center">
+                        <div className="bg-white bg-opacity-90 px-4 py-2 rounded-lg text-center opacity-0 group-hover:opacity-100 transition-opacity">
+                          <p className="text-xs font-bold text-blue-700">Clique para Baixar</p>
+                          <p className="text-xs text-slate-600">PDF (17 MB)</p>
+                        </div>
+                      </div>
                     </a>
-                    <a href="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/Novo_Ecossistema_IN_98_2024_2e435404.pptx" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 p-3 bg-amber-50 rounded-lg hover:bg-amber-100 transition-colors">
-                      <FileText className="w-5 h-5 text-amber-700" />
-                      <span className="text-sm font-medium text-slate-900">Apresentação (22 MB)</span>
+
+                    {/* PPTX Preview */}
+                    <a href="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/Novo_Ecossistema_IN_98_2024_2e435404.pptx" target="_blank" rel="noopener noreferrer" className="group relative overflow-hidden rounded-lg border-2 border-amber-200 hover:border-amber-500 transition-all hover:shadow-lg">
+                      <img src="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/preview-pptx-novo-ecossistema-3q5TK4KMvCAJXRTm57tFvS.webp" alt="PPTX Preview" className="w-full h-48 object-cover" />
+                      <div className="absolute inset-0 bg-amber-600 bg-opacity-0 group-hover:bg-opacity-40 transition-all flex items-center justify-center">
+                        <div className="bg-white bg-opacity-90 px-4 py-2 rounded-lg text-center opacity-0 group-hover:opacity-100 transition-opacity">
+                          <p className="text-xs font-bold text-amber-700">Clique para Baixar</p>
+                          <p className="text-xs text-slate-600">Apresentação (22 MB)</p>
+                        </div>
+                      </div>
                     </a>
                   </div>
+                  <p className="text-slate-600 mt-4 text-xs text-center">Clique nas imagens para fazer download dos documentos completos</p>
                 </div>
               </Card>
             </div>
