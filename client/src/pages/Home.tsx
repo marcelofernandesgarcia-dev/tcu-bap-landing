@@ -804,6 +804,72 @@ export default function Home() {
         </div>
       </section>
 
+      {/* INFOGRAPHICS & RESOURCES SECTION */}
+      <section className="py-20 bg-gradient-to-br from-slate-50 to-blue-50">
+        <div className="container">
+          <div className="max-w-5xl mx-auto">
+            <div className="mb-12 text-center">
+              <h2 className="text-4xl font-bold text-slate-900 mb-4">Infográficos e Recursos</h2>
+              <p className="text-lg text-slate-600">Materiais visuais e documentos técnicos para aprofundar o conhecimento sobre o novo ecossistema IN 98/2024</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+              {/* Infographic Card */}
+              <Card className="overflow-hidden border-2 border-green-200 hover:shadow-lg transition-shadow">
+                <div className="bg-gradient-to-br from-green-600 to-green-700 p-8 text-white">
+                  <h3 className="text-2xl font-bold mb-2">Descomplicando o e-TCE</h3>
+                  <p className="text-green-100">Guia visual da Portaria TCU nº 121/2025</p>
+                </div>
+                <div className="p-6">
+                  <p className="text-slate-600 mb-4 text-sm">Infográfico completo mostrando o fluxo do processo no e-TCE, perfis de acesso, regras de segurança e cadastro de devedores com prescrição.</p>
+                  <div className="bg-green-50 rounded-lg p-4 mb-4">
+                    <img src="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/INFOGRAFICOTCE_a4d6d0e5.webp" alt="Infográfico e-TCE" className="w-full rounded" />
+                  </div>
+                  <p className="text-xs text-slate-500 mb-4">Fonte: Documentação Oficial TCU</p>
+                </div>
+              </Card>
+
+              {/* Resources Card */}
+              <Card className="overflow-hidden border-2 border-blue-200 hover:shadow-lg transition-shadow">
+                <div className="bg-gradient-to-br from-blue-600 to-blue-700 p-8 text-white">
+                  <h3 className="text-2xl font-bold mb-2">Novo Ecossistema IN 98/2024</h3>
+                  <p className="text-blue-100">Documentos técnicos e apresentações</p>
+                </div>
+                <div className="p-6">
+                  <p className="text-slate-600 mb-4 text-sm">Acesse os documentos completos sobre o novo ecossistema regulatório, incluindo apresentações, análises técnicas e guias de implementação.</p>
+                  <div className="space-y-3">
+                    <a href="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/Novo_Ecossistema_IN_98_2024_db62d122.pdf" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
+                      <FileText className="w-5 h-5 text-blue-700" />
+                      <span className="text-sm font-medium text-slate-900">PDF Completo (17 MB)</span>
+                    </a>
+                    <a href="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/Novo_Ecossistema_IN_98_2024_2e435404.pptx" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 p-3 bg-amber-50 rounded-lg hover:bg-amber-100 transition-colors">
+                      <FileText className="w-5 h-5 text-amber-700" />
+                      <span className="text-sm font-medium text-slate-900">Apresentação (22 MB)</span>
+                    </a>
+                  </div>
+                </div>
+              </Card>
+            </div>
+
+            {/* Key Topics Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+              <Card className="p-4 border-l-4 border-l-blue-700 bg-white">
+                <h4 className="font-bold text-slate-900 mb-2 text-sm">Fluxo do Processo</h4>
+                <p className="text-xs text-slate-600">Visualização completa das etapas de instauração, análise e pronunciamento no e-TCE</p>
+              </Card>
+              <Card className="p-4 border-l-4 border-l-green-700 bg-white">
+                <h4 className="font-bold text-slate-900 mb-2 text-sm">Perfis de Acesso</h4>
+                <p className="text-xs text-slate-600">Definição de papéis e responsabilidades (Operador, Instaurador, Auditor, Diretor)</p>
+              </Card>
+              <Card className="p-4 border-l-4 border-l-amber-700 bg-white">
+                <h4 className="font-bold text-slate-900 mb-2 text-sm">Segurança e Disponibilidade</h4>
+                <p className="text-xs text-slate-600">Regras de autenticação digital e disponibilidade 24/7 do sistema</p>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* SOURCES SECTION */}
       <section className="py-16 bg-white border-t border-slate-200">
         <div className="container">
