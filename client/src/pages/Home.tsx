@@ -836,30 +836,25 @@ export default function Home() {
                   <p className="text-blue-100">Documentos técnicos e apresentações</p>
                 </div>
                 <div className="p-6">
-                  <div className="grid grid-cols-2 gap-4">
-                    {/* PDF Preview */}
-                    <a href="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/Novo_Ecossistema_IN_98_2024_db62d122.pdf" target="_blank" rel="noopener noreferrer" className="group relative overflow-hidden rounded-lg border-2 border-blue-200 hover:border-blue-500 transition-all hover:shadow-lg">
-                      <img src="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/preview-pdf-novo-ecossistema-FhZhnK4xnaKprpBVtXEQde.webp" alt="PDF Preview" className="w-full h-48 object-cover" />
-                      <div className="absolute inset-0 bg-blue-600 bg-opacity-0 group-hover:bg-opacity-40 transition-all flex items-center justify-center">
-                        <div className="bg-white bg-opacity-90 px-4 py-2 rounded-lg text-center opacity-0 group-hover:opacity-100 transition-opacity">
-                          <p className="text-xs font-bold text-blue-700">Clique para Baixar</p>
-                          <p className="text-xs text-slate-600">PDF (17 MB)</p>
-                        </div>
+                  <p className="text-slate-600 mb-6 text-sm text-center">Clique nas imagens para fazer download dos documentos completos</p>
+                  
+                  <div className="grid grid-cols-2 gap-6 mb-6">
+                    {/* PDF Block */}
+                    <a href="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/Novo_Ecossistema_IN_98_2024_db62d122.pdf" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-3 hover:opacity-80 transition-opacity">
+                      <div className="w-full bg-blue-600 rounded-lg h-32 hover:bg-blue-700 transition-colors cursor-pointer flex items-center justify-center">
+                        <span className="text-white font-bold text-lg">PDF</span>
                       </div>
+                      <p className="text-sm font-semibold text-slate-900 text-center">Baixar PDF</p>
                     </a>
 
-                    {/* PPTX Preview */}
-                    <a href="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/Novo_Ecossistema_IN_98_2024_2e435404.pptx" target="_blank" rel="noopener noreferrer" className="group relative overflow-hidden rounded-lg border-2 border-amber-200 hover:border-amber-500 transition-all hover:shadow-lg">
-                      <img src="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/preview-pptx-novo-ecossistema-3q5TK4KMvCAJXRTm57tFvS.webp" alt="PPTX Preview" className="w-full h-48 object-cover" />
-                      <div className="absolute inset-0 bg-amber-600 bg-opacity-0 group-hover:bg-opacity-40 transition-all flex items-center justify-center">
-                        <div className="bg-white bg-opacity-90 px-4 py-2 rounded-lg text-center opacity-0 group-hover:opacity-100 transition-opacity">
-                          <p className="text-xs font-bold text-amber-700">Clique para Baixar</p>
-                          <p className="text-xs text-slate-600">Apresentação (22 MB)</p>
-                        </div>
+                    {/* PPTX Block */}
+                    <a href="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/Novo_Ecossistema_IN_98_2024_2e435404.pptx" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-3 hover:opacity-80 transition-opacity">
+                      <div className="w-full bg-orange-600 rounded-lg h-32 hover:bg-orange-700 transition-colors cursor-pointer flex items-center justify-center">
+                        <span className="text-white font-bold text-lg">PPTX</span>
                       </div>
+                      <p className="text-sm font-semibold text-slate-900 text-center">Baixar PPTX</p>
                     </a>
                   </div>
-                  <p className="text-slate-600 mt-4 text-xs text-center">Clique nas imagens para fazer download dos documentos completos</p>
                 </div>
               </Card>
             </div>
