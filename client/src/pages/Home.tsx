@@ -352,6 +352,13 @@ export default function Home() {
             </Card>
 
 
+            <Card className="p-6 border-0 shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex items-start justify-between">
+                <div>
+                </div>
+                <BookOpen className="w-8 h-8 text-blue-700 opacity-20" />
+              </div>
+            </Card>
           </div>
         </div>
       </section>
