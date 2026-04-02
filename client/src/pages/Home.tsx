@@ -351,6 +351,9 @@ export default function Home() {
             <Card className="p-6 border-0 shadow-sm hover:shadow-md transition-shadow">
               <div className="flex items-start justify-between">
                 <div>
+                  <p className="text-sm text-slate-500 font-semibold">Base de Conhecimento</p>
+                  <p className="text-2xl font-bold text-blue-700 mt-2">210</p>
+                  <p className="text-xs text-slate-600 mt-1">PERGUNTAS E RESPOSTAS</p>
                 </div>
                 <BookOpen className="w-8 h-8 text-blue-700 opacity-20" />
               </div>
