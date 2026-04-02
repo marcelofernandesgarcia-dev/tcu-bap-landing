@@ -1,0 +1,198 @@
+{
+  "statistics": {
+    "summary": {
+      "totalAnalyzed": 44969,
+      "totalCertified": 36743,
+      "totalDiligenced": 8226,
+      "certificationRate": 81.7,
+      "diligenceRate": 18.3,
+      "totalRecoveryPotential": 54724747085.69,
+      "yearlyAverage": 1875,
+      "startYear": 2002,
+      "endYear": 2025,
+      "lastUpdateDate": "2025-12-31"
+    },
+    "yearlyData": [
+      {
+        "year": "2002-2011",
+        "period": "2002-2011",
+        "analyzed": 16039,
+        "diligenced": 3702,
+        "certified": 12337,
+        "recoveryPotential": 7718359893.71,
+        "averagePerYear": 1603.9
+      },
+      {
+        "year": 2012,
+        "analyzed": 1688,
+        "diligenced": 414,
+        "certified": 1274,
+        "recoveryPotential": 1453300009.34
+      },
+      {
+        "year": 2013,
+        "analyzed": 2127,
+        "diligenced": 204,
+        "certified": 1923,
+        "recoveryPotential": 2520489158.45
+      },
+      {
+        "year": 2014,
+        "analyzed": 2500,
+        "diligenced": 178,
+        "certified": 2322,
+        "recoveryPotential": 1381037790.38
+      },
+      {
+        "year": 2015,
+        "analyzed": 2634,
+        "diligenced": 197,
+        "certified": 2437,
+        "recoveryPotential": 2795723054.33
+      },
+      {
+        "year": 2016,
+        "analyzed": 1335,
+        "diligenced": 168,
+        "certified": 1167,
+        "recoveryPotential": 2589820465.42
+      },
+      {
+        "year": 2017,
+        "analyzed": 1395,
+        "diligenced": 155,
+        "certified": 1240,
+        "recoveryPotential": 2782938232.36
+      },
+      {
+        "year": 2018,
+        "analyzed": 1360,
+        "diligenced": 95,
+        "certified": 1265,
+        "recoveryPotential": 2607801854.40
+      },
+      {
+        "year": 2019,
+        "analyzed": 1976,
+        "diligenced": 593,
+        "certified": 1383,
+        "recoveryPotential": 2422989282.70
+      },
+      {
+        "year": 2020,
+        "analyzed": 2978,
+        "diligenced": 879,
+        "certified": 2099,
+        "recoveryPotential": 3706243057.71
+      },
+      {
+        "year": 2021,
+        "analyzed": 2130,
+        "diligenced": 325,
+        "certified": 1805,
+        "recoveryPotential": 9086574134.94
+      },
+      {
+        "year": 2022,
+        "analyzed": 2025,
+        "diligenced": 322,
+        "certified": 1703,
+        "recoveryPotential": 5132316555.76
+      },
+      {
+        "year": 2023,
+        "analyzed": 1719,
+        "diligenced": 326,
+        "certified": 1393,
+        "recoveryPotential": 7730045086.00
+      },
+      {
+        "year": 2024,
+        "analyzed": 1741,
+        "diligenced": 295,
+        "certified": 1446,
+        "recoveryPotential": 3346687237.00
+      },
+      {
+        "year": 2025,
+        "analyzed": 3322,
+        "diligenced": 373,
+        "certified": 2949,
+        "recoveryPotential": 3450421273.19,
+        "isRecord": true,
+        "recordNote": "Recorde histórico de certificações em 2025"
+      }
+    ],
+    "insights": {
+      "recordYear": 2025,
+      "recordCertifications": 2949,
+      "recordRecoveryPotential": 3450421273.19,
+      "highestRecoveryYear": 2021,
+      "highestRecoveryAmount": 9086574134.94,
+      "lowestCertificationYear": 2023,
+      "lowestCertifications": 1393,
+      "averageCertificationsPerYear": 2449.53,
+      "averageRecoveryPerYear": 3648316472.38,
+      "totalYearsAnalyzed": 24,
+      "sourceOrganization": "Controladoria-Geral da União (CGU)",
+      "sourceUrl": "https://www.gov.br/cgu/pt-br/assuntos/auditoria-e-fiscalizacao/tomadas-de-contas-especiais",
+      "lastUpdated": "2026-04-02"
+    },
+    "categories": {
+      "byStatus": [
+        {
+          "status": "Certificadas ao TCU",
+          "count": 36743,
+          "percentage": 81.7,
+          "color": "#059669",
+          "description": "Processos certificados e encaminhados ao TCU para julgamento"
+        },
+        {
+          "status": "Diligenciadas",
+          "count": 8226,
+          "percentage": 18.3,
+          "color": "#f59e0b",
+          "description": "Processos devolvidos para revisão ou complementação de dados"
+        }
+      ],
+      "byDecade": [
+        {
+          "period": "2002-2011",
+          "analyzed": 16039,
+          "certified": 12337,
+          "recoveryPotential": 7718359893.71,
+          "percentage": 35.7
+        },
+        {
+          "period": "2012-2021",
+          "analyzed": 20471,
+          "certified": 16751,
+          "recoveryPotential": 31653362821.37,
+          "percentage": 57.9
+        },
+        {
+          "period": "2022-2025",
+          "analyzed": 8459,
+          "certified": 7655,
+          "recoveryPotential": 15352550152.19,
+          "percentage": 28.1
+        }
+      ]
+    },
+    "metadata": {
+      "source": "Controladoria-Geral da União (CGU)",
+      "sourceUrl": "https://www.gov.br/cgu/pt-br/assuntos/auditoria-e-fiscalizacao/tomadas-de-contas-especiais",
+      "dataType": "Official Government Statistics",
+      "updateFrequency": "Annual",
+      "lastUpdated": "2025-12-31",
+      "nextUpdate": "2026-12-31",
+      "dataQuality": "Official",
+      "normativos": [
+        "Lei 8.443/1992",
+        "IN TCU nº 98/2024",
+        "Portaria TCU nº 121/2025",
+        "Resolução TCU nº 344/2022"
+      ]
+    }
+  }
+}

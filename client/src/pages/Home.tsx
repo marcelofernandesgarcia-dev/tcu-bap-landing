@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ChevronRight, FileText, AlertTriangle, CheckCircle2, Clock, DollarSign, Users, BookOpen, X, Download, Mail, ExternalLink, Headphones, Play } from "lucide-react";
+import { Dashboard } from "@/components/Dashboard";
+import { FlowDiagram } from "@/components/FlowDiagram";
 
 /**
  * DESIGN PHILOSOPHY: Governance Design System
@@ -359,6 +361,28 @@ export default function Home() {
               </div>
             </Card>
           </div>
+        </div>
+      </section>
+
+      {/* DASHBOARD SECTION - TCE STATISTICS */}
+      <section className="py-16 md:py-20 bg-white">
+        <div className="container">
+          <div className="mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Estatísticas de Tomadas de Contas Especiais</h2>
+            <p className="text-lg text-slate-600">Explore dados históricos de análises, certificações e retorno potencial de TCEs (2002-2025)</p>
+          </div>
+          <Dashboard />
+        </div>
+      </section>
+
+      {/* FLOW DIAGRAM SECTION - INSTITUTIONAL FLOW */}
+      <section className="py-16 md:py-20 bg-slate-50">
+        <div className="container">
+          <div className="mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Fluxo Institucional da TCE</h2>
+            <p className="text-lg text-slate-600">Entenda o processo completo: do órgão instaurador até o arquivamento no BAP</p>
+          </div>
+          <FlowDiagram />
         </div>
       </section>
 
