@@ -1,0 +1,92 @@
+{
+  "faqData": {
+    "O que é TCE": {
+      "count": 7,
+      "color": "blue",
+      "questions": [
+        {
+          "q": "O que significa a sigla TCE?",
+          "a": "A sigla TCE significa Tomada de Contas Especial."
+        },
+        {
+          "q": "O que é, de fato, a Tomada de Contas Especial (TCE)?",
+          "a": "É um processo administrativo muito formal e rigoroso. O objetivo exclusivo da TCE é apurar fatos, quantificar o prejuízo (dano) causado aos cofres públicos da União e identificar quem foram os responsáveis por causar esse prejuízo para conseguir o dinheiro de volta. Referência: Constituição Federal, Art. 70 e 71; IN TCU nº 98/2024, Art. 1º."
+        },
+        {
+          "q": "Qualquer erro em prefeituras gera logo de cara uma TCE?",
+          "a": "Não. A TCE é tratada como uma 'medida de exceção'. Isso significa que ela é a última alternativa do governo. Antes de instaurar (abrir) uma TCE, as autoridades têm a obrigação de tentar resolver o problema com medidas mais amigáveis e administrativas. Referência: IN TCU nº 98/2024, Art. 3º, parágrafo único."
+        },
+        {
+          "q": "Quais são as outras formas de resolver o problema antes da TCE?",
+          "a": "A administração pública pode usar várias outras tentativas, garantindo ao acusado o direito de defesa. Alguns exemplos são: enviar cartas de cobrança (notificações), descontar parcelas diretamente da folha de pagamento (se for servidor público), descontar valores de faturas futuras (se for uma empresa contratada que entregou produto com defeito), realizar protestos em cartório ou até tentar acordos diretos, ou buscar solução consensual conforme previsto na IN TCU nº 98/2024. Referência: IN TCU nº 98/2024, Art. 3º, parágrafo único; Acórdão TCU nº 2469/2024 - Plenário."
+        },
+        {
+          "q": "Quais são as principais leis e manuais que ensinam como a TCE deve funcionar?",
+          "a": "As regras máximas vêm da Constituição Federal (artigos 70 e 71). No dia a dia, os servidores seguem a Instrução Normativa (IN) do TCU nº 98/2024 (que é a regra principal hoje), junto com a Decisão Normativa (DN) TCU 155/2016 (atualizada pela DN 217/2025) e a Portaria TCU 121/2025. A Lei nº 9.873/1999 estabelece o prazo prescricional geral de 5 anos para as pretensões punitiva e de ressarcimento. A Resolução TCU 344/2022 regulamenta a prescrição para o exercício das pretensões punitiva e de ressarcimento no âmbito do TCU, incluindo a prescrição intercorrente. Referências: Constituição Federal, Art. 70 e 71; Lei nº 9.873/1999; IN TCU nº 98/2024; DN TCU 155/2016 (atualizada pela DN 217/2025); Portaria TCU 121/2025; Resolução TCU 344/2022."
+        },
+        {
+          "q": "Por que o Tribunal de Contas da União (TCU) criou essa nova IN 98/2024?",
+          "a": "A regra antiga (a IN 71/2012) já tinha 12 anos e estava desatualizada. O Supremo Tribunal Federal (STF) tomou uma decisão nova determinando que as dívidas da TCE podem 'caducar' (prescrever) se o governo demorar muito para julgar. O TCU precisou criar a IN 98/2024 para modernizar, dar mais agilidade e criar regras de prescrição para evitar que o Estado perca o direito de cobrar os devedores. Referência: Acórdão TCU nº 2469/2024 - Plenário; IN TCU nº 98/2024."
+        },
+        {
+          "q": "Prefeitos e Governadores podem abrir processos de TCE dentro do sistema do TCU?",
+          "a": "Não. Os gestores de municípios e estados que recebem o dinheiro apenas prestam contas e informam ao governo federal se encontrarem roubos ou problemas graves. Apenas os repassadores federais do recurso (como Ministérios e órgãos do Governo Federal) podem instaurar a TCE no sistema eletrônico. Referência: IN TCU nº 98/2024, Art. 4º."
+        }
+      ]
+    },
+    "Prescrição e Marcos Interruptivos": {
+      "count": 12,
+      "color": "blue",
+      "questions": [
+        {
+          "q": "Qual é o prazo de prescrição intercorrente conforme a Resolução TCU 344/2022?",
+          "a": "A prescrição intercorrente é um prazo adicional de 3 (três) anos, conforme estabelecido no Art. 8º da Resolução TCU nº 344/2022. Este prazo começa a contar a partir do último ato inequívoco de apuração dos fatos (como uma diligência, notificação ou relatório de fiscalização). Se nenhum ato inequívoco ocorrer durante esses 3 anos, o processo prescreve mesmo que o prazo principal de 5 anos ainda não tenha decorrido. Referência: Resolução TCU nº 344/2022, Art. 8º."
+        },
+        {
+          "q": "Como funciona a interrupção da prescrição por atos inequívocos?",
+          "a": "A prescrição é interrompida quando a administração pública pratica um ato inequívoco de apuração dos fatos. Conforme Art. 2º da Lei nº 9.873/1999 e Art. 5º da Resolução TCU nº 344/2022, os atos inequívocos incluem: (I) notificação ou citação do indiciado ou acusado, inclusive por meio de edital; (II) qualquer ato que importe apuração do fato (como diligência, relatório de fiscalização, auditoria); (III) decisão condenatória recorrível; (IV) manifestação expressa de tentativa de solução conciliatória. Quando qualquer desses atos ocorre, o prazo prescricional retorna a zero. Referências: Lei nº 9.873/1999, Art. 2º; Resolução TCU nº 344/2022, Art. 5º."
+        },
+        {
+          "q": "Qual é a diferença entre prescrição principal e prescrição intercorrente?",
+          "a": "A prescrição principal é o prazo de 5 (cinco) anos contado a partir da data limite de prestação de contas ou da data do fato (conforme Lei nº 9.873/1999, Art. 1º). Se este prazo decorrer sem que haja condenação definitiva, o processo prescreve. A prescrição intercorrente é um prazo adicional de 3 (três) anos que começa a contar após o último ato inequívoco de apuração (conforme Resolução TCU nº 344/2022, Art. 8º). Se nenhum ato inequívoco ocorrer durante esses 3 anos, o processo prescreve mesmo que o prazo principal de 5 anos ainda não tenha expirado. Ambas as formas de prescrição extinguem o direito do Estado de cobrar o débito. Referências: Lei nº 9.873/1999, Art. 1º; Resolução TCU nº 344/2022, Art. 8º."
+        },
+        {
+          "q": "Como é calculado o prazo de 5 anos para prescrição da ação punitiva?",
+          "a": "O prazo de 5 (cinco) anos é contado a partir da data da prática do ato (ou, no caso de infração permanente ou continuada, do dia em que tiver cessado), conforme Art. 1º da Lei nº 9.873/1999. No contexto da TCE, o prazo geralmente começa a contar a partir da 'Data Limite de Prestação de Contas' (data em que o gestor deveria ter entregue a comprovação dos gastos). Se houver marcos interruptivos (como notificação, diligência, relatório de fiscalização), o prazo recomeça a contar do zero. O sistema BAP valida automaticamente se o prazo de 5 anos foi cumprido antes de permitir o arquivamento provisório. Referência: Lei nº 9.873/1999, Art. 1º; IN TCU nº 98/2024, Art. 19º."
+        },
+        {
+          "q": "Quais são os marcos interruptivos da prescrição conforme a legislação vigente?",
+          "a": "Os marcos interruptivos estão listados no Art. 2º da Lei nº 9.873/1999 (redação dada pela Lei nº 11.941/2009) e Art. 5º da Resolução TCU nº 344/2022. São eles: (I) notificação ou citação do indiciado ou acusado, inclusive por meio de edital; (II) qualquer ato inequívoco que importe apuração do fato (como diligência ao banco, relatório de fiscalização, auditoria, investigação); (III) decisão condenatória recorrível; (IV) qualquer ato inequívoco que importe em manifestação expressa de tentativa de solução conciliatória no âmbito interno da administração pública federal. Cada um desses atos faz com que o prazo prescricional retorne a zero. Referências: Lei nº 9.873/1999, Art. 2º; Resolução TCU nº 344/2022, Art. 5º."
+        },
+        {
+          "q": "O que é 'solução consensual' conforme a Instrução Normativa TCU nº 98/2024?",
+          "a": "A solução consensual é um mecanismo de resolução de conflitos que permite que o gestor investigado chegue a um acordo com a administração pública antes da condenação definitiva. Conforme Art. 2º, inciso IV da Lei nº 9.873/1999 (redação dada pela Lei nº 11.941/2009), a tentativa de solução conciliatória interrompe o prazo prescricional. A IN TCU nº 98/2024 regulamenta essa possibilidade, permitindo que as partes negociem e resolvam o caso de forma amigável, evitando o julgamento formal no Plenário do TCU. A tentativa de solução consensual deve ser documentada e registrada nos autos do processo. Referências: Lei nº 9.873/1999, Art. 2º, inciso IV; IN TCU nº 98/2024, Art. 3º, parágrafo único."
+        },
+        {
+          "q": "Como funciona o sistema de notificações automáticas do BAP?",
+          "a": "O sistema BAP (Banco de Arquivamentos por Prescrição) possui integração com o sistema de notificações do TCU. Conforme Portaria TCU nº 121/2025, quando um processo é arquivado provisoriamente no BAP, o sistema dispara automaticamente notificações para: (I) o órgão responsável pela instauração da TCE; (II) os supervisores designados (como Ministros ou Secretários de Estado); (III) a Controladoria Geral da União (CGU), para fins de transparência e auditoria. Essas notificações garantem que todas as partes interessadas sejam informadas sobre o arquivamento provisório. O sistema também mantém um registro auditável de todas as ações realizadas. Referência: Portaria TCU nº 121/2025, Art. 12º."
+        },
+        {
+          "q": "Qual é o papel da CGU (Controladoria Geral da União) na verificação de prescrições no BAP?",
+          "a": "A CGU atua como órgão fiscalizador independente no processo de verificação de prescrições. Conforme IN TCU nº 98/2024 e Portaria TCU nº 121/2025, a CGU pode: (I) realizar auditorias periódicas nos arquivamentos realizados no BAP; (II) validar se os prazos de prescrição foram corretamente calculados; (III) verificar se todos os requisitos legais foram atendidos; (IV) investigar possíveis irregularidades ou fraudes no preenchimento da planilha BAP. A CGU tem acesso total aos dados do BAP e pode solicitar informações adicionais aos órgãos que realizaram os arquivamentos. Referências: IN TCU nº 98/2024, Art. 20º; Portaria TCU nº 121/2025, Art. 13º."
+        },
+        {
+          "q": "Como é feita a auditoria de conformidade dos arquivamentos no BAP?",
+          "a": "A auditoria de conformidade do BAP segue os procedimentos estabelecidos na Portaria TCU nº 121/2025 e é realizada em três níveis: (I) Validação Automática: o sistema BAP valida automaticamente cada planilha enviada, verificando se todos os campos obrigatórios foram preenchidos corretamente e se os prazos de prescrição foram calculados conforme a lei; (II) Auditoria Interna: a equipe do TCU realiza revisão manual de amostras dos arquivamentos para garantir conformidade; (III) Auditoria Externa: a CGU e órgãos de controle externo podem realizar auditorias periódicas. Qualquer irregularidade identificada resulta em rejeição do arquivo ou abertura de investigação. Referência: Portaria TCU nº 121/2025, Art. 14º."
+        },
+        {
+          "q": "Quais são as penalidades para preenchimento incorreto ou fraudulento da planilha BAP?",
+          "a": "Conforme IN TCU nº 98/2024, Art. 21º, e Portaria TCU nº 121/2025, Art. 15º, as penalidades incluem: (I) Rejeição do arquivo: se houver erros de preenchimento, o sistema rejeita a planilha e exige correção; (II) Multa administrativa: o servidor responsável pode sofrer multa administrativa se o preenchimento for negligente; (III) Processo disciplinar: em caso de fraude intencional (como falsificação de datas ou valores), o servidor pode ser submetido a processo disciplinar conforme Lei nº 8.112/1990; (IV) Responsabilização civil: se o preenchimento fraudulento causar prejuízo ao Estado, o servidor pode ser responsabilizado civilmente; (V) Ação penal: em casos graves de fraude, falsificação ou estelionato, pode haver denúncia ao Ministério Público Federal. Referências: IN TCU nº 98/2024, Art. 21º; Portaria TCU nº 121/2025, Art. 15º; Lei nº 8.112/1990."
+        },
+        {
+          "q": "O que acontece se um processo arquivado no BAP for posteriormente descoberto como fraudulento?",
+          "a": "Se um processo arquivado no BAP for descoberto como fraudulento (por exemplo, se a prescrição foi calculada incorretamente ou se houve falsificação de documentos), conforme IN TCU nº 98/2024, Art. 22º, o arquivamento é imediatamente cassado e o processo retorna ao status de ativo. A TCE é reaberta e o processo volta a tramitar normalmente. O servidor responsável pela fraude é submetido a: (I) Processo administrativo disciplinar; (II) Possível ação civil por danos ao erário; (III) Possível denúncia ao Ministério Público Federal por fraude ou falsificação. O TCU também notifica o órgão responsável e a CGU para investigação. Referência: IN TCU nº 98/2024, Art. 22º."
+        },
+        {
+          "q": "Qual é o prazo máximo para que um processo permaneça no status de 'Arquivamento Provisório' antes de se tornar definitivo?",
+          "a": "Conforme Portaria TCU nº 121/2025, Art. 11º, o arquivamento provisório tem duração de 180 (cento e oitenta) dias. Durante este período, o órgão responsável pode apresentar recursos ou novas informações que justifiquem a reabertura do processo. Após os 180 dias, se nenhuma impugnação for apresentada e nenhuma irregularidade for identificada pela CGU ou pelo TCU, o arquivamento se torna definitivo e o processo é encerrado. O arquivamento definitivo significa que o Estado renuncia ao direito de cobrar o débito, e o processo não pode mais ser reaberto, salvo em casos de fraude comprovada (conforme Art. 22º da IN TCU nº 98/2024). Referências: Portaria TCU nº 121/2025, Art. 11º; IN TCU nº 98/2024, Art. 22º."
+        }
+      ]
+    }
+  }
+}
