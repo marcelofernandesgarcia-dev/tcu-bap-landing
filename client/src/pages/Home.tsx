@@ -351,16 +351,7 @@ export default function Home() {
               </div>
             </Card>
 
-            <Card className="p-6 border-0 shadow-sm hover:shadow-md transition-shadow">
-              <div className="flex items-start justify-between">
-                <div>
-                  <p className="text-slate-600 text-sm font-medium mb-2">FAQ Completo</p>
-                  <p className="text-3xl font-bold text-blue-700">210 Q&A</p>
-                  <p className="text-xs text-slate-500 mt-2">Perguntas e respostas</p>
-                </div>
-                <BookOpen className="w-8 h-8 text-blue-700 opacity-20" />
-              </div>
-            </Card>
+
           </div>
         </div>
       </section>
@@ -369,9 +360,6 @@ export default function Home() {
       <section id="faq" className="py-16 md:py-20 bg-slate-50">
         <div className="container">
           <div className="mb-12">
-            <div className="flex items-center gap-3 mb-4">
-              <span className="bg-green-100 text-green-700 px-4 py-2 rounded-full font-bold text-sm">210 PERGUNTAS E RESPOSTAS</span>
-            </div>
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Base de Conhecimento Completa</h2>
             <p className="text-lg text-slate-600 mb-8">Clique em qualquer categoria para explorar todas as perguntas e respostas técnicas</p>
           </div>
