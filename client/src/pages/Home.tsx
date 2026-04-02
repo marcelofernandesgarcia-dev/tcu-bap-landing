@@ -275,6 +275,8 @@ export default function Home() {
             {/* SIACT Logo */}
             <div className="mb-8">
               <p className="text-white font-bold text-5xl md:text-6xl">SIACT</p>
+              <p className="text-blue-100 text-lg md:text-xl mt-3 font-medium">Tomada de Contas Especial - TCE</p>
+              <p className="text-blue-100 text-lg md:text-xl font-medium">Banco de Arquivamentos por Prescrição (BAP)</p>
             </div>
             
             <div className="inline-block bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-semibold mb-6">
