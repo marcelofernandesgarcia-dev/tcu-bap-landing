@@ -272,6 +272,17 @@ export default function Home() {
         
         <div className="container relative z-10">
           <div className="max-w-3xl">
+            {/* SIACT Logo */}
+            <div className="mb-8 flex items-center gap-4">
+              <div className="bg-blue-600 rounded-lg p-3 shadow-lg">
+                <span className="text-white font-bold text-3xl">SIACT</span>
+              </div>
+              <div>
+                <p className="text-white font-bold text-2xl">SIACT</p>
+                <p className="text-blue-200 text-sm font-medium">TCE • PRESCRIÇÃO • BAP</p>
+              </div>
+            </div>
+            
             <div className="inline-block bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-semibold mb-6">
               ✓ Conforme IN TCU nº 98/2024 e Portaria-TCU nº 121/2025
             </div>
