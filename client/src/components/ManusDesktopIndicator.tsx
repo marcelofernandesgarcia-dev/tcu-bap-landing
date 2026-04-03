@@ -12,6 +12,7 @@ interface ManusDesktopIndicatorProps {
   fileSize: number; // em bytes
   progress?: number; // 0-100
   errorMessage?: string;
+  onRemove?: () => void;
 }
 
 export function ManusDesktopIndicator({
@@ -20,6 +21,7 @@ export function ManusDesktopIndicator({
   fileSize,
   progress = 0,
   errorMessage,
+  onRemove,
 }: ManusDesktopIndicatorProps) {
   const fileSizeMB = (fileSize / (1024 * 1024)).toFixed(2);
 
