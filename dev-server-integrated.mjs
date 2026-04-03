@@ -5,7 +5,7 @@
  * Combina Express (backend) + Vite (frontend) na mesma porta
  * 
  * CORREÇÃO CRÍTICA:
- * - Usar app.use() para TODOS os middlewares ANTES de app.get('*')
+ * - Usar Vite middleware em modo development
  * - Vite middleware deve ser adicionado ANTES do SPA fallback
  * - Usar next() explicitamente para passar para próximo middleware
  */
@@ -17,13 +17,15 @@ import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
+import { createServer as createViteServer } from 'vite';
+import { nanoid } from 'nanoid';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Configurar multer para upload de arquivos
 const upload = multer({
   storage: multer.memoryStorage(),
-  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB
+  limits: { fileSize: 150 * 1024 * 1024 }, // 150MB
   fileFilter: (req, file, cb) => {
     const allowedMimes = [
       'application/pdf',
@@ -51,8 +53,8 @@ async function startDevServer() {
     origin: ['http://localhost:3000', 'http://localhost:5173', 'http://127.0.0.1:3000'],
     credentials: true
   }));
-  app.use(express.json({ limit: '10mb' }));
-  app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+  app.use(express.json({ limit: '150mb' }));
+  app.use(express.urlencoded({ extended: true, limit: '150mb' }));
 
   // Logging middleware
   app.use((req, res, next) => {
@@ -147,25 +149,40 @@ async function startDevServer() {
   });
 
   // ============================================================================
-  // PASSO 3: Servir arquivos estáticos do frontend (dist/public)
+  // PASSO 3: Configurar Vite middleware para desenvolvimento
   // ============================================================================
-  const publicPath = path.join(__dirname, 'dist', 'public');
-  if (fs.existsSync(publicPath)) {
-    console.log('Servindo frontend compilado de:', publicPath);
-    app.use(express.static(publicPath));
-  } else {
-    console.warn('Diretório dist/public não encontrado. Frontend não será servido.');
-  }
+  const vite = await createViteServer({
+    server: {
+      middlewareMode: true,
+      hmr: { server: httpServer },
+      allowedHosts: true,
+    },
+    appType: 'custom',
+  });
+
+  // Adicionar Vite middleware
+  app.use(vite.middlewares);
 
   // ============================================================================
   // PASSO 4: SPA Fallback (serve index.html para rotas não-API)
   // ============================================================================
-  app.get('*', (req, res) => {
-    const indexPath = path.join(__dirname, 'dist', 'public', 'index.html');
-    if (fs.existsSync(indexPath)) {
-      res.sendFile(indexPath);
-    } else {
-      res.status(404).send('index.html not found');
+  app.use('*', async (req, res, next) => {
+    const url = req.originalUrl;
+
+    try {
+      const clientTemplate = path.resolve(__dirname, 'client', 'index.html');
+
+      // Ler e transformar index.html via Vite
+      let template = await fs.promises.readFile(clientTemplate, 'utf-8');
+      template = template.replace(
+        `src="/src/main.tsx"`,
+        `src="/src/main.tsx?v=${nanoid()}"`
+      );
+      const page = await vite.transformIndexHtml(url, template);
+      res.status(200).set({ 'Content-Type': 'text/html' }).end(page);
+    } catch (e) {
+      vite.ssrFixStacktrace(e);
+      next(e);
     }
   });
 
@@ -189,7 +206,7 @@ async function startDevServer() {
     console.log(`
 ╔════════════════════════════════════════╗
 ║   SIACT Development Server             ║
-║   Express + Vite Integrado (CORRIGIDO) ║
+║   Express + Vite Integrado             ║
 ╚════════════════════════════════════════╝
 
 🚀 Servidor iniciado em http://localhost:${port}
@@ -199,20 +216,21 @@ async function startDevServer() {
 
 Ambiente: development
 
-Ordem de processamento (CORRIGIDA):
+Ordem de processamento:
 1. Express middlewares globais (CORS, JSON)
 2. Rotas específicas /api/* (Express)
-3. Vite middleware (Frontend)
+3. Vite middleware (Frontend + HMR)
 4. SPA fallback (index.html)
 5. Error handler
 
-✅ Agora /api/analyze será processado ANTES do Vite middleware
+✅ Vite middleware ativo com Hot Module Replacement
     `);
   });
 
   // Graceful shutdown
   process.on('SIGINT', async () => {
     console.log('\n\nEncerrando servidor...');
+    await vite.close();
     httpServer.close();
     process.exit(0);
   });
