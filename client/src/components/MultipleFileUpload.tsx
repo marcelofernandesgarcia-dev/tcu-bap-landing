@@ -20,23 +20,24 @@ interface FileItem {
 /**
  * Componente para upload e processamento de múltiplos arquivos
  * Aceita até 15 arquivos, máximo 100MB total
+ * Suporta drag-and-drop e clique para selecionar
  */
 export function MultipleFileUpload() {
   const [files, setFiles] = useState<FileItem[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
   const [totalProgress, setTotalProgress] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const uploadChunkedMutation = trpc.uploadChunked.processBatchChunks.useMutation();
+  const dropZoneRef = useRef<HTMLDivElement>(null);
 
   /**
-   * Adicionar múltiplos arquivos
+   * Processar arquivos (de input ou drag-drop)
    */
-  const handleFileSelect = useCallback(
-    (selectedFileList: FileList | null) => {
-      if (!selectedFileList) return;
+  const processFiles = useCallback(
+    (fileList: FileList | null) => {
+      if (!fileList || fileList.length === 0) return;
 
-      const newFiles: FileItem[] = Array.from(selectedFileList).map((file) => ({
+      const newFiles: FileItem[] = Array.from(fileList).map((file) => ({
         id: `${file.name}-${Date.now()}-${Math.random()}`,
         name: file.name,
         size: file.size,
@@ -55,21 +56,65 @@ export function MultipleFileUpload() {
       }
 
       // Validar tamanho total
-      const totalSize = files.reduce((sum, f) => sum + f.size, 0) +
+      const totalSize =
+        files.reduce((sum, f) => sum + f.size, 0) +
         newFiles.reduce((sum, f) => sum + f.size, 0);
       if (totalSize > 100 * 1024 * 1024) {
-        alert(`Tamanho total excede 100MB. Total: ${(totalSize / 1024 / 1024).toFixed(2)}MB`);
+        alert(
+          `Tamanho total excede 100MB. Total: ${(totalSize / 1024 / 1024).toFixed(2)}MB`
+        );
         return;
       }
 
       setFiles((prev) => [...prev, ...newFiles]);
-      
+
       // Limpar input
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
     },
     [files]
+  );
+
+  /**
+   * Clique no input
+   */
+  const handleFileSelect = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      processFiles(event.target.files);
+    },
+    [processFiles]
+  );
+
+  /**
+   * Drag over
+   */
+  const handleDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  }, []);
+
+  /**
+   * Drag leave
+   */
+  const handleDragLeave = useCallback((e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  }, []);
+
+  /**
+   * Drop
+   */
+  const handleDrop = useCallback(
+    (e: React.DragEvent<HTMLDivElement>) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setIsDragging(false);
+      processFiles(e.dataTransfer.files);
+    },
+    [processFiles]
   );
 
   /**
@@ -127,7 +172,7 @@ export function MultipleFileUpload() {
         for (let chunk = 0; chunk < 5; chunk++) {
           await new Promise((resolve) => setTimeout(resolve, 200));
           const progress = Math.min(((chunk + 1) / 5) * 100, 100);
-          
+
           setFiles((prev) =>
             prev.map((f, idx) =>
               idx === fileIndex ? { ...f, progress } : f
@@ -213,13 +258,23 @@ export function MultipleFileUpload() {
         </p>
       </div>
 
-      {/* Upload Area */}
-      <Card className="p-8 border-2 border-dashed border-blue-300 bg-blue-50 hover:bg-blue-100 transition">
-        <label className="flex flex-col items-center justify-center cursor-pointer space-y-3">
+      {/* Upload Area - Drag and Drop */}
+      <div
+        ref={dropZoneRef}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
+        className={`p-8 border-2 border-dashed rounded-lg transition ${
+          isDragging
+            ? "border-blue-600 bg-blue-100"
+            : "border-blue-300 bg-blue-50 hover:bg-blue-100"
+        }`}
+      >
+        <div className="flex flex-col items-center justify-center cursor-pointer space-y-3">
           <Upload className="w-12 h-12 text-blue-500" />
           <div className="text-center">
             <p className="font-semibold text-gray-700">
-              Clique para selecionar ou arraste múltiplos arquivos
+              Arraste múltiplos arquivos aqui ou clique para selecionar
             </p>
             <p className="text-sm text-gray-500">
               PDF, DOCX, DOC, TXT, HTML (até 15 arquivos, 100MB total)
@@ -230,12 +285,23 @@ export function MultipleFileUpload() {
             type="file"
             multiple
             accept=".pdf,.docx,.doc,.txt,.html"
-            onChange={(e) => handleFileSelect(e.target.files)}
+            onChange={handleFileSelect}
             disabled={isProcessing}
             className="hidden"
+            onClick={(e) => {
+              // Garantir que o input permite múltiplos
+              (e.target as HTMLInputElement).multiple = true;
+            }}
           />
-        </label>
-      </Card>
+          <Button
+            onClick={() => fileInputRef.current?.click()}
+            disabled={isProcessing}
+            className="mt-4"
+          >
+            Selecionar Arquivos
+          </Button>
+        </div>
+      </div>
 
       {/* Stats */}
       {files.length > 0 && (
@@ -319,14 +385,16 @@ export function MultipleFileUpload() {
                 </div>
 
                 {/* Progress Bar */}
-                {file.progress !== undefined && file.progress > 0 && file.progress < 100 && (
-                  <div className="w-24 bg-gray-200 rounded-full h-1 mx-2">
-                    <div
-                      className="bg-blue-600 h-1 rounded-full transition-all"
-                      style={{ width: `${file.progress}%` }}
-                    />
-                  </div>
-                )}
+                {file.progress !== undefined &&
+                  file.progress > 0 &&
+                  file.progress < 100 && (
+                    <div className="w-24 bg-gray-200 rounded-full h-1 mx-2">
+                      <div
+                        className="bg-blue-600 h-1 rounded-full transition-all"
+                        style={{ width: `${file.progress}%` }}
+                      />
+                    </div>
+                  )}
 
                 {/* Remove Button */}
                 <Button
