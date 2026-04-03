@@ -1,10 +1,10 @@
 /**
  * SIACT Analisador - Componente de Upload e Análise
- * Permite upload de PDFs/documentos para análise de prescrição
+ * Permite upload de múltiplos PDFs/documentos para análise de prescrição
  */
 
 import { useState, useRef } from 'react';
-import { Upload, FileText, AlertCircle, CheckCircle, Loader } from 'lucide-react';
+import { Upload, FileText, AlertCircle, CheckCircle, Loader, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -14,37 +14,65 @@ interface AnalysisUploaderProps {
 }
 
 export function AnalysisUploader({ onAnalysisComplete }: AnalysisUploaderProps) {
-  const [file, setFile] = useState<File | null>(null);
+  const [files, setFiles] = useState<File[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files?.[0];
-    if (!selectedFile) return;
+    const selectedFiles = Array.from(e.target.files || []);
+    if (selectedFiles.length === 0) return;
 
-    // Validar tipo de arquivo
-    const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'text/plain', 'text/html'];
-    if (!allowedTypes.includes(selectedFile.type)) {
-      setError('Tipo de arquivo não suportado. Use PDF, DOCX, DOC, TXT ou HTML.');
+    // Validar cada arquivo
+    const allowedTypes = [
+      'application/pdf',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'text/plain',
+      'text/html',
+    ];
+    const validFiles: File[] = [];
+    const errors: string[] = [];
+
+    for (const file of selectedFiles) {
+      // Validar tipo de arquivo
+      if (!allowedTypes.includes(file.type)) {
+        errors.push(`${file.name}: Tipo não suportado`);
+        continue;
+      }
+
+      // Validar tamanho (máx 10MB por arquivo)
+      if (file.size > 10 * 1024 * 1024) {
+        errors.push(`${file.name}: Arquivo muito grande (máx 10MB)`);
+        continue;
+      }
+
+      validFiles.push(file);
+    }
+
+    if (validFiles.length === 0) {
+      setError(errors.join('; ') || 'Nenhum arquivo válido selecionado');
       return;
     }
 
-    // Validar tamanho (máx 10MB)
-    if (selectedFile.size > 10 * 1024 * 1024) {
-      setError('Arquivo muito grande. Máximo 10MB.');
+    if (validFiles.length + files.length > 15) {
+      setError('Máximo 15 arquivos por vez');
       return;
     }
 
-    setFile(selectedFile);
+    setFiles([...files, ...validFiles]);
     setError(null);
     setSuccess(null);
   };
 
+  const removeFile = (index: number) => {
+    setFiles(files.filter((_, i) => i !== index));
+  };
+
   const handleUpload = async () => {
-    if (!file) {
-      setError('Selecione um arquivo primeiro');
+    if (files.length === 0) {
+      setError('Selecione pelo menos um arquivo');
       return;
     }
 
@@ -53,33 +81,38 @@ export function AnalysisUploader({ onAnalysisComplete }: AnalysisUploaderProps) 
     setSuccess(null);
 
     try {
-      const formData = new FormData();
-      formData.append('file', file);
+      const results = [];
 
-      // Enviar para backend local
-      const response = await fetch('/api/analyze', {
-        method: 'POST',
-        body: formData,
-      });
+      for (const file of files) {
+        const formData = new FormData();
+        formData.append('file', file);
 
-      if (!response.ok) {
-        throw new Error(`Erro na análise: ${response.statusText}`);
+        // Enviar para backend local
+        const response = await fetch('/api/analyze', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error(`Erro na análise de ${file.name}: ${response.statusText}`);
+        }
+
+        const result = await response.json();
+        results.push({ file: file.name, ...result });
       }
 
-      const result = await response.json();
-      
-      setSuccess('Análise concluída com sucesso!');
-      setFile(null);
-      
+      setSuccess(`${files.length} arquivo(s) analisado(s) com sucesso!`);
+      setFiles([]);
+
       if (fileInputRef.current) {
         fileInputRef.current.value = '';
       }
 
       if (onAnalysisComplete) {
-        onAnalysisComplete(result);
+        onAnalysisComplete(results);
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro ao processar arquivo');
+      setError(err instanceof Error ? err.message : 'Erro ao processar arquivos');
     } finally {
       setLoading(false);
     }
@@ -90,13 +123,13 @@ export function AnalysisUploader({ onAnalysisComplete }: AnalysisUploaderProps) 
       <Card className="border-2 border-dashed border-blue-200 p-8">
         <div className="flex flex-col items-center justify-center space-y-4">
           <Upload className="h-12 w-12 text-blue-600" />
-          
+
           <div className="text-center">
             <h3 className="text-lg font-semibold text-gray-900">
-              Upload de Documento para Análise
+              Upload de Documentos para Análise
             </h3>
             <p className="text-sm text-gray-600 mt-1">
-              Formatos suportados: PDF, DOCX, DOC, TXT, HTML (máx 10MB)
+              Formatos suportados: PDF, DOCX, DOC, TXT, HTML (máx 10MB cada, até 15 arquivos)
             </p>
           </div>
 
@@ -107,6 +140,7 @@ export function AnalysisUploader({ onAnalysisComplete }: AnalysisUploaderProps) 
             accept=".pdf,.doc,.docx,.txt,.html"
             className="hidden"
             disabled={loading}
+            multiple
           />
 
           <Button
@@ -116,23 +150,42 @@ export function AnalysisUploader({ onAnalysisComplete }: AnalysisUploaderProps) 
             className="w-full sm:w-auto"
           >
             <FileText className="mr-2 h-4 w-4" />
-            Selecionar Arquivo
+            Selecionar Arquivos
           </Button>
 
-          {file && (
-            <div className="w-full bg-blue-50 p-3 rounded-lg">
-              <p className="text-sm text-gray-700">
-                <strong>Arquivo selecionado:</strong> {file.name}
+          {files.length > 0 && (
+            <div className="w-full bg-blue-50 p-3 rounded-lg space-y-2 max-h-48 overflow-y-auto">
+              <p className="text-sm font-semibold text-gray-700">
+                Arquivos selecionados: {files.length}
               </p>
-              <p className="text-xs text-gray-600 mt-1">
-                Tamanho: {(file.size / 1024).toFixed(2)} KB
-              </p>
+              {files.map((file, index) => (
+                <div
+                  key={index}
+                  className="flex justify-between items-center text-sm text-gray-700 bg-white p-2 rounded"
+                >
+                  <div>
+                    <p>
+                      <strong>{file.name}</strong>
+                    </p>
+                    <p className="text-xs text-gray-600">
+                      Tamanho: {(file.size / 1024).toFixed(2)} KB
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => removeFile(index)}
+                    className="text-red-600 hover:text-red-800 text-lg"
+                    disabled={loading}
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+              ))}
             </div>
           )}
 
           <Button
             onClick={handleUpload}
-            disabled={!file || loading}
+            disabled={files.length === 0 || loading}
             className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700"
           >
             {loading ? (
@@ -143,7 +196,7 @@ export function AnalysisUploader({ onAnalysisComplete }: AnalysisUploaderProps) 
             ) : (
               <>
                 <CheckCircle className="mr-2 h-4 w-4" />
-                Analisar Documento
+                Analisar {files.length > 1 ? `${files.length} Documentos` : 'Documento'}
               </>
             )}
           </Button>
@@ -163,14 +216,6 @@ export function AnalysisUploader({ onAnalysisComplete }: AnalysisUploaderProps) 
           <AlertDescription className="text-green-800">{success}</AlertDescription>
         </Alert>
       )}
-
-      <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-        <p className="text-xs text-gray-700">
-          <strong>🔒 Segurança:</strong> Seu documento é processado localmente. 
-          Nenhuma informação pessoal é compartilhada com serviços externos.
-          Dados sensíveis são mascarados conforme LGPD.
-        </p>
-      </div>
     </div>
   );
 }
