@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import { ChevronRight, FileText, AlertTriangle, CheckCircle2, Clock, DollarSign, Users, BookOpen, X, Download, Mail, ExternalLink, Headphones, Play } from "lucide-react";
 import { Dashboard } from "@/components/Dashboard";
 import { FlowDiagram } from "@/components/FlowDiagram";
+import { FAQSearch } from "@/components/FAQSearch";
 
 /**
  * DESIGN PHILOSOPHY: Governance Design System
@@ -386,56 +387,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FAQ SECTION - INTERACTIVE CATEGORIES */}
+      {/* FAQ SECTION - SEARCH & FILTER */}
       <section id="faq" className="py-16 md:py-20 bg-slate-50">
         <div className="container">
           <div className="mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Base de Conhecimento Completa</h2>
-            <p className="text-lg text-slate-600 mb-8">Clique em qualquer categoria para explorar todas as perguntas e respostas técnicas</p>
+            <p className="text-lg text-slate-600 mb-8">Busque por palavras-chave ou explore as 210 perguntas e respostas técnicas por categoria</p>
           </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
-            {Object.entries(faqData).map(([category, data]) => (
-              <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`text-left p-6 rounded-lg border-2 transition-all hover:shadow-lg ${
-                  selectedCategory === category
-                    ? 'border-blue-700 bg-blue-50'
-                    : 'border-slate-200 bg-white hover:border-blue-400'
-                }`}
-              >
-                <p className="font-semibold text-slate-900">{category}</p>
-                <p className="text-sm text-slate-600">{data.count} perguntas</p>
-              </button>
-            ))}
-          </div>
-
-          {/* MODAL FOR SELECTED CATEGORY */}
-          {selectedCategory && (
-            <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-              <div className="bg-white rounded-lg max-w-4xl w-full max-h-[80vh] overflow-y-auto">
-                <div className="sticky top-0 bg-white border-b border-slate-200 p-6 flex items-center justify-between">
-                  <h3 className="text-2xl font-bold text-slate-900">{selectedCategory}</h3>
-                  <button
-                    onClick={() => setSelectedCategory(null)}
-                    className="text-slate-500 hover:text-slate-700"
-                  >
-                    <X className="w-6 h-6" />
-                  </button>
-                </div>
-                
-                <div className="p-6 space-y-6">
-                  {faqData[selectedCategory as keyof typeof faqData]?.questions.map((item, idx) => (
-                    <div key={idx} className="border-b border-slate-200 pb-6 last:border-b-0">
-                      <h4 className="font-bold text-slate-900 mb-3 text-lg">{item.q}</h4>
-                      <p className="text-slate-700 leading-relaxed">{item.a}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
+          <FAQSearch faqData={faqData} />
         </div>
       </section>
 
