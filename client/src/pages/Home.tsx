@@ -8,6 +8,7 @@ import { Dashboard } from "@/components/Dashboard";
 import { FlowDiagram } from "@/components/FlowDiagram";
 import { FAQSearch } from "@/components/FAQSearch";
 import { HeroSidebar } from "@/components/HeroSidebar";
+import { ImageModal } from "@/components/ImageModal";
 
 /**
  * DESIGN PHILOSOPHY: Governance Design System
@@ -819,9 +820,11 @@ export default function Home() {
                 </div>
                 <div className="p-6">
                   <p className="text-slate-600 mb-4 text-sm">Infográfico completo mostrando o fluxo do processo no e-TCE, perfis de acesso, regras de segurança e cadastro de devedores com prescrição.</p>
-                  <div className="bg-green-50 rounded-lg p-4 mb-4">
-                    <img src="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/INFOGRAFICOTCE_a4d6d0e5.webp" alt="Infográfico e-TCE" className="w-full rounded" />
-                  </div>
+                  <ImageModal src="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/INFOGRAFICOTCE_a4d6d0e5.webp" alt="Infográfico e-TCE" title="Descomplicando o e-TCE">
+                    <div className="bg-green-50 rounded-lg p-4 mb-4">
+                      <img src="https://d2xsxph8kpxj0f.cloudfront.net/310419663028965824/4wDv8y7ANjrFUhXJBKtipN/INFOGRAFICOTCE_a4d6d0e5.webp" alt="Infográfico e-TCE" className="w-full rounded" />
+                    </div>
+                  </ImageModal>
                   <p className="text-xs text-slate-500 mb-4">Fonte: Documentação Oficial TCU</p>
                 </div>
               </Card>
