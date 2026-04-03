@@ -220,49 +220,73 @@ export function AnalysisUploader({ onAnalysisComplete }: AnalysisUploaderProps) 
         return updated;
       });
 
-      // Simular progresso de upload
-      const progressInterval = setInterval(() => {
-        setFileProgress(prev => {
-          const updated = new Map(prev);
-          const progress = updated.get(fileId);
-          if (progress && progress.status === 'uploading') {
-            // Incrementar progresso aleatoriamente
-            const increment = Math.random() * 15;
-            progress.progress = Math.min(progress.progress + increment, 95);
-            progress.uploadedBytes = Math.floor((progress.progress / 100) * file.size);
-          }
-          return updated;
-        });
-      }, 200);
+      // Usar XMLHttpRequest para rastrear progresso real
+      const xhr = new XMLHttpRequest();
 
-      const response = await fetch('/api/analyze', {
-        method: 'POST',
-        body: formData,
-      });
+      // Rastrear progresso real do upload
+      xhr.upload.addEventListener('progress', (event) => {
+        if (event.lengthComputable) {
+          const uploadedBytes = event.loaded;
+          const totalBytes = event.total;
+          const progress = (uploadedBytes / totalBytes) * 100;
 
-      clearInterval(progressInterval);
-
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
-
-      const result = await response.json();
-
-      // Atualizar status para concluído
-      setFileProgress(prev => {
-        const updated = new Map(prev);
-        const progress = updated.get(fileId);
-        if (progress) {
-          progress.status = 'completed';
-          progress.progress = 100;
-          progress.uploadedBytes = file.size;
+          setFileProgress(prev => {
+            const updated = new Map(prev);
+            const fileProgress = updated.get(fileId);
+            if (fileProgress) {
+              fileProgress.progress = progress;
+              fileProgress.uploadedBytes = uploadedBytes;
+            }
+            return updated;
+          });
         }
-        return updated;
       });
 
-      if (onAnalysisComplete) {
-        onAnalysisComplete(result);
-      }
+      // Sucesso
+      xhr.addEventListener('load', () => {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          try {
+            const result = JSON.parse(xhr.responseText);
+
+            // Atualizar status para concluído
+            setFileProgress(prev => {
+              const updated = new Map(prev);
+              const progress = updated.get(fileId);
+              if (progress) {
+                progress.status = 'completed';
+                progress.progress = 100;
+                progress.uploadedBytes = file.size;
+              }
+              return updated;
+            });
+
+            if (onAnalysisComplete) {
+              onAnalysisComplete(result);
+            }
+          } catch (err) {
+            throw new Error('Erro ao parsear resposta JSON');
+          }
+        } else {
+          throw new Error(`HTTP ${xhr.status}`);
+        }
+      });
+
+      // Erro
+      xhr.addEventListener('error', () => {
+        throw new Error('Erro de rede durante upload');
+      });
+
+      // Timeout
+      xhr.addEventListener('timeout', () => {
+        throw new Error('Timeout durante upload');
+      });
+
+      // Configurar timeout (5 minutos para arquivos grandes)
+      xhr.timeout = 300000;
+
+      // Enviar
+      xhr.open('POST', '/api/analyze');
+      xhr.send(formData);
     } catch (err) {
       // Atualizar status para erro
       setFileProgress(prev => {

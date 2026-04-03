@@ -182,17 +182,16 @@ describe('analysisMapper', () => {
       expect(result.aiParecer).toContain('TCE-2024-00123');
     });
 
-    it('deve lançar erro quando success é false', () => {
+    it('deve lançar erro quando success é false e sem dados', () => {
       const backendData = {
         success: false,
-        error: 'Falha na análise',
+        maskedText: '',
       };
-
-      expect(() => mapBackendAnalysisToFrontend(backendData)).toThrow('Análise falhou no backend');
+      expect(() => mapBackendAnalysisToFrontend(backendData)).toThrow();
     });
 
     it('deve lançar erro quando dados são null', () => {
-      expect(() => mapBackendAnalysisToFrontend(null)).toThrow('Análise falhou no backend');
+      expect(() => mapBackendAnalysisToFrontend(null)).toThrow('Dados de análise não recebidos');
     });
 
     it('deve incluir dados brutos na resposta mapeada', () => {

@@ -23,11 +23,17 @@ export interface MappedAnalysis {
  * Mapeia resposta do backend para estrutura esperada pelo frontend
  */
 export function mapBackendAnalysisToFrontend(backendData: any): MappedAnalysis {
-  if (!backendData || !backendData.success) {
-    throw new Error('Análise falhou no backend');
+  if (!backendData) {
+    throw new Error('Dados de análise não recebidos');
   }
 
-  const { prescriptionAnalysis, dates, values, entities, processNumber, maskedText } = backendData;
+  // Aceitar mesmo que success seja false, desde que haja dados para mapear
+  const { prescriptionAnalysis, dates, values, entities, processNumber, maskedText, error } = backendData;
+
+  // Se houver erro e nenhum dado, rejeitar
+  if (!backendData.success && !processNumber && !dates && !values && !entities) {
+    throw new Error(`Análise falhou: ${error || 'Erro desconhecido'}`);
+  }
 
   // Etapa 1: Admissibilidade
   // Verifica se o processo tem dados básicos necessários
@@ -41,29 +47,31 @@ export function mapBackendAnalysisToFrontend(backendData: any): MappedAnalysis {
     admissibilityPassed = false;
   }
 
-  if (dates && dates.length > 0) {
+  if (dates && Array.isArray(dates) && dates.length > 0) {
     admissibilityDetails.push(`✓ ${dates.length} data(s) importante(s) extraída(s)`);
     dates.forEach((d: any) => {
-      admissibilityDetails.push(`  • ${d.label}: ${d.value}`);
+      admissibilityDetails.push(`  • ${d?.label || 'Data'}: ${d?.value || 'N/A'}`);
     });
   } else {
     admissibilityDetails.push('⚠ Nenhuma data importante encontrada');
     admissibilityPassed = false;
   }
 
-  if (values && values.length > 0) {
+  if (values && Array.isArray(values) && values.length > 0) {
     admissibilityDetails.push(`✓ ${values.length} valor(es) identificado(s)`);
     values.forEach((v: any) => {
-      admissibilityDetails.push(`  • ${v.label}: ${v.currency} ${v.amount.toLocaleString('pt-BR')}`);
+      const amount = typeof v?.amount === 'number' ? v.amount.toLocaleString('pt-BR') : 'N/A';
+      admissibilityDetails.push(`  • ${v?.label || 'Valor'}: ${v?.currency || 'R$'} ${amount}`);
     });
   } else {
     admissibilityDetails.push('⚠ Nenhum valor identificado');
   }
 
-  if (entities && entities.length > 0) {
+  if (entities && Array.isArray(entities) && entities.length > 0) {
     admissibilityDetails.push(`✓ ${entities.length} entidade(s) identificada(s)`);
     entities.slice(0, 3).forEach((e: any) => {
-      admissibilityDetails.push(`  • ${e.type}: ${e.value} (confiança: ${(e.confidence * 100).toFixed(0)}%)`);
+      const confidence = typeof e?.confidence === 'number' ? (e.confidence * 100).toFixed(0) : 'N/A';
+      admissibilityDetails.push(`  • ${e?.type || 'Entidade'}: ${e?.value || 'N/A'} (confiança: ${confidence}%)`);
     });
   }
 
@@ -101,8 +109,8 @@ export function mapBackendAnalysisToFrontend(backendData: any): MappedAnalysis {
   let bapEligibilityPassed = false;
 
   // Critérios BAP: valor >= R$ 120.000 e prescrição ocorreu
-  if (values && values.length > 0) {
-    const totalValue = values.reduce((sum: number, v: any) => sum + v.amount, 0);
+  if (values && Array.isArray(values) && values.length > 0) {
+    const totalValue = values.reduce((sum: number, v: any) => sum + (typeof v?.amount === 'number' ? v.amount : 0), 0);
     if (totalValue >= 120000) {
       bapEligibilityDetails.push(`✓ Valor total (${totalValue.toLocaleString('pt-BR')}) >= R$ 120.000`);
       bapEligibilityPassed = true;
@@ -122,13 +130,17 @@ export function mapBackendAnalysisToFrontend(backendData: any): MappedAnalysis {
   }
 
   // Parecer de IA (resumo executivo)
+  const totalValue = values && Array.isArray(values) && values.length > 0
+    ? values.reduce((sum: number, v: any) => sum + (typeof v?.amount === 'number' ? v.amount : 0), 0)
+    : 0;
+
   const aiParecer = generateAIParecer({
     admissibilityPassed,
     prescriptionPassed,
     bapEligibilityPassed,
     prescriptionStatus,
     processNumber,
-    totalValue: values?.reduce((sum: number, v: any) => sum + v.amount, 0) || 0,
+    totalValue,
   });
 
   return {
