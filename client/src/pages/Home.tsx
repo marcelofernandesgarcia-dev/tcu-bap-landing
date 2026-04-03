@@ -9,6 +9,7 @@ import { FlowDiagram } from "@/components/FlowDiagram";
 import { FAQSearch } from "@/components/FAQSearch";
 import { HeroSidebar } from "@/components/HeroSidebar";
 import { ImageModal } from "@/components/ImageModal";
+import { PrescriptionCalculator } from "@/components/PrescriptionCalculator";
 
 /**
  * DESIGN PHILOSOPHY: Governance Design System
@@ -884,6 +885,19 @@ export default function Home() {
                 <p className="text-xs text-slate-600">Regras de autenticação digital e disponibilidade 24/7 do sistema</p>
               </Card>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* PRESCRIPTION CALCULATOR SECTION */}
+      <section className="py-20 bg-gradient-to-br from-blue-50 to-indigo-50">
+        <div className="container">
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-12 text-center">
+              <h2 className="text-4xl font-bold text-slate-900 mb-4">Calculadora de Prescrição</h2>
+              <p className="text-lg text-slate-600">Calcule a data de prescrição de processos de Tomada de Contas Especial e receba alertas quando faltarem 6 meses para prescrever</p>
+            </div>
+            <PrescriptionCalculator />
           </div>
         </div>
       </section>
