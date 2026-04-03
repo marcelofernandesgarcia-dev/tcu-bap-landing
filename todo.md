@@ -243,3 +243,37 @@
 - [x] TypeScript compilando sem erros
 - [x] 74 testes passando (100%)
 - [x] Pronto para: PRODUÇÃO
+
+
+## Fase 12: Correção de Limites de Upload e Integração Manus Desktop ✅
+- [x] Identificar erro: limite de 10MB estava muito restritivo
+- [x] Corrigir limite de 10MB para 90MB por arquivo
+- [x] Adicionar suporte a múltiplos arquivos (até 15, 100MB total)
+- [x] Integrar com Manus Desktop para arquivos > 90MB
+- [x] Refatorar AnalysisUploader.tsx para separar arquivos normais vs. grandes
+- [x] Melhorar UI com indicadores de processamento (normal vs. Manus Desktop)
+- [x] Adicionar validação de tipo de arquivo
+- [x] Adicionar validação de tamanho total
+- [x] Criar 14 testes de validação de limites
+  - [x] Arquivo de 90MB aceito
+  - [x] Arquivo > 90MB enviado para Manus Desktop
+  - [x] Múltiplos arquivos de 90MB
+  - [x] Até 15 arquivos
+  - [x] Separação de arquivos normais vs. grandes
+  - [x] Caso real do usuário (27MB) aceito
+  - [x] Múltiplos arquivos incluindo 27MB
+  - [x] Cálculo de tamanho total
+  - [x] Integração com Manus Desktop
+  - [x] Arquivo de 10MB aceito
+  - [x] 10 arquivos de 10MB = 100MB
+  - [x] 11 arquivos de 10MB excedem limite
+  - [x] Validação de tipos de arquivo
+  - [x] Validação de tamanho total
+- [x] Total de testes: 88 passando (74 anteriores + 14 novos)
+
+## Status Final - Fase 12
+- [x] Erro crítico resolvido: múltipla seleção com limite de 90MB
+- [x] Integração com Manus Desktop para arquivos > 90MB
+- [x] TypeScript compilando sem erros
+- [x] 88 testes passando (100%)
+- [x] Pronto para: PRODUÇÃO

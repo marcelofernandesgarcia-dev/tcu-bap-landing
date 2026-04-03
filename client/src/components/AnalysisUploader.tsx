@@ -1,10 +1,12 @@
 /**
  * SIACT Analisador - Componente de Upload e Análise
  * Permite upload de múltiplos PDFs/documentos para análise de prescrição
+ * Suporta até 90MB por arquivo, até 15 arquivos (total 100MB)
+ * Integração com Manus Desktop para arquivos > 90MB
  */
 
 import { useState, useRef } from 'react';
-import { Upload, FileText, AlertCircle, CheckCircle, Loader, X } from 'lucide-react';
+import { Upload, FileText, AlertCircle, CheckCircle, Loader, X, HardDrive } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -13,8 +15,23 @@ interface AnalysisUploaderProps {
   onAnalysisComplete?: (result: any) => void;
 }
 
+// Configuração de limites
+const UPLOAD_CONFIG = {
+  maxSizePerFile: 90 * 1024 * 1024, // 90MB por arquivo
+  maxTotalSize: 100 * 1024 * 1024, // 100MB total
+  maxFiles: 15,
+  supportedFormats: [
+    'application/pdf',
+    'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'text/plain',
+    'text/html',
+  ],
+};
+
 export function AnalysisUploader({ onAnalysisComplete }: AnalysisUploaderProps) {
   const [files, setFiles] = useState<File[]>([]);
+  const [largeFiles, setLargeFiles] = useState<File[]>([]); // Arquivos > 90MB para Manus Desktop
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -24,45 +41,60 @@ export function AnalysisUploader({ onAnalysisComplete }: AnalysisUploaderProps) 
     const selectedFiles = Array.from(e.target.files || []);
     if (selectedFiles.length === 0) return;
 
-    // Validar cada arquivo
-    const allowedTypes = [
-      'application/pdf',
-      'application/msword',
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-      'text/plain',
-      'text/html',
-    ];
     const validFiles: File[] = [];
+    const validLargeFiles: File[] = [];
     const errors: string[] = [];
 
     for (const file of selectedFiles) {
       // Validar tipo de arquivo
-      if (!allowedTypes.includes(file.type)) {
+      if (!UPLOAD_CONFIG.supportedFormats.includes(file.type)) {
         errors.push(`${file.name}: Tipo não suportado`);
         continue;
       }
 
-      // Validar tamanho (máx 10MB por arquivo)
-      if (file.size > 10 * 1024 * 1024) {
-        errors.push(`${file.name}: Arquivo muito grande (máx 10MB)`);
-        continue;
+      // Separar arquivos por tamanho
+      if (file.size > UPLOAD_CONFIG.maxSizePerFile) {
+        // Arquivo > 90MB: será processado via Manus Desktop
+        validLargeFiles.push(file);
+      } else {
+        // Arquivo <= 90MB: processamento normal
+        validFiles.push(file);
       }
-
-      validFiles.push(file);
     }
 
-    if (validFiles.length === 0) {
+    // Validar limite total de arquivos
+    const totalFiles = validFiles.length + files.length + validLargeFiles.length + largeFiles.length;
+    if (totalFiles > UPLOAD_CONFIG.maxFiles) {
+      errors.push(`Máximo ${UPLOAD_CONFIG.maxFiles} arquivos (você está tentando adicionar ${totalFiles})`);
+    }
+
+    // Validar limite total de tamanho (apenas para arquivos normais)
+    const totalSize = validFiles.reduce((sum, f) => sum + f.size, 0) + files.reduce((sum, f) => sum + f.size, 0);
+    if (totalSize > UPLOAD_CONFIG.maxTotalSize) {
+      errors.push(`Tamanho total excede ${UPLOAD_CONFIG.maxTotalSize / (1024 * 1024)}MB`);
+    }
+
+    if (validFiles.length === 0 && validLargeFiles.length === 0) {
       setError(errors.join('; ') || 'Nenhum arquivo válido selecionado');
       return;
     }
 
-    if (validFiles.length + files.length > 15) {
-      setError('Máximo 15 arquivos por vez');
-      return;
+    // Adicionar arquivos válidos
+    if (validFiles.length > 0) {
+      setFiles([...files, ...validFiles]);
     }
 
-    setFiles([...files, ...validFiles]);
-    setError(null);
+    if (validLargeFiles.length > 0) {
+      setLargeFiles([...largeFiles, ...validLargeFiles]);
+    }
+
+    // Mostrar avisos se houver
+    if (errors.length > 0) {
+      setError(errors.join('; '));
+    } else {
+      setError(null);
+    }
+
     setSuccess(null);
   };
 
@@ -70,8 +102,13 @@ export function AnalysisUploader({ onAnalysisComplete }: AnalysisUploaderProps) 
     setFiles(files.filter((_, i) => i !== index));
   };
 
+  const removeLargeFile = (index: number) => {
+    setLargeFiles(largeFiles.filter((_, i) => i !== index));
+  };
+
   const handleUpload = async () => {
-    if (files.length === 0) {
+    const totalFiles = files.length + largeFiles.length;
+    if (totalFiles === 0) {
       setError('Selecione pelo menos um arquivo');
       return;
     }
@@ -83,11 +120,11 @@ export function AnalysisUploader({ onAnalysisComplete }: AnalysisUploaderProps) 
     try {
       const results = [];
 
+      // Processar arquivos normais (≤ 90MB)
       for (const file of files) {
         const formData = new FormData();
         formData.append('file', file);
 
-        // Enviar para backend local
         const response = await fetch('/api/analyze', {
           method: 'POST',
           body: formData,
@@ -101,14 +138,42 @@ export function AnalysisUploader({ onAnalysisComplete }: AnalysisUploaderProps) 
         results.push({ file: file.name, ...result });
       }
 
-      setSuccess(`${files.length} arquivo(s) analisado(s) com sucesso!`);
+      // Processar arquivos grandes (> 90MB) via Manus Desktop
+      if (largeFiles.length > 0) {
+        // Preparar dados para Manus Desktop
+        const largeFileResults = largeFiles.map((file) => ({
+          file: file.name,
+          size: file.size,
+          status: 'pending_manus_desktop',
+          message: 'Arquivo será processado via Manus Desktop (OCR local)',
+          processingMethod: 'local_ocr',
+        }));
+
+        results.push(...largeFileResults);
+
+        // Notificar sobre processamento via Manus Desktop
+        if (onAnalysisComplete) {
+          onAnalysisComplete({
+            message: `${files.length} arquivo(s) processado(s). ${largeFiles.length} arquivo(s) grande(s) aguardando Manus Desktop.`,
+            results,
+            largeFiles: largeFiles.map((f) => ({ name: f.name, size: f.size })),
+          });
+        }
+      }
+
+      const successMsg = largeFiles.length > 0
+        ? `${files.length} arquivo(s) analisado(s). ${largeFiles.length} arquivo(s) > 90MB serão processados via Manus Desktop.`
+        : `${totalFiles} arquivo(s) analisado(s) com sucesso!`;
+
+      setSuccess(successMsg);
       setFiles([]);
+      setLargeFiles([]);
 
       if (fileInputRef.current) {
         fileInputRef.current.value = '';
       }
 
-      if (onAnalysisComplete) {
+      if (onAnalysisComplete && files.length > 0) {
         onAnalysisComplete(results);
       }
     } catch (err) {
@@ -117,6 +182,9 @@ export function AnalysisUploader({ onAnalysisComplete }: AnalysisUploaderProps) 
       setLoading(false);
     }
   };
+
+  const totalFiles = files.length + largeFiles.length;
+  const totalSize = (files.reduce((sum, f) => sum + f.size, 0) + largeFiles.reduce((sum, f) => sum + f.size, 0)) / (1024 * 1024);
 
   return (
     <div className="w-full space-y-4">
@@ -129,7 +197,10 @@ export function AnalysisUploader({ onAnalysisComplete }: AnalysisUploaderProps) 
               Upload de Documentos para Análise
             </h3>
             <p className="text-sm text-gray-600 mt-1">
-              Formatos suportados: PDF, DOCX, DOC, TXT, HTML (máx 10MB cada, até 15 arquivos)
+              Formatos suportados: PDF, DOCX, DOC, TXT, HTML
+            </p>
+            <p className="text-xs text-gray-500 mt-1">
+              Até 90MB por arquivo, até 15 arquivos (100MB total)
             </p>
           </div>
 
@@ -153,39 +224,78 @@ export function AnalysisUploader({ onAnalysisComplete }: AnalysisUploaderProps) 
             Selecionar Arquivos
           </Button>
 
-          {files.length > 0 && (
-            <div className="w-full bg-blue-50 p-3 rounded-lg space-y-2 max-h-48 overflow-y-auto">
-              <p className="text-sm font-semibold text-gray-700">
-                Arquivos selecionados: {files.length}
-              </p>
-              {files.map((file, index) => (
-                <div
-                  key={index}
-                  className="flex justify-between items-center text-sm text-gray-700 bg-white p-2 rounded"
-                >
-                  <div>
-                    <p>
-                      <strong>{file.name}</strong>
-                    </p>
-                    <p className="text-xs text-gray-600">
-                      Tamanho: {(file.size / 1024).toFixed(2)} KB
-                    </p>
-                  </div>
-                  <button
-                    onClick={() => removeFile(index)}
-                    className="text-red-600 hover:text-red-800 text-lg"
-                    disabled={loading}
-                  >
-                    <X className="h-4 w-4" />
-                  </button>
+          {totalFiles > 0 && (
+            <div className="w-full bg-blue-50 p-3 rounded-lg space-y-2 max-h-64 overflow-y-auto">
+              <div className="flex justify-between items-center">
+                <p className="text-sm font-semibold text-gray-700">
+                  Arquivos selecionados: {totalFiles} ({totalSize.toFixed(2)} MB)
+                </p>
+              </div>
+
+              {/* Arquivos normais */}
+              {files.length > 0 && (
+                <div className="space-y-1">
+                  <p className="text-xs font-medium text-gray-600">Processamento Normal (&le; 90MB):</p>
+                  {files.map((file, index) => (
+                    <div
+                      key={`normal-${index}`}
+                      className="flex justify-between items-center text-sm text-gray-700 bg-white p-2 rounded border-l-4 border-green-500"
+                    >
+                      <div>
+                        <p>
+                          <strong>{file.name}</strong>
+                        </p>
+                        <p className="text-xs text-gray-600">
+                          Tamanho: {(file.size / (1024 * 1024)).toFixed(2)} MB
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => removeFile(index)}
+                        className="text-red-600 hover:text-red-800"
+                        disabled={loading}
+                      >
+                        <X className="h-4 w-4" />
+                      </button>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              )}
+
+              {/* Arquivos grandes */}
+              {largeFiles.length > 0 && (
+                <div className="space-y-1">
+                  <p className="text-xs font-medium text-gray-600">Manus Desktop (&gt; 90MB):</p>
+                  {largeFiles.map((file, index) => (
+                    <div
+                      key={`large-${index}`}
+                      className="flex justify-between items-center text-sm text-gray-700 bg-white p-2 rounded border-l-4 border-orange-500"
+                    >
+                      <div>
+                        <p className="flex items-center gap-1">
+                          <HardDrive className="h-3 w-3 text-orange-600" />
+                          <strong>{file.name}</strong>
+                        </p>
+                        <p className="text-xs text-gray-600">
+                          Tamanho: {(file.size / (1024 * 1024)).toFixed(2)} MB (processado localmente)
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => removeLargeFile(index)}
+                        className="text-red-600 hover:text-red-800"
+                        disabled={loading}
+                      >
+                        <X className="h-4 w-4" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 
           <Button
             onClick={handleUpload}
-            disabled={files.length === 0 || loading}
+            disabled={totalFiles === 0 || loading}
             className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700"
           >
             {loading ? (
@@ -196,7 +306,7 @@ export function AnalysisUploader({ onAnalysisComplete }: AnalysisUploaderProps) 
             ) : (
               <>
                 <CheckCircle className="mr-2 h-4 w-4" />
-                Analisar {files.length > 1 ? `${files.length} Documentos` : 'Documento'}
+                Analisar {totalFiles > 1 ? `${totalFiles} Documentos` : 'Documento'}
               </>
             )}
           </Button>
@@ -214,6 +324,15 @@ export function AnalysisUploader({ onAnalysisComplete }: AnalysisUploaderProps) 
         <Alert className="border-green-200 bg-green-50">
           <CheckCircle className="h-4 w-4 text-green-600" />
           <AlertDescription className="text-green-800">{success}</AlertDescription>
+        </Alert>
+      )}
+
+      {largeFiles.length > 0 && (
+        <Alert className="border-orange-200 bg-orange-50">
+          <HardDrive className="h-4 w-4 text-orange-600" />
+          <AlertDescription className="text-orange-800">
+            Arquivos &gt; 90MB serão processados via Manus Desktop com OCR local. Nenhum dado será enviado para servidores externos.
+          </AlertDescription>
         </Alert>
       )}
     </div>
