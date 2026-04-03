@@ -133,3 +133,29 @@
 - [x] TypeScript: Compilando sem erros
 - [x] Dev Server: Rodando
 - [x] Pronto para: PRODUÇÃO
+
+## Fase 9: Correção de Rota /api/analyze ✅
+- [x] Identificar erro: fetch('/api/analyze') retornava HTML em vez de JSON
+- [x] Verificar rota Express em server/index.ts
+- [x] Confirmar que rota existe e está respondendo corretamente
+- [x] Testar com curl: ✅ SUCESSO
+  - [x] Extração de número do processo: ✅
+  - [x] Extração de datas: ✅
+  - [x] Extração de valores: ✅
+  - [x] Identificação de entidades: ✅
+  - [x] Análise de prescrição: ✅
+  - [x] Mascaramento LGPD: ✅
+- [x] Criar arquivo server/routes/analyze.ts com imports corretos (ES modules)
+- [x] Validar TypeScript: ✅ Compilando sem erros
+- [x] Criar 10 testes de integração: ✅ TODOS PASSANDO
+  - [x] Teste de extração de número do processo
+  - [x] Teste de extração de datas
+  - [x] Teste de extração de valores monetários
+  - [x] Teste de identificação de entidades
+  - [x] Teste de análise de prescrição
+  - [x] Teste de mascaramento LGPD
+  - [x] Teste de resposta JSON válida
+  - [x] Teste de múltiplos formatos de arquivo
+  - [x] Teste de prescrição INADMISSIBLE
+  - [x] Teste de reasoning na análise
+- [x] Total de testes: 31 passando (21 anteriores + 10 novos)

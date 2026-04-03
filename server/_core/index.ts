@@ -7,6 +7,7 @@ import { registerOAuthRoutes } from "./oauth";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
+import analyzeRouter from "../routes/analyze";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -37,6 +38,8 @@ async function startServer() {
   app.use(express.text({ limit: "100mb" }));
   // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);
+  // Análise de documentos
+  app.use("/api", analyzeRouter);
   // tRPC API
   app.use(
     "/api/trpc",
