@@ -5,15 +5,27 @@
 import { useState } from 'react';
 import { AnalysisUploader } from '@/components/AnalysisUploader';
 import { AnalysisResults } from '@/components/AnalysisResults';
+import { MultiFileUploader } from '@/components/MultiFileUploader';
 import { Card } from '@/components/ui/card';
-import { AlertCircle } from 'lucide-react';
+import { AlertCircle, FileText } from 'lucide-react';
+import { OCRResult } from '@/hooks/useOCR';
 
 export function Analyzer() {
   const [analysisResult, setAnalysisResult] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [ocrResults, setOcrResults] = useState<OCRResult[]>([]);
+  const [showOCRUploader, setShowOCRUploader] = useState(false);
 
   const handleAnalysisComplete = (result: any) => {
     setAnalysisResult(result);
+  };
+
+  const handleFilesProcessed = (results: OCRResult[]) => {
+    setOcrResults(results);
+    // Combinar textos extraídos e enviar para análise
+    const combinedText = results.map(r => `\n=== ${r.filename} ===\n${r.text}`).join('\n');
+    // TODO: Enviar para análise
+    console.log('OCR Results:', results);
   };
 
   return (
