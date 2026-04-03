@@ -94,7 +94,7 @@ export default function Dashboard() {
   const filteredAnalyses = useMemo(() => {
     if (!analyses?.items) return [];
     
-    return analyses.items.filter((analysis: AnalysisRecord) => {
+    return analyses.items.filter((analysis: any) => {
       const matchesSearch =
         !searchTerm ||
         analysis.processNumber?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -335,7 +335,7 @@ export default function Dashboard() {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredAnalyses.map((analysis: AnalysisRecord) => (
+                  {filteredAnalyses.map((analysis: any) => (
                     <tr key={analysis.id} className="border-b border-slate-200 hover:bg-slate-50">
                       <td className="px-6 py-4">
                         <p className="text-sm font-medium text-slate-900">
