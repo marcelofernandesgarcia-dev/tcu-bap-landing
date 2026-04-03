@@ -7,6 +7,7 @@ import { ChevronRight, FileText, AlertTriangle, CheckCircle2, Clock, DollarSign,
 import { Dashboard } from "@/components/Dashboard";
 import { FlowDiagram } from "@/components/FlowDiagram";
 import { FAQSearch } from "@/components/FAQSearch";
+import { HeroSidebar } from "@/components/HeroSidebar";
 
 /**
  * DESIGN PHILOSOPHY: Governance Design System
@@ -274,7 +275,9 @@ export default function Home() {
         </div>
         
         <div className="container relative z-10">
-          <div className="max-w-3xl">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            {/* LEFT SIDE - Existing Content */}
+            <div>
             {/* SIACT Logo */}
             <div className="mb-8">
               <p className="text-white font-bold text-5xl md:text-6xl">SIACT</p>
@@ -308,6 +311,12 @@ export default function Home() {
               >
                 Documentos Normativos
               </Button>
+            </div>
+            </div>
+
+            {/* RIGHT SIDE - HeroSidebar */}
+            <div className="hidden lg:block">
+              <HeroSidebar />
             </div>
           </div>
         </div>
