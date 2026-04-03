@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Search, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
@@ -11,11 +11,12 @@ interface FAQItem {
 
 interface FAQSearchProps {
   faqData: Record<string, { count: number; color: string; questions: FAQItem[] }>;
+  initialCategory?: string;
 }
 
-export function FAQSearch({ faqData }: FAQSearchProps) {
+export function FAQSearch({ faqData, initialCategory }: FAQSearchProps) {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(initialCategory || null);
 
   // Flatten all FAQ items with category info
   const allFaqItems = useMemo(() => {
@@ -27,6 +28,13 @@ export function FAQSearch({ faqData }: FAQSearchProps) {
     });
     return items;
   }, [faqData]);
+
+  // Set initial category on mount
+  useEffect(() => {
+    if (initialCategory && faqData[initialCategory]) {
+      setSelectedCategory(initialCategory);
+    }
+  }, [initialCategory, faqData]);
 
   // Filter items based on search query and category
   const filteredItems = useMemo(() => {
@@ -89,18 +97,18 @@ export function FAQSearch({ faqData }: FAQSearchProps) {
       {/* Search Input */}
       <div className="relative">
         <div className="relative">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+          <Search className="absolute left-3 top-3 w-5 h-5 text-slate-400" />
           <Input
             type="text"
             placeholder="Busque por palavras-chave (ex: prescrição, BAP, juros, valores...)"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-12 pr-12 py-3 text-base border-2 border-slate-300 focus:border-blue-700 focus:ring-2 focus:ring-blue-200"
+            className="pl-10 py-2 text-base"
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery('')}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+              className="absolute right-3 top-3 text-slate-400 hover:text-slate-600"
             >
               <X className="w-5 h-5" />
             </button>
@@ -108,26 +116,27 @@ export function FAQSearch({ faqData }: FAQSearchProps) {
         </div>
       </div>
 
-      {/* Category Filter */}
+      {/* Category Filter Buttons */}
       <div className="flex flex-wrap gap-2">
         <button
           onClick={() => setSelectedCategory(null)}
-          className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+          className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
             selectedCategory === null
-              ? 'bg-blue-700 text-white'
-              : 'bg-slate-200 text-slate-700 hover:bg-slate-300'
+              ? 'bg-slate-800 text-white'
+              : 'bg-slate-200 text-slate-800 hover:bg-slate-300'
           }`}
         >
           Todas as Categorias
         </button>
+
         {Object.entries(faqData).map(([category, data]) => (
           <button
             key={category}
             onClick={() => setSelectedCategory(category)}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
               selectedCategory === category
-                ? `bg-${categoryColors[category] || 'blue'}-700 text-white`
-                : `bg-${categoryColors[category] || 'blue'}-100 text-${categoryColors[category] || 'blue'}-800 hover:bg-${categoryColors[category] || 'blue'}-200`
+                ? `${getCategoryBadgeColor(category)} border-2`
+                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
             }`}
           >
             {category} ({data.count})
@@ -135,53 +144,34 @@ export function FAQSearch({ faqData }: FAQSearchProps) {
         ))}
       </div>
 
-      {/* Results Summary */}
-      <div className="flex items-center justify-between">
-        <p className="text-sm text-slate-600">
-          <span className="font-semibold text-slate-900">{filteredItems.length}</span>
-          {' '}
-          resultado{filteredItems.length !== 1 ? 's' : ''} encontrado{filteredItems.length !== 1 ? 's' : ''}
-          {searchQuery && ` para "${searchQuery}"`}
-          {selectedCategory && ` em ${selectedCategory}`}
-        </p>
+      {/* Results Count */}
+      <div className="text-sm text-slate-600 font-medium">
+        {filteredItems.length} resultado{filteredItems.length !== 1 ? 's' : ''} encontrado{filteredItems.length !== 1 ? 's' : ''} {selectedCategory && `em ${selectedCategory}`}
       </div>
 
-      {/* Results */}
-      {filteredItems.length > 0 ? (
-        <div className="space-y-4">
-          {filteredItems.map((item, idx) => (
-            <Card key={idx} className="p-6 border-l-4 border-l-blue-700 hover:shadow-md transition-shadow">
-              <div className="flex items-start justify-between gap-4 mb-3">
-                <h3 className="text-lg font-bold text-slate-900 flex-grow">
-                  {highlightText(item.q, searchQuery)}
-                </h3>
-                <span className={`px-3 py-1 rounded-full text-xs font-semibold border whitespace-nowrap ${getCategoryBadgeColor(item.category)}`}>
-                  {item.category}
-                </span>
-              </div>
-              <p className="text-slate-700 leading-relaxed">
+      {/* FAQ Items */}
+      <div className="space-y-4">
+        {filteredItems.length > 0 ? (
+          filteredItems.map((item, idx) => (
+            <Card key={idx} className="p-6 border-l-4 border-l-blue-500 hover:shadow-md transition-shadow">
+              <h3 className="font-bold text-slate-900 mb-3 text-base">
+                {highlightText(item.q, searchQuery)}
+              </h3>
+              <p className="text-slate-700 text-sm leading-relaxed mb-3">
                 {highlightText(item.a, searchQuery)}
               </p>
+              <div className={`inline-block text-xs font-semibold px-3 py-1 rounded-full border ${getCategoryBadgeColor(item.category || '')}`}>
+                {item.category}
+              </div>
             </Card>
-          ))}
-        </div>
-      ) : (
-        <Card className="p-12 text-center bg-slate-50 border-2 border-dashed border-slate-300">
-          <p className="text-slate-600 text-lg mb-2">
-            Nenhum resultado encontrado
-          </p>
-          <p className="text-slate-500 text-sm">
-            Tente usar outras palavras-chave ou navegue por categorias
-          </p>
-        </Card>
-      )}
-
-      {/* Quick Tips */}
-      <Card className="p-4 bg-blue-50 border-blue-200">
-        <p className="text-sm text-blue-900">
-          <strong>💡 Dica:</strong> Use palavras-chave como "prescrição", "BAP", "juros", "valores", "responsável", "TCU", "CGU" para encontrar respostas rapidamente.
-        </p>
-      </Card>
+          ))
+        ) : (
+          <Card className="p-8 text-center bg-slate-50">
+            <p className="text-slate-600 font-medium">Nenhum resultado encontrado</p>
+            <p className="text-slate-500 text-sm mt-2">Tente ajustar sua busca ou explorar outras categorias</p>
+          </Card>
+        )}
+      </div>
     </div>
   );
 }
