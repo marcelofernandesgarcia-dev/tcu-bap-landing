@@ -9,6 +9,7 @@ import { MultiFileUploader } from '@/components/MultiFileUploader';
 import { Card } from '@/components/ui/card';
 import { AlertCircle, FileText } from 'lucide-react';
 import { OCRResult } from '@/hooks/useOCR';
+import { mapBackendAnalysisToFrontend } from '@/lib/analysisMapper';
 
 export function Analyzer() {
   const [analysisResult, setAnalysisResult] = useState<any>(null);
@@ -17,7 +18,13 @@ export function Analyzer() {
   const [showOCRUploader, setShowOCRUploader] = useState(false);
 
   const handleAnalysisComplete = (result: any) => {
-    setAnalysisResult(result);
+    try {
+      const mappedResult = mapBackendAnalysisToFrontend(result);
+      setAnalysisResult(mappedResult);
+    } catch (error) {
+      console.error('Erro ao mapear análise:', error);
+      setAnalysisResult(result);
+    }
   };
 
   const handleFilesProcessed = (results: OCRResult[]) => {
