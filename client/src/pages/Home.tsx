@@ -260,11 +260,12 @@ export default function Home() {
               <p className="text-xs text-slate-500">TCE • PRESCRIÇÃO • BAP</p>
             </div>
           </div>
-          <div className="hidden md:flex gap-6">
+          <div className="hidden md:flex gap-4 items-center">
             <a href="#conceitos" className="text-sm text-slate-600 hover:text-blue-700">Conceitos</a>
             <a href="#timeline" className="text-sm text-slate-600 hover:text-blue-700">Timeline</a>
             <a href="#processo" className="text-sm text-slate-600 hover:text-blue-700">Processo</a>
             <a href="#faq" className="text-sm text-slate-600 hover:text-blue-700">FAQ</a>
+            <a href="/analyzer" className="px-3 py-2 bg-blue-600 text-white rounded-lg text-sm font-semibold hover:bg-blue-700 transition">🔍 Analisador</a>
           </div>
         </div>
       </nav>
