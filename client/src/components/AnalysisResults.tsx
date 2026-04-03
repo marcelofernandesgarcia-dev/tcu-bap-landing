@@ -37,6 +37,18 @@ export function AnalysisResults({ analysis, loading }: AnalysisResultsProps) {
     return null;
   }
 
+  // Validar que todas as propriedades existem
+  if (!analysis.admissibility || !analysis.prescription || !analysis.bapEligibility) {
+    return (
+      <Alert className="border-red-300 bg-red-50">
+        <AlertCircle className="h-4 w-4 text-red-600" />
+        <AlertDescription className="text-red-800">
+          Erro: Dados de análise incompletos. Por favor, tente novamente.
+        </AlertDescription>
+      </Alert>
+    );
+  }
+
   const steps = [
     analysis.admissibility,
     analysis.prescription,
@@ -56,47 +68,50 @@ export function AnalysisResults({ analysis, loading }: AnalysisResultsProps) {
 
       {/* Análise em Etapas */}
       <div className="space-y-4">
-        {steps.map((step, idx) => (
-          <Card key={idx} className="p-6 border-l-4" style={{
-            borderLeftColor: step.passed ? '#10b981' : '#ef4444'
-          }}>
-            <div className="flex items-start space-x-4">
-              <div className="flex-shrink-0 mt-1">
-                {step.passed ? (
-                  <CheckCircle className="h-6 w-6 text-green-600" />
-                ) : (
-                  <XCircle className="h-6 w-6 text-red-600" />
-                )}
-              </div>
-              
-              <div className="flex-1">
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                  {step.stepName}
-                </h3>
+        {steps.map((step, idx) => {
+          if (!step || step.passed === undefined) return null;
+          return (
+            <Card key={idx} className="p-6 border-l-4" style={{
+              borderLeftColor: step.passed ? '#10b981' : '#ef4444'
+            }}>
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0 mt-1">
+                  {step.passed ? (
+                    <CheckCircle className="h-6 w-6 text-green-600" />
+                  ) : (
+                    <XCircle className="h-6 w-6 text-red-600" />
+                  )}
+                </div>
                 
-                <div className="space-y-2">
-                  {step.details.map((detail, detailIdx) => (
-                    <div key={detailIdx} className="flex items-start space-x-2">
-                      <span className="text-gray-600 text-sm">
-                        {detail}
-                      </span>
-                    </div>
-                  ))}
-                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                    {step.stepName}
+                  </h3>
+                  
+                  <div className="space-y-2">
+                    {step.details.map((detail, detailIdx) => (
+                      <div key={detailIdx} className="flex items-start space-x-2">
+                        <span className="text-gray-600 text-sm">
+                          {detail}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
 
-                <div className="mt-4 inline-block">
-                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                    step.passed
-                      ? 'bg-green-100 text-green-800'
-                      : 'bg-red-100 text-red-800'
-                  }`}>
-                    {step.status}
-                  </span>
+                  <div className="mt-4 inline-block">
+                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                      step.passed
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
+                    }`}>
+                      {step.status}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-          </Card>
-        ))}
+            </Card>
+          );
+        })}
       </div>
 
       {/* Parecer da IA (se disponível) */}
