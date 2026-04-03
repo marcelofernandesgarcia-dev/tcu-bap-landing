@@ -83,11 +83,11 @@ export function FAQSearch({ faqData, initialCategory }: FAQSearchProps) {
     'Planilha BAP': 'amber',
   };
 
-  const getCategoryBadgeColor = (category: string) => {
+  const getCategoryBadgeColor = (category: string, isSelected: boolean = false) => {
     const colorMap: Record<string, string> = {
-      blue: 'bg-blue-100 text-blue-800 border-blue-300',
-      green: 'bg-green-100 text-green-800 border-green-300',
-      amber: 'bg-amber-100 text-amber-800 border-amber-300',
+      blue: isSelected ? 'bg-blue-500 text-white border-blue-600' : 'bg-blue-100 text-blue-800 border-blue-300',
+      green: isSelected ? 'bg-green-500 text-white border-green-600' : 'bg-green-100 text-green-800 border-green-300',
+      amber: isSelected ? 'bg-amber-500 text-white border-amber-600' : 'bg-amber-100 text-amber-800 border-amber-300',
     };
     return colorMap[categoryColors[category] || 'blue'] || colorMap.blue;
   };
@@ -133,10 +133,10 @@ export function FAQSearch({ faqData, initialCategory }: FAQSearchProps) {
           <button
             key={category}
             onClick={() => setSelectedCategory(category)}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors border-2 ${
               selectedCategory === category
-                ? `${getCategoryBadgeColor(category)} border-2`
-                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                ? getCategoryBadgeColor(category, true)
+                : getCategoryBadgeColor(category, false)
             }`}
           >
             {category} ({data.count})
@@ -160,7 +160,7 @@ export function FAQSearch({ faqData, initialCategory }: FAQSearchProps) {
               <p className="text-slate-700 text-sm leading-relaxed mb-3">
                 {highlightText(item.a, searchQuery)}
               </p>
-              <div className={`inline-block text-xs font-semibold px-3 py-1 rounded-full border ${getCategoryBadgeColor(item.category || '')}`}>
+              <div className={`inline-block text-xs font-semibold px-3 py-1 rounded-full border-2 ${getCategoryBadgeColor(item.category || '', false)}`}>
                 {item.category}
               </div>
             </Card>
