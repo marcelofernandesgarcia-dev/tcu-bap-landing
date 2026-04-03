@@ -1,8 +1,8 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card } from "@/components/ui/card";
-import { AlertCircle, CheckCircle2, FileText, Loader2, X } from "lucide-react";
+import { AlertCircle, CheckCircle2, FileText, Loader2, X, Upload } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 
 interface FileItem {
@@ -14,38 +14,62 @@ interface FileItem {
   status?: "pending" | "uploading" | "processing" | "success" | "error";
   progress?: number;
   error?: string;
+  file?: File;
 }
 
 /**
- * Componente para seleção e processamento em batch de múltiplos arquivos
+ * Componente para upload e processamento de múltiplos arquivos
+ * Aceita até 15 arquivos, máximo 100MB total
  */
-export function BatchFileSelector() {
+export function MultipleFileUpload() {
   const [files, setFiles] = useState<FileItem[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
   const [totalProgress, setTotalProgress] = useState(0);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const uploadChunkedMutation = trpc.uploadChunked.processBatchChunks.useMutation();
 
   /**
-   * Adicionar arquivo à lista
+   * Adicionar múltiplos arquivos
    */
   const handleFileSelect = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const selectedFiles = Array.from(event.target.files || []);
+    (selectedFileList: FileList | null) => {
+      if (!selectedFileList) return;
 
-      const newFiles: FileItem[] = selectedFiles.map((file) => ({
-        id: `${file.name}-${Date.now()}`,
+      const newFiles: FileItem[] = Array.from(selectedFileList).map((file) => ({
+        id: `${file.name}-${Date.now()}-${Math.random()}`,
         name: file.name,
         size: file.size,
         type: file.type,
         selected: true,
         status: "pending",
         progress: 0,
+        file: file,
       }));
 
+      // Validar limite de 15 arquivos
+      const totalFiles = files.length + newFiles.length;
+      if (totalFiles > 15) {
+        alert(`Máximo 15 arquivos permitidos. Você selecionou ${totalFiles}.`);
+        return;
+      }
+
+      // Validar tamanho total
+      const totalSize = files.reduce((sum, f) => sum + f.size, 0) +
+        newFiles.reduce((sum, f) => sum + f.size, 0);
+      if (totalSize > 100 * 1024 * 1024) {
+        alert(`Tamanho total excede 100MB. Total: ${(totalSize / 1024 / 1024).toFixed(2)}MB`);
+        return;
+      }
+
       setFiles((prev) => [...prev, ...newFiles]);
+      
+      // Limpar input
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
     },
-    []
+    [files]
   );
 
   /**
@@ -58,7 +82,7 @@ export function BatchFileSelector() {
   }, []);
 
   /**
-   * Remover arquivo da lista
+   * Remover arquivo
    */
   const removeFile = useCallback((id: string) => {
     setFiles((prev) => prev.filter((f) => f.id !== id));
@@ -76,7 +100,7 @@ export function BatchFileSelector() {
    * Processar arquivos selecionados
    */
   const handleProcessBatch = useCallback(async () => {
-    const selectedFiles = files.filter((f) => f.selected);
+    const selectedFiles = files.filter((f) => f.selected && f.file);
 
     if (selectedFiles.length === 0) {
       alert("Selecione pelo menos um arquivo");
@@ -87,11 +111,12 @@ export function BatchFileSelector() {
     setTotalProgress(0);
 
     try {
+      // Simular processamento
       for (let i = 0; i < selectedFiles.length; i++) {
         const file = selectedFiles[i];
         const fileIndex = files.findIndex((f) => f.id === file.id);
 
-        // Atualizar status para uploading
+        // Atualizar para uploading
         setFiles((prev) =>
           prev.map((f, idx) =>
             idx === fileIndex ? { ...f, status: "uploading", progress: 0 } : f
@@ -99,14 +124,10 @@ export function BatchFileSelector() {
         );
 
         // Simular upload em chunks
-        const chunkSize = 5 * 1024 * 1024; // 5MB
-        const totalChunks = Math.ceil(file.size / chunkSize);
-
-        for (let chunkIdx = 0; chunkIdx < totalChunks; chunkIdx++) {
-          // Simular delay de upload
-          await new Promise((resolve) => setTimeout(resolve, 100));
-
-          const progress = Math.round(((chunkIdx + 1) / totalChunks) * 100);
+        for (let chunk = 0; chunk < 5; chunk++) {
+          await new Promise((resolve) => setTimeout(resolve, 200));
+          const progress = Math.min(((chunk + 1) / 5) * 100, 100);
+          
           setFiles((prev) =>
             prev.map((f, idx) =>
               idx === fileIndex ? { ...f, progress } : f
@@ -114,17 +135,17 @@ export function BatchFileSelector() {
           );
         }
 
-        // Atualizar status para processing
+        // Atualizar para processing
         setFiles((prev) =>
           prev.map((f, idx) =>
             idx === fileIndex ? { ...f, status: "processing", progress: 100 } : f
           )
         );
 
-        // Simular análise
+        // Simular processamento
         await new Promise((resolve) => setTimeout(resolve, 500));
 
-        // Atualizar status para success
+        // Atualizar para success
         setFiles((prev) =>
           prev.map((f, idx) =>
             idx === fileIndex ? { ...f, status: "success" } : f
@@ -132,10 +153,10 @@ export function BatchFileSelector() {
         );
 
         // Atualizar progresso total
-        const completedCount = i + 1;
-        setTotalProgress(Math.round((completedCount / selectedFiles.length) * 100));
+        setTotalProgress(((i + 1) / selectedFiles.length) * 100);
       }
     } catch (error) {
+      alert(`Erro ao processar: ${error}`);
       setFiles((prev) =>
         prev.map((f) =>
           f.selected ? { ...f, status: "error", error: String(error) } : f
@@ -186,29 +207,30 @@ export function BatchFileSelector() {
     <div className="w-full max-w-4xl mx-auto p-6 space-y-6">
       {/* Header */}
       <div className="space-y-2">
-        <h2 className="text-2xl font-bold">Processamento em Batch</h2>
+        <h2 className="text-2xl font-bold">Upload de Múltiplos Arquivos</h2>
         <p className="text-gray-600">
-          Selecione múltiplos arquivos para análise simultânea
+          Selecione até 15 arquivos para análise em batch (máximo 100MB)
         </p>
       </div>
 
       {/* Upload Area */}
-      <Card className="p-6 border-2 border-dashed border-blue-300 bg-blue-50">
+      <Card className="p-8 border-2 border-dashed border-blue-300 bg-blue-50 hover:bg-blue-100 transition">
         <label className="flex flex-col items-center justify-center cursor-pointer space-y-3">
-          <div className="text-4xl">📁</div>
+          <Upload className="w-12 h-12 text-blue-500" />
           <div className="text-center">
             <p className="font-semibold text-gray-700">
-              Clique ou arraste arquivos aqui
+              Clique para selecionar ou arraste múltiplos arquivos
             </p>
             <p className="text-sm text-gray-500">
-              PDF, DOCX, DOC, TXT, HTML (máx 100MB total)
+              PDF, DOCX, DOC, TXT, HTML (até 15 arquivos, 100MB total)
             </p>
           </div>
           <input
+            ref={fileInputRef}
             type="file"
             multiple
             accept=".pdf,.docx,.doc,.txt,.html"
-            onChange={handleFileSelect}
+            onChange={(e) => handleFileSelect(e.target.files)}
             disabled={isProcessing}
             className="hidden"
           />
@@ -233,6 +255,22 @@ export function BatchFileSelector() {
         </div>
       )}
 
+      {/* Progress Bar */}
+      {isProcessing && totalProgress > 0 && (
+        <div className="space-y-2">
+          <div className="flex justify-between items-center">
+            <p className="text-sm font-medium">Progresso Total</p>
+            <p className="text-sm text-gray-600">{Math.round(totalProgress)}%</p>
+          </div>
+          <div className="w-full bg-gray-200 rounded-full h-2">
+            <div
+              className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+              style={{ width: `${totalProgress}%` }}
+            />
+          </div>
+        </div>
+      )}
+
       {/* File List */}
       {files.length > 0 && (
         <Card className="p-4 space-y-4">
@@ -249,28 +287,27 @@ export function BatchFileSelector() {
               </span>
             </div>
             <Button
-              variant="ghost"
+              variant="outline"
               size="sm"
               onClick={handleClearAll}
               disabled={isProcessing}
-              className="text-red-600 hover:text-red-700"
             >
               Limpar Tudo
             </Button>
           </div>
 
           {/* File Items */}
-          <div className="space-y-3 max-h-96 overflow-y-auto">
+          <div className="space-y-3">
             {files.map((file) => (
               <div
                 key={file.id}
-                className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition"
+                className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
               >
                 <div className="flex items-center space-x-3 flex-1">
                   <Checkbox
                     checked={file.selected}
                     onCheckedChange={() => toggleFileSelection(file.id)}
-                    disabled={isProcessing || file.status === "success"}
+                    disabled={isProcessing}
                   />
                   {getStatusIcon(file.status)}
                   <div className="flex-1 min-w-0">
@@ -282,90 +319,53 @@ export function BatchFileSelector() {
                 </div>
 
                 {/* Progress Bar */}
-                {file.status === "uploading" || file.status === "processing" ? (
-                  <div className="w-24 mr-3">
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div
-                        className="bg-blue-600 h-2 rounded-full transition-all"
-                        style={{ width: `${file.progress || 0}%` }}
-                      />
-                    </div>
-                    <p className="text-xs text-gray-500 mt-1 text-right">
-                      {file.progress}%
-                    </p>
+                {file.progress !== undefined && file.progress > 0 && file.progress < 100 && (
+                  <div className="w-24 bg-gray-200 rounded-full h-1 mx-2">
+                    <div
+                      className="bg-blue-600 h-1 rounded-full transition-all"
+                      style={{ width: `${file.progress}%` }}
+                    />
                   </div>
-                ) : null}
+                )}
 
                 {/* Remove Button */}
-                {file.status !== "uploading" && file.status !== "processing" && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => removeFile(file.id)}
-                    disabled={isProcessing}
-                    className="text-gray-400 hover:text-red-600"
-                  >
-                    <X className="w-4 h-4" />
-                  </Button>
-                )}
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => removeFile(file.id)}
+                  disabled={isProcessing}
+                  className="ml-2"
+                >
+                  <X className="w-4 h-4" />
+                </Button>
               </div>
             ))}
           </div>
         </Card>
       )}
 
-      {/* Progress Bar Total */}
-      {isProcessing && (
-        <Card className="p-4 space-y-2">
-          <div className="flex justify-between items-center">
-            <p className="text-sm font-medium">Progresso Total</p>
-            <p className="text-sm font-bold text-blue-600">{totalProgress}%</p>
-          </div>
-          <div className="w-full bg-gray-200 rounded-full h-3">
-            <div
-              className="bg-blue-600 h-3 rounded-full transition-all"
-              style={{ width: `${totalProgress}%` }}
-            />
-          </div>
-        </Card>
-      )}
-
       {/* Action Buttons */}
-      <div className="flex gap-3 justify-end">
-        <Button
-          variant="outline"
-          onClick={handleClearAll}
-          disabled={isProcessing || files.length === 0}
-        >
-          Cancelar
-        </Button>
-        <Button
-          onClick={handleProcessBatch}
-          disabled={isProcessing || selectedCount === 0}
-          className="bg-blue-600 hover:bg-blue-700"
-        >
-          {isProcessing ? (
-            <>
-              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-              Processando ({totalProgress}%)
-            </>
-          ) : (
-            <>
-              Processar {selectedCount > 0 ? `(${selectedCount})` : ""}
-            </>
-          )}
-        </Button>
-      </div>
-
-      {/* Summary */}
       {files.length > 0 && (
-        <Card className="p-4 bg-blue-50 border-blue-200">
-          <p className="text-sm text-gray-700">
-            <span className="font-semibold">{selectedCount}</span> arquivo(s)
-            selecionado(s) • Tamanho total:{" "}
-            <span className="font-semibold">{formatFileSize(selectedSize)}</span>
-          </p>
-        </Card>
+        <div className="flex gap-3">
+          <Button
+            onClick={handleProcessBatch}
+            disabled={isProcessing || selectedCount === 0}
+            className="flex-1"
+            size="lg"
+          >
+            {isProcessing ? (
+              <>
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                Processando...
+              </>
+            ) : (
+              <>
+                <Upload className="w-4 h-4 mr-2" />
+                Processar {selectedCount} Arquivo{selectedCount !== 1 ? "s" : ""}
+              </>
+            )}
+          </Button>
+        </div>
       )}
     </div>
   );

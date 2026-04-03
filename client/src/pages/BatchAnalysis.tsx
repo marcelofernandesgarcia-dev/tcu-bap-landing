@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { BatchFileSelector } from "@/components/BatchFileSelector";
+import { useState } from "react";
+import { MultipleFileUpload } from "@/components/MultipleFileUpload";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { AlertCircle, CheckCircle2, FileText } from "lucide-react";
@@ -9,7 +9,6 @@ import { AlertCircle, CheckCircle2, FileText } from "lucide-react";
  * Permite selecionar e processar múltiplos arquivos simultaneamente
  */
 export function BatchAnalysisPage() {
-  const [showResults, setShowResults] = useState(false);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
@@ -65,7 +64,7 @@ export function BatchAnalysisPage() {
 
         {/* Main Content */}
         <Card className="p-8 bg-white shadow-lg">
-          <BatchFileSelector />
+          <MultipleFileUpload />
         </Card>
 
         {/* Supported Formats */}
