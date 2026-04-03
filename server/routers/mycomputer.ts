@@ -7,6 +7,7 @@ import { z } from 'zod';
 import { publicProcedure, router } from '../_core/trpc';
 import { localOCRService } from '../services/localOCRService';
 import { geminiDesktopService } from '../services/geminiDesktopService';
+import { myComputerSyncService } from '../services/mycomputerSyncService';
 
 export const myComputerRouter = router({
   /**
