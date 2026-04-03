@@ -506,7 +506,7 @@ export function AnalysisUploader({ onAnalysisComplete }: AnalysisUploaderProps) 
           {(files.length > 0 || largeFiles.length > 0) && (
             <Button
               onClick={handleUpload}
-              disabled={loading || fileProgress.size > 0}
+              disabled={loading}
               className="w-full gap-2"
               size="lg"
             >
