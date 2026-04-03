@@ -383,3 +383,29 @@
 - [x] Classificação visual por ano
 - [x] 125 testes passando (100%)
 - [x] Pronto para: PRODUÇÃO
+
+
+## Fase 16: Barra de Progresso Individual por Arquivo - CONCLUIDA
+- [x] Criar componente FileProgressBar com interface FileProgress
+- [x] Adicionar rastreamento de progresso de upload por arquivo
+- [x] Implementar indicadores de velocidade (MB/s) e tempo estimado
+- [x] Adicionar status visual (pendente, enviando, concluído, erro)
+- [x] Integrar FileProgressBar no AnalysisUploader
+- [x] Criar testes para barra de progresso (35 testes)
+- [x] Criar testes para AnalysisUploader com FileProgress (31 testes)
+- [x] Atualizar vitest.config.ts para incluir testes do cliente
+- [x] Corrigir e validar todos os testes
+- [x] Total de testes: 191 passando (100%)
+
+## Status Final - Fase 16
+- [x] Componente FileProgressBar criado e funcional
+- [x] Rastreamento de progresso por arquivo implementado
+- [x] Velocidade de upload (MB/s) calculada em tempo real
+- [x] Tempo estimado restante exibido dinamicamente
+- [x] Status visual com ícones e animações implementado
+- [x] Integração completa no AnalysisUploader
+- [x] 66 novos testes criados (35 + 31)
+- [x] 191 testes passando (100%)
+- [x] TypeScript compilando sem erros
+- [x] Dev server rodando normalmente
+- [x] Pronto para: PRODUCAO

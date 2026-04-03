@@ -11,7 +11,7 @@ const __dirname = path.dirname(__filename);
 // Configurar multer para upload de arquivos
 const upload = multer({
   storage: multer.memoryStorage(),
-  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB
+  limits: { fileSize: 150 * 1024 * 1024 }, // 150MB
   fileFilter: (req: any, file: any, cb: any) => {
     const allowedMimes = [
       'application/pdf',
@@ -37,8 +37,8 @@ async function startServer() {
     origin: process.env.CORS_ORIGINS?.split(',') || ['http://localhost:3000', 'http://localhost:5173', 'http://localhost:3001'],
     credentials: true
   }));
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: true }));
+  app.use(express.json({ limit: '150mb' }));
+  app.use(express.urlencoded({ extended: true, limit: '150mb' }));
 
   // Logging middleware
   app.use((req: any, res: any, next: any) => {
@@ -53,6 +53,19 @@ async function startServer() {
       : path.resolve(__dirname, "..", "dist", "public");
 
   app.use(express.static(staticPath));
+
+  // Middleware de erro para multer - DEVE ESTAR ANTES DAS ROTAS
+  app.use((err: any, req: any, res: any, next: any) => {
+    if (err instanceof multer.MulterError) {
+      if (err.code === 'LIMIT_FILE_SIZE') {
+        return res.status(413).json({
+          status: 'error',
+          error: 'Arquivo muito grande. Maximo: 150MB'
+        });
+      }
+    }
+    next(err);
+  });
 
   // Health check
   app.get('/health', (req: any, res: any) => {
