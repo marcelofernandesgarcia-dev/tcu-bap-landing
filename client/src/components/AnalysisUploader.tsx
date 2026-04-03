@@ -10,6 +10,7 @@ import { Upload, FileText, AlertCircle, CheckCircle, Loader, X, HardDrive } from
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { ManusDesktopIndicator } from '@/components/ManusDesktopIndicator';
 
 interface AnalysisUploaderProps {
   onAnalysisComplete?: (result: any) => void;
@@ -266,23 +267,18 @@ export function AnalysisUploader({ onAnalysisComplete }: AnalysisUploaderProps) 
                 <div className="space-y-1">
                   <p className="text-xs font-medium text-gray-600">Manus Desktop (&gt; 90MB):</p>
                   {largeFiles.map((file, index) => (
-                    <div
-                      key={`large-${index}`}
-                      className="flex justify-between items-center text-sm text-gray-700 bg-white p-2 rounded border-l-4 border-orange-500"
-                    >
-                      <div>
-                        <p className="flex items-center gap-1">
-                          <HardDrive className="h-3 w-3 text-orange-600" />
-                          <strong>{file.name}</strong>
-                        </p>
-                        <p className="text-xs text-gray-600">
-                          Tamanho: {(file.size / (1024 * 1024)).toFixed(2)} MB (processado localmente)
-                        </p>
-                      </div>
+                    <div key={`large-${index}`} className="relative">
+                      <ManusDesktopIndicator
+                        status={loading ? 'processing' : 'pending'}
+                        fileName={file.name}
+                        fileSize={file.size}
+                        progress={loading ? Math.min(100, (index + 1) * 33) : 0}
+                      />
                       <button
                         onClick={() => removeLargeFile(index)}
-                        className="text-red-600 hover:text-red-800"
+                        className="absolute top-2 right-2 text-red-600 hover:text-red-800 bg-white rounded-full p-1"
                         disabled={loading}
+                        title="Remover arquivo"
                       >
                         <X className="h-4 w-4" />
                       </button>
