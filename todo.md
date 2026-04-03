@@ -61,13 +61,40 @@
 - [x] Adicionar funcionalidade de exportação
   - [x] Mutation para exportar relatórios
 
-## Fase 5: Integração com Sistemas Externos (Futuro)
+## Fase 5: Testes de OCR Real e Extração de Dados (Atual)
+- [ ] Executar teste real de OCR no frontend com Tesseract.js
+- [ ] Executar PaddleOCR no backend com SEI_72031.008871_2017_71.pdf
+- [ ] Conectar Analyzer para envio real ao backend
+- [ ] Testar pipeline OCR→LLM→Prescrição ponta a ponta
+- [ ] Registrar benchmarks de performance/timeouts
+- [ ] Documentar resultados com evidências
+
+## Fase 6: Testes de Análise de Prescrição e Validação LGPD (Atual)
+- [ ] Corrigir tipos do Dashboard (dismissed: boolean vs number)
+- [ ] Reconciliar regra de prescrição (5 vs 10 anos)
+- [ ] Testar cálculo de prescrição com dados reais (4/4 casos)
+- [ ] Validar mascaramento LGPD (5/5 casos passando)
+- [ ] Testar conformidade com IN TCU 98/2024
+- [ ] Validar análise de admissibilidade
+- [ ] Testar alertas de prescrição no Dashboard
+- [ ] Produzir relatório de casos de teste
+
+## Fase 7: Testes do Dashboard com Dados Reais (Próximo)
+- [ ] Carregar análises reais no banco de dados
+- [ ] Testar KPI Cards com dados reais
+- [ ] Testar filtros e busca
+- [ ] Testar paginação
+- [ ] Testar alertas de prescrição no Dashboard
+- [ ] Testar exportação de relatórios
+- [ ] Validar performance com múltiplas análises
+
+## Fase 8: Integração com Sistemas Externos (Futuro)
 - [ ] Conectar com e-TCE para validação de processos
 - [ ] Sincronizar com SIAFI para valores de transferências
 - [ ] Integrar com CGU para histórico de responsáveis
 - [ ] Integrar com CEIS para inidoneidade
 
-## Fase 6: Otimizações e Produção (Futuro)
+## Fase 9: Otimizações e Produção (Futuro)
 - [ ] Otimizar performance de OCR
 - [ ] Implementar cache de resultados
 - [ ] Adicionar suporte a mais idiomas

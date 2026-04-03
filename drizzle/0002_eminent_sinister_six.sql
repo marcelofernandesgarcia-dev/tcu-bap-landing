@@ -1,0 +1,1 @@
+ALTER TABLE `prescription_alerts` MODIFY COLUMN `dismissed` tinyint;

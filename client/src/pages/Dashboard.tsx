@@ -112,10 +112,10 @@ export default function Dashboard() {
     if (!analyses?.items) return null;
 
     const items = analyses.items as AnalysisRecord[];
-    const admissible = items.filter((a) => a.prescriptionStatus === 'ADMISSIBLE').length;
-    const requiresReview = items.filter((a) => a.prescriptionStatus === 'REQUIRES_REVIEW').length;
-    const prescribed = items.filter((a) => a.prescriptionStatus === 'INADMISSIBLE').length;
-    const urgent = (alerts as PrescriptionAlert[])?.filter((a) => a.alertType === 'URGENT').length || 0;
+    const admissible = items.filter((a: any) => a.prescriptionStatus === 'ADMISSIBLE').length;
+    const requiresReview = items.filter((a: any) => a.prescriptionStatus === 'REQUIRES_REVIEW').length;
+    const prescribed = items.filter((a: any) => a.prescriptionStatus === 'INADMISSIBLE').length;
+    const urgent = (alerts as any)?.filter((a: any) => a.alertType === 'URGENT').length || 0;
 
     return {
       totalAnalyses: analyses.total || 0,
@@ -219,13 +219,13 @@ export default function Dashboard() {
         )}
 
         {/* Alertas de Prescrição */}
-        {(alerts as PrescriptionAlert[])?.length > 0 && (
+        {(alerts as any)?.length > 0 && (
           <Card className="mb-8 border-l-4 border-l-red-600 bg-red-50 p-6">
             <div className="flex items-start gap-4">
               <AlertTriangle className="w-6 h-6 text-red-600 flex-shrink-0 mt-1" />
               <div className="flex-1">
                 <h3 className="text-lg font-bold text-red-900 mb-2">
-                  ⚠️ {(alerts as PrescriptionAlert[]).length} Alertas de Prescrição
+                  ⚠️ {(alerts as any).length} Alertas de Prescrição
                 </h3>
                 <p className="text-sm text-red-800 mb-4">
                   Existem processos próximos de prescrever. Revise-os imediatamente.

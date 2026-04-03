@@ -15,6 +15,13 @@
       "when": 1775226586442,
       "tag": "0001_cultured_zodiak",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1775231249744,
+      "tag": "0002_eminent_sinister_six",
+      "breakpoints": true
     }
   ]
 }

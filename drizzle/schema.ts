@@ -1,4 +1,4 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, datetime, decimal, index } from "drizzle-orm/mysql-core";
+import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, datetime, decimal, index, tinyint } from "drizzle-orm/mysql-core";
 
 /**
  * Core user table backing auth flow.
@@ -71,7 +71,7 @@ export const prescriptionAlerts = mysqlTable(
     prescriptionDate: timestamp('prescription_date').notNull(),
     daysRemaining: int('days_remaining').notNull(),
     alertType: mysqlEnum('alert_type', ['URGENT', 'WARNING', 'INFO']).default('INFO'),
-    dismissed: int('dismissed').default(0),
+    dismissed: tinyint('dismissed').default(0),
     dismissedAt: timestamp('dismissed_at'),
     createdAt: timestamp('created_at').defaultNow().notNull(),
   },
