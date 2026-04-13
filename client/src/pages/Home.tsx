@@ -10,7 +10,6 @@ import { FAQSearch } from "@/components/FAQSearch";
 import { HeroSidebar } from "@/components/HeroSidebar";
 import { ImageModal } from "@/components/ImageModal";
 import { PrescriptionCalculator } from "@/components/PrescriptionCalculator";
-import { ServerMonitorControl } from "@/components/ServerMonitorControl";
 
 /**
  * DESIGN PHILOSOPHY: Governance Design System
@@ -266,7 +265,6 @@ export default function Home() {
             <a href="#timeline" className="text-sm text-slate-600 hover:text-blue-700">Timeline</a>
             <a href="#processo" className="text-sm text-slate-600 hover:text-blue-700">Processo</a>
             <a href="#faq" className="text-sm text-slate-600 hover:text-blue-700">FAQ</a>
-            <a href="/analyzer" className="px-3 py-2 bg-blue-600 text-white rounded-lg text-sm font-semibold hover:bg-blue-700 transition">🔍 Analisador</a>
           </div>
         </div>
       </nav>
@@ -963,15 +961,6 @@ export default function Home() {
                 <strong>Aviso Legal:</strong> Este material é de caráter informativo e foi desenvolvido pelo SIACT com base em informações públicas disponíveis no site do Tribunal de Contas da União. Para informações oficiais e vinculantes, consulte sempre os documentos normativos originais e o portal do TCU.
               </p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* MONITOR DE SERVIDOR */}
-      <section className="bg-slate-50 py-12 md:py-16">
-        <div className="container">
-          <div className="max-w-2xl mx-auto">
-            <ServerMonitorControl />
           </div>
         </div>
       </section>
