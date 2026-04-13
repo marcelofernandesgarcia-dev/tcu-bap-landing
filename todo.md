@@ -468,7 +468,7 @@
 
 
 ## Fase 20: Alinhamento com SIACT v7.9.4 - Análise Jurídica Especializada
-- [ ] Atualizar prompt do LLM com base normativa SIACT (Lei 9.873/1999, Res. TCU 344/2022, IN 98/2024)
+- [x] Atualizar prompt do LLM com base normativa SIACT (Lei 9.873/1999, Res. TCU 344/2022, IN 98/2024)
 - [ ] Implementar chunking de 200KB com retry robusto (backoff agressivo: 30s, 60s, 90s)
 - [ ] Criar schema JSON estruturado com Type.OBJECT/ARRAY (20+ campos)
 - [ ] Implementar extração de BAP Checklist (12 itens do Art. 30 - Portaria 121/2025)
@@ -480,3 +480,51 @@
 - [ ] Validar parecer gerado vs. parecer SIACT
 - [ ] Criar testes de conformidade com IN TCU 98/2024
 - [ ] Fazer checkpoint e entregar ao usuário
+
+
+## Fase 21: Mecanismo de Extração e Exibição de Conclusões
+- [ ] Integrar siactPrompt.ts no routers/analysis.ts
+- [ ] Criar componente AnalysisConclusions para exibir parecer completo
+- [ ] Implementar extração de conclusões, recomendações e alertas de prescrição
+- [ ] Adicionar card de conclusões na página Analyzer (após resultados)
+- [ ] Criar testes para componente de conclusões
+- [ ] Testar com documentos reais
+- [ ] Fazer checkpoint e entregar solução
+
+
+## Fase 21: Mecanismo de Extração e Exibição de Conclusões - EM ANDAMENTO
+- [x] Integrar siactPrompt.ts no routers/analysis.ts (Preparado)
+- [x] Criar componente AnalysisConclusions para exibir parecer completo
+- [x] Implementar extração de conclusões, recomendações e alertas de prescrição
+- [x] Adicionar card de conclusões na página Analyzer (após resultados)
+- [x] Criar testes para componente de conclusões (11 testes)
+- [ ] Testar com documentos reais
+- [ ] Fazer checkpoint e entregar solução
+
+## Status Atual - Fase 21
+- [x] AnalysisConclusions.tsx criado com card de parecer técnico
+- [x] conclusionExtractor.ts com 8 funções de extração
+- [x] Analyzer.tsx integrado com AnalysisConclusions
+- [x] 214 testes passando (100%)
+- [ ] Aguardando teste com documentos reais do usuário
+
+
+## Fase 22: Desabilitação de Ações em Segundo Plano - CONCLUIDA
+- [x] Desabilitar monitor-server.mjs automático
+- [x] Criar comando manual para acionamento do monitor (check-server-manual.mjs)
+- [x] Adicionar componente ServerMonitorControl na interface
+- [x] Remover auto-sync Manus Desktop (já desabilitado)
+- [x] Criar documentação de controle manual (MONITORING.md)
+- [x] Testar verificação manual do servidor
+- [x] Validar economia de créditos
+
+## Status Final - Fase 22
+- [x] Monitor automático desabilitado (economia de créditos)
+- [x] Verificação manual disponível na interface (ServerMonitorControl)
+- [x] Verificação manual disponível via CLI (check-server-manual.mjs)
+- [x] ServerMonitorControl integrado na Home.tsx
+- [x] Documentação completa em MONITORING.md
+- [x] 214 testes passando (100%)
+- [x] TypeScript compilando sem erros
+- [x] Dev server rodando normalmente
+- [x] Pronto para: PRODUCAO

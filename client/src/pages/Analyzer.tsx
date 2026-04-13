@@ -5,14 +5,17 @@
 import { useState } from 'react';
 import { AnalysisUploader } from '@/components/AnalysisUploader';
 import { AnalysisResults } from '@/components/AnalysisResults';
+import { AnalysisConclusions } from '@/components/AnalysisConclusions';
 import { MultiFileUploader } from '@/components/MultiFileUploader';
 import { Card } from '@/components/ui/card';
 import { AlertCircle, FileText } from 'lucide-react';
 import { OCRResult } from '@/hooks/useOCR';
 import { mapBackendAnalysisToFrontend } from '@/lib/analysisMapper';
+import { extractConclusions } from '@/lib/conclusionExtractor';
 
 export function Analyzer() {
   const [analysisResult, setAnalysisResult] = useState<any>(null);
+  const [conclusions, setConclusions] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [ocrResults, setOcrResults] = useState<OCRResult[]>([]);
   const [showOCRUploader, setShowOCRUploader] = useState(false);
@@ -21,6 +24,14 @@ export function Analyzer() {
     try {
       const mappedResult = mapBackendAnalysisToFrontend(result);
       setAnalysisResult(mappedResult);
+      
+      // Extrair conclusões da análise
+      try {
+        const extractedConclusions = extractConclusions(result);
+        setConclusions(extractedConclusions);
+      } catch (error) {
+        console.error('Erro ao extrair conclusões:', error);
+      }
     } catch (error) {
       console.error('Erro ao mapear análise:', error);
       setAnalysisResult(result);
@@ -185,8 +196,16 @@ export function Analyzer() {
 
         {/* Results Section */}
         {analysisResult && (
-          <div className="mt-12">
+          <div className="mt-12 space-y-8">
             <AnalysisResults analysis={analysisResult} loading={isLoading} />
+            
+            {/* Conclusions Section */}
+            {conclusions && (
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">📄 Parecer Técnico</h2>
+                <AnalysisConclusions data={conclusions} />
+              </div>
+            )}
           </div>
         )}
       </div>
