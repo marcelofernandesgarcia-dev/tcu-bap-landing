@@ -1157,33 +1157,7 @@ export default function Home() {
                 </div>
               </Card>
 
-              {/* TRF Card */}
-              <Card className="overflow-hidden border-l-4 border-l-green-700 hover:shadow-xl transition-shadow">
-                <div className="bg-gradient-to-br from-green-600 to-green-700 p-8 text-white">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-16 h-16 bg-white rounded-lg flex items-center justify-center">
-                      <span className="text-2xl font-bold text-green-700">TRF</span>
-                    </div>
-                    <h3 className="text-2xl font-bold">Tribunais Regionais Federais</h3>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <p className="text-slate-700 mb-4 font-semibold">Instância Regional do Poder Judiciário</p>
-                  <p className="text-slate-600 mb-6">Órgãos responsáveis por julgar recursos de decisões de primeira instância em matérias federais.</p>
-                  <div className="space-y-3 mb-6">
-                    <p className="text-sm text-slate-600"><strong>Relevância para TCE:</strong></p>
-                    <ul className="text-sm text-slate-600 space-y-2 ml-4">
-                      <li>• Recurso de condenações TCU</li>
-                      <li>• Análise de questões processuais</li>
-                      <li>• Garantias de direito de defesa</li>
-                      <li>• Revisão de decisões administrativas</li>
-                    </ul>
-                  </div>
-                  <a href="https://www.trf.jus.br" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-green-600 hover:text-green-700 font-semibold">
-                    Acessar Portal TRF <ExternalLink className="w-4 h-4" />
-                  </a>
-                </div>
-              </Card>
+
             </div>
           </div>
         </div>
@@ -1430,14 +1404,7 @@ export default function Home() {
                 <p className="text-xs text-slate-400">Federal</p>
               </div>
 
-              {/* TRF Badge */}
-              <div className="text-center">
-                <div className="w-20 h-20 bg-green-600 rounded-lg flex items-center justify-center mb-2 mx-auto hover:bg-green-700 transition-colors">
-                  <span className="text-2xl font-bold text-white">TRF</span>
-                </div>
-                <p className="text-xs text-slate-400">Tribunais Regionais</p>
-                <p className="text-xs text-slate-400">Federais</p>
-              </div>
+
             </div>
           </div>
 
