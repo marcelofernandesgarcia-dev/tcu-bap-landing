@@ -728,6 +728,43 @@ export default function Home() {
               </div>
             </Card>
 
+            {/* CARTILHA TRANSFERENCIAS CARD */}
+            <Card className="overflow-hidden border-2 border-purple-200 hover:shadow-lg transition-shadow">
+              <div className="bg-gradient-to-br from-purple-600 to-purple-700 p-8 text-white">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
+                    <FileText className="w-8 h-8" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold">Cartilha de Transferências Voluntárias</h3>
+                    <p className="text-purple-100">Guia completo para gestores de recursos federais</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-8">
+                <h4 className="text-xl font-bold text-slate-900 mb-4">Transferências Voluntárias da União (2025)</h4>
+                <p className="text-slate-600 mb-6 leading-relaxed">
+                  A Cartilha de Transferências Voluntárias da União (2025) consolida as recentes mudanças legislativas para garantir eficiência na gestão de recursos públicos. Ferramenta indispensável para gestores, o guia oferece orientações atualizadas sobre normas, procedimentos e controle das transferências federais, fortalecendo a cultura de transparência e responsabilidade.
+                </p>
+
+                <div className="bg-purple-50 rounded-lg p-4 mb-6">
+                  <div className="flex items-start gap-3">
+                    <FileText className="w-5 h-5 text-purple-700 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <p className="font-semibold text-slate-900 text-sm">Conteúdo da Cartilha</p>
+                      <p className="text-xs text-slate-600 mt-1">Normas, procedimentos, controle e melhores práticas em transferências federais</p>
+                    </div>
+                  </div>
+                </div>
+
+                <Button className="w-full bg-purple-700 hover:bg-purple-800 text-white" onClick={() => window.open('https://portal.tcu.gov.br/publicacoes-institucionais/cartilha-manual-ou-tutorial/transferencias-voluntarias-da-uniao', '_blank')}>
+                  <ExternalLink className="w-4 h-4 mr-2" />
+                  Acessar Cartilha
+                </Button>
+              </div>
+            </Card>
+
             {/* CONSENSUAL SOLUTION CARD */}
             <Card className="overflow-hidden border-2 border-amber-200 hover:shadow-lg transition-shadow">
               <div className="bg-gradient-to-br from-amber-600 to-amber-700 p-8 text-white">
