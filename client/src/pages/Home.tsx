@@ -824,6 +824,83 @@ export default function Home() {
                 </Button>
               </div>
             </Card>
+
+            {/* CGU - TCE FLOW CARD */}
+            <Card className="overflow-hidden border-2 border-orange-200 hover:shadow-lg transition-shadow">
+              <div className="bg-gradient-to-br from-orange-600 to-orange-700 p-8 text-white">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
+                    <FileText className="w-8 h-8" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold">Tomadas de Contas Especial</h3>
+                    <p className="text-orange-100">Fluxo e Informações</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-8">
+                <h4 className="text-xl font-bold text-slate-900 mb-6">Fluxo do Processo de TCE</h4>
+                
+                {/* FLOW STAGES */}
+                <div className="space-y-6">
+                  {/* Stage 1 */}
+                  <div className="border-l-4 border-orange-600 pl-4">
+                    <h5 className="font-bold text-slate-900 mb-2">1. Medidas Administrativas (Fase Preliminar)</h5>
+                    <p className="text-sm text-slate-600 mb-2"><strong>Início:</strong> Identificação do Indício do dano</p>
+                    <p className="text-sm text-slate-600 mb-2"><strong>Prazos:</strong> 120 dias em caso de omissão; 360 dias para os demais casos</p>
+                    <p className="text-sm text-slate-600"><strong>Término:</strong> Finaliza com a Instaução da TCE</p>
+                  </div>
+
+                  {/* Stage 2 */}
+                  <div className="border-l-4 border-orange-600 pl-4">
+                    <h5 className="font-bold text-slate-900 mb-2">2. TCE - Fase Interna</h5>
+                    <p className="text-sm text-slate-600 mb-2"><strong>Duração Total:</strong> 180 dias</p>
+                    <p className="text-sm text-slate-600 mb-2"><strong>Etapas:</strong> Instaução e instrução do processo • Envio ao Controle Interno (aos 90 dias) • Pronunciamento Ministerial</p>
+                    <p className="text-sm text-slate-600"><strong>Término:</strong> Envio ao TCU</p>
+                  </div>
+
+                  {/* Stage 3 */}
+                  <div className="border-l-4 border-orange-600 pl-4">
+                    <h5 className="font-bold text-slate-900 mb-2">3. TCE - Fase Externa</h5>
+                    <p className="text-sm text-slate-600 mb-2"><strong>Local:</strong> Tribunal de Contas da União (TCU)</p>
+                    <p className="text-sm text-slate-600"><strong>Término:</strong> Culmina no Julgamento da TCE</p>
+                  </div>
+
+                  {/* Stage 4 */}
+                  <div className="border-l-4 border-orange-600 pl-4">
+                    <h5 className="font-bold text-slate-900 mb-2">4. Resultados do Julgamento</h5>
+                    <div className="space-y-1 text-sm text-slate-600">
+                      <p><strong>Regulares:</strong> Quitação plena ao responsável</p>
+                      <p><strong>Regulares com Ressalva:</strong> Quitação e correção de impropriedades</p>
+                      <p><strong>Irregulares:</strong> Condenação ao pagamento do débito e/ou multa</p>
+                    </div>
+                  </div>
+
+                  {/* Stage 5 */}
+                  <div className="border-l-4 border-orange-600 pl-4">
+                    <h5 className="font-bold text-slate-900 mb-2">5. Desfecho da Condenação (Contas Irregulares)</h5>
+                    <p className="text-sm text-slate-600 mb-2"><strong>Pagamento Integral:</strong> Gera a quitação ao responsável</p>
+                    <p className="text-sm text-slate-600"><strong>Sem Recolhimento:</strong> Resulta na Cobrança judicial da dívida</p>
+                  </div>
+                </div>
+
+                <div className="bg-orange-50 rounded-lg p-4 mt-6 mb-6">
+                  <div className="flex items-start gap-3">
+                    <Clock className="w-5 h-5 text-orange-700 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <p className="font-semibold text-slate-900 text-sm">Prazos Críticos</p>
+                      <p className="text-xs text-slate-600 mt-1">Medidas Administrativas: 120-360 dias | Fase Interna: 180 dias | Fase Externa: Sem prazo definido</p>
+                    </div>
+                  </div>
+                </div>
+
+                <Button className="w-full bg-orange-700 hover:bg-orange-800 text-white" onClick={() => window.open('https://www.gov.br/cgu/pt-br/assuntos/auditoria-e-fiscalizacao/tomadas-de-contas-especiais/fluxo-e-informacoes', '_blank')}>
+                  <ExternalLink className="w-4 h-4 mr-2" />
+                  Acessar Fluxo e Informações Completas
+                </Button>
+              </div>
+            </Card>
           </div>
         </div>
       </section>
