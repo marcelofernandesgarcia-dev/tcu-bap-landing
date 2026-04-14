@@ -727,6 +727,43 @@ export default function Home() {
                 </Button>
               </div>
             </Card>
+
+            {/* CONSENSUAL SOLUTION CARD */}
+            <Card className="overflow-hidden border-2 border-amber-200 hover:shadow-lg transition-shadow">
+              <div className="bg-gradient-to-br from-amber-600 to-amber-700 p-8 text-white">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
+                    <CheckCircle2 className="w-8 h-8" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold">Solução Consensual</h3>
+                    <p className="text-amber-100">Resolução colaborativa de conflitos</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-8">
+                <h4 className="text-xl font-bold text-slate-900 mb-4">Iniciativa de Soluções Consensuais do TCU</h4>
+                <p className="text-slate-600 mb-6 leading-relaxed">
+                  Desde o início de 2023, o Tribunal de Contas da União (TCU) tem se dedicado à promoção de soluções consensuais e à prevenção de conflitos, reforçando seu compromisso com a efetividade das políticas públicas e a segurança jurídica. Esta iniciativa reflete o esforço do TCU em buscar soluções tempestivas, construídas de maneira colaborativa e célere, envolvendo tanto a sociedade quanto os entes públicos. A atuação do TCU nesta área evidencia sua busca contínua por inovação e aprimoramento na gestão de conflitos, alinhando-se às melhores práticas de governança e controle externo.
+                </p>
+
+                <div className="bg-amber-50 rounded-lg p-4 mb-6">
+                  <div className="flex items-start gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-amber-700 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <p className="font-semibold text-slate-900 text-sm">Benefícios da Solução Consensual</p>
+                      <p className="text-xs text-slate-600 mt-1">Resolução célere, segurança jurídica e colaboração entre órgãos públicos e sociedade</p>
+                    </div>
+                  </div>
+                </div>
+
+                <Button className="w-full bg-amber-700 hover:bg-amber-800 text-white" onClick={() => window.open('https://portal.tcu.gov.br/solucao-consensual', '_blank')}>
+                  <ExternalLink className="w-4 h-4 mr-2" />
+                  Acessar Solução Consensual
+                </Button>
+              </div>
+            </Card>
           </div>
         </div>
       </section>
