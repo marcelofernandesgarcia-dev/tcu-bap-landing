@@ -301,12 +301,6 @@ export default function Home() {
             
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
-                onClick={() => setShowConsultModal(true)}
-                className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 text-base"
-              >
-                Iniciar Consulta <ChevronRight className="w-4 h-4 ml-2" />
-              </Button>
-              <Button 
                 onClick={() => setShowDocsModal(true)}
                 variant="outline" 
                 className="border-white text-white hover:bg-white/10 px-6 py-3 text-base"
