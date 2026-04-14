@@ -15,7 +15,7 @@ Não. A TCE é tratada como uma "medida de exceção". Isso significa que ela é
 A administração pública pode usar várias outras tentativas, garantindo ao acusado o direito de defesa. Alguns exemplos são: enviar cartas de cobrança (notificações), descontar parcelas diretamente da folha de pagamento (se for servidor público), descontar valores de faturas futuras (se for uma empresa contratada que entregou produto com defeito), realizar protestos em cartório ou até tentar acordos diretos.
 
 ### 5. Quais são as principais leis e manuais que ensinam como a TCE deve funcionar?
-As regras máximas vêm da Constituição Federal (artigos 70 e 71). No dia a dia, os servidores seguem a Instrução Normativa (IN) do TCU nº 98/2024 (que é a regra principal hoje), junto com a Decisão Normativa (DN) TCU 155/2016 (atualizada pela DN 217/2025) e a Portaria TCU 121/2025. A Resolução TCU 344/2022 cuida apenas dos prazos de validade das punições (prescrição).
+As regras máximas vêm da Constituição Federal (artigos 70 e 71). No dia a dia, os servidores seguem a Instrução Normativa (IN) do TCU nº 98/2024 e a Portaria TCU 121/2025. A Resolução TCU 344/2022 cuida apenas dos prazos de validade das punições (prescrição).
 
 ### 6. Por que o Tribunal de Contas da União (TCU) criou essa nova IN 98/2024?
 A regra antiga (a IN 71/2012) já tinha 12 anos e estava desatualizada. O Supremo Tribunal Federal (STF) tomou uma decisão nova determinando que as dívidas da TCE podem "caducar" (prescrever) se o governo demorar muito para julgar. O TCU precisou criar a IN 98/2024 para modernizar, dar mais agilidade e criar regras de prescrição para evitar que o Estado perca o direito de cobrar os devedores.
@@ -374,7 +374,7 @@ Isso é bastante comum com o FNDE, por exemplo, onde as transferências ficam ap
 Não. Como o processo está sendo jogado no "cemitério burocrático" do BAP, o servidor não deve perder tempo fazendo cálculos complexos. O valor informado deve ser o valor original (histórico) da transferência ou do dano identificado na época, devendo ser digitado apenas com números e a vírgula para os centavos (ex: 150000,00), sem atualização monetária.
 
 ### 172. Como eu preencho a coluna "Origem dos Recursos" para que o robô do TCU não rejeite o meu arquivo?
-Para evitar que cada pessoa escreva de um jeito (ex: "dinheiro voluntário", "repasse"), o TCU determinou que deve ser usada exatamente a classificação do Anexo III da DN 155/2016. Deve-se escrever tudo em letras maiúsculas, sem acentos, trocando os espaços por "underline". Exemplo correto: "TRANSFERENCIAS_DISCRICIONARIAS".
+Para evitar que cada pessoa escreva de um jeito (ex: "dinheiro voluntário", "repasse"), o TCU determinou que deve ser usada exatamente a classificação padrão de origem de recursos. Deve-se escrever tudo em letras maiúsculas, sem acentos, trocando os espaços por "underline". Exemplo correto: "TRANSFERENCIAS_DISCRICIONARIAS".
 
 ### 173. O que acontece se eu preencher a data final da prescrição com um dia que ainda vai acontecer no mês que vem?
 O sistema possui uma barreira de segurança e bloqueará o arquivo. A data final que atesta que o processo cumpriu os 5 anos de gaveta deve ser obrigatoriamente menor ou igual ao dia de hoje (o dia em que você está enviando o arquivo). O sistema não aceita que se registre uma prescrição "futura".

@@ -137,7 +137,7 @@ Devem ser informados no cadastro do BAP:
 - Identificação do repasse (Siconv/Siafi)
 - Hipótese de arquivamento e datas utilizadas
 - Número do processo administrativo
-- Origem dos recursos (classificação conforme Anexo III da DN TCU 155/2016)
+- Origem dos recursos (classificação padrão)
 - Número da TCE (se já houver registro no e-TCE)
 - Sistema de origem da transferência
 - Número da primeira ordem bancária concatenado com UG e Gestão
@@ -149,7 +149,7 @@ Devem ser informados no cadastro do BAP:
 
 ## 8. ORIGEM DOS RECURSOS - CLASSIFICAÇÃO PADRONIZADA
 
-Conforme Anexo III da Decisão Normativa TCU 155/2016, as origens devem ser preenchidas exatamente como listado:
+As origens dos recursos devem ser preenchidas exatamente conforme a classificação padrão:
 - TRANSFERENCIAS_DISCRICIONARIAS
 - TRANSFERENCIAS_LEGAIS
 - TRANSFERENCIAS_LEGAIS_FUNDO_A_FUNDO
