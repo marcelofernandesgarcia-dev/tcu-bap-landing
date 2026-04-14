@@ -519,14 +519,6 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors cursor-pointer">
-                  <Download className="w-5 h-5 text-blue-700 mt-1 flex-shrink-0" />
-                  <div>
-                    <p className="font-semibold text-slate-900">DN TCU nº 155/2016</p>
-                    <p className="text-sm text-slate-600">Transferências voluntárias de recursos federais</p>
-                  </div>
-                </div>
-
                 <div className="flex items-start gap-3 p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors cursor-pointer">
                   <Download className="w-5 h-5 text-green-700 mt-1 flex-shrink-0" />
                   <div>
