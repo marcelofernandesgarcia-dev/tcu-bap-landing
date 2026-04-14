@@ -721,7 +721,7 @@ export default function Home() {
                   </a>
                 </div>
 
-                <Button className="w-full mt-6 bg-blue-700 hover:bg-blue-800 text-white" onClick={() => window.open('https://www.tcu.gov.br/webinarios', '_blank')}>
+                <Button className="w-full mt-6 bg-blue-700 hover:bg-blue-800 text-white" onClick={() => window.open('https://portal.tcu.gov.br/imprensa/noticias/webinario-discute-inovacoes-nos-processos-de-tomada-de-contas-especial', '_blank')}>
                   <ExternalLink className="w-4 h-4 mr-2" />
                   Acessar Webinários
                 </Button>
