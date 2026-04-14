@@ -787,6 +787,43 @@ export default function Home() {
                 </Button>
               </div>
             </Card>
+
+            {/* CGU - SPECIAL ACCOUNTS CARD */}
+            <Card className="overflow-hidden border-2 border-red-200 hover:shadow-lg transition-shadow">
+              <div className="bg-gradient-to-br from-red-600 to-red-700 p-8 text-white">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
+                    <FileText className="w-8 h-8" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold">Controladoria-Geral da União</h3>
+                    <p className="text-red-100">Tomadas de Contas Especial</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-8">
+                <h4 className="text-xl font-bold text-slate-900 mb-4">Processo de Apuração de Danos ao Erário</h4>
+                <p className="text-slate-600 mb-6 leading-relaxed">
+                  A Tomada de Contas Especial (TCE) é o processo para apurar danos ao Erário federal por omissão, desvio ou atos ilegais, visando identificar responsáveis e obter ressarcimento. Conforme a Lei 8.443/1992 e a IN TCU 98/2024, cabe à CGU emitir o Relatório e Certificado de Auditoria sobre a regularidade da apuração e quantificação do dano. Para orientar a fase interna desses processos, a CGU editou a Portaria nº 1.531/2021 e a Nota Informativa nº 877/2021, que detalham os procedimentos e normas aplicáveis aos órgãos do Poder Executivo Federal.
+                </p>
+
+                <div className="bg-red-50 rounded-lg p-4 mb-6">
+                  <div className="flex items-start gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-red-700 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <p className="font-semibold text-slate-900 text-sm">Competências da CGU</p>
+                      <p className="text-xs text-slate-600 mt-1">Auditoria, fiscalização e orientação normativa dos processos de TCE no Poder Executivo Federal</p>
+                    </div>
+                  </div>
+                </div>
+
+                <Button className="w-full bg-red-700 hover:bg-red-800 text-white" onClick={() => window.open('https://www.gov.br/cgu/pt-br/assuntos/auditoria-e-fiscalizacao/tomadas-de-contas-especiais', '_blank')}>
+                  <ExternalLink className="w-4 h-4 mr-2" />
+                  Acessar Tomadas de Contas Especiais
+                </Button>
+              </div>
+            </Card>
           </div>
         </div>
       </section>
