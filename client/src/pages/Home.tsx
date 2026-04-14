@@ -48,7 +48,7 @@ const faqData = {
       { q: "Como o investigador calcula o tamanho do prejuízo financeiro do governo?", a: "A lei aceita duas formas: o método da 'Verificação' e o método da 'Estimativa'." },
       { q: "O que é o cálculo por Verificação?", a: "É quando a matemática é exata. Usa-se conta simples de somar, subtrair ou dividir. Por exemplo, se a união mandou 1 milhão e o prefeito sumiu e não comprovou nada, o débito exato apurado por verificação é 1 milhão." },
       { q: "O que é o cálculo por Estimativa?", a: "É usado quando é impossível descobrir o centavo exato do roubo. O investigador usa métodos estatísticos e confiáveis para chegar a um valor aproximado." },
-      { q: "Ao cobrar o acusado, o governo cobra só a inflação ou cobra juros de mora também?", a: "Quando a TCE é instaurada, a lei manda atualizar o dinheiro perdido de acordo com o IPCA (inflação) e adicionar os pesados juros de mora legais desde o dia em que o dano ocorreu." },
+      { q: "Ao cobrar o acusado, o governo cobra só a inflação ou cobra juros de mora também?", a: "Quando a TCE é instaurada, a lei manda atualizar o dinheiro perdido de acordo com o IPCA (Índice de Preços ao Consumidor Amplo, calculado pelo IBGE - Instituto Brasileiro de Geografia e Estatística) e adicionar os pesados juros de mora legais desde o dia em que o dano ocorreu. O IPCA é o índice oficial de inflação utilizado pelo governo federal para atualização de valores. Consulte www.ibge.gov.br para mais informações." },
       { q: "Se o acusado confessar e pagar rápido (antes do processo chegar ao TCU), ele ganha desconto?", a: "Sim. Se na fase administrativa inicial a pessoa acusada não teve a intenção de roubar (houve boa-fé) e decide quitar a dívida rapidamente, ela pode pagar apenas o valor original com a atualização da inflação." },
       { q: "O acusado pode pedir para dividir a dívida em parcelas suaves?", a: "Se o processo ainda estiver tramitando nos Ministérios (Fase Administrativa), não é possível parcelar. O parcelamento da dívida só é permitido quando a TCE chega e passa a ser julgada no Tribunal de Contas da União (TCU)." }
     ]
@@ -1063,6 +1063,132 @@ export default function Home() {
         </div>
       </section>
 
+      {/* CONTROL BODIES SECTION */}
+      <section className="py-20 bg-gradient-to-br from-slate-50 to-blue-50 border-t border-slate-200">
+        <div className="container">
+          <div className="max-w-5xl mx-auto">
+            <div className="mb-12 text-center">
+              <h2 className="text-4xl font-bold text-slate-900 mb-4">Órgãos de Controle</h2>
+              <p className="text-lg text-slate-600">Instituições responsáveis pela fiscalização e controle de recursos públicos federais</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* TCU Card */}
+              <Card className="overflow-hidden border-l-4 border-l-blue-700 hover:shadow-xl transition-shadow">
+                <div className="bg-gradient-to-br from-blue-600 to-blue-700 p-8 text-white">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="w-16 h-16 bg-white rounded-lg flex items-center justify-center">
+                      <span className="text-2xl font-bold text-blue-700">TCU</span>
+                    </div>
+                    <h3 className="text-2xl font-bold">Tribunal de Contas da União</h3>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <p className="text-slate-700 mb-4 font-semibold">Controle Externo Federal</p>
+                  <p className="text-slate-600 mb-6">Órgão responsável pela fiscalização contábil, financeira, orçamentária, operacional e patrimonial da União e das entidades da administração indireta.</p>
+                  <div className="space-y-3 mb-6">
+                    <p className="text-sm text-slate-600"><strong>Competências:</strong></p>
+                    <ul className="text-sm text-slate-600 space-y-2 ml-4">
+                      <li>• Apreciar as contas do Presidente da República</li>
+                      <li>• Julgar Tomadas de Contas Especiais (TCE)</li>
+                      <li>• Fiscalizar a aplicação de recursos federais</li>
+                      <li>• Emitir pareceres sobre conformidade de despesas</li>
+                    </ul>
+                  </div>
+                  <a href="https://www.tcu.gov.br" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold">
+                    Acessar Portal TCU <ExternalLink className="w-4 h-4" />
+                  </a>
+                </div>
+              </Card>
+
+              {/* CGU Card */}
+              <Card className="overflow-hidden border-l-4 border-l-red-700 hover:shadow-xl transition-shadow">
+                <div className="bg-gradient-to-br from-red-600 to-red-700 p-8 text-white">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="w-16 h-16 bg-white rounded-lg flex items-center justify-center">
+                      <span className="text-2xl font-bold text-red-700">CGU</span>
+                    </div>
+                    <h3 className="text-2xl font-bold">Controladoria-Geral da União</h3>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <p className="text-slate-700 mb-4 font-semibold">Controle Interno Federal</p>
+                  <p className="text-slate-600 mb-6">Órgão responsável pela auditoria, fiscalização e controle interno da administração pública federal.</p>
+                  <div className="space-y-3 mb-6">
+                    <p className="text-sm text-slate-600"><strong>Competências:</strong></p>
+                    <ul className="text-sm text-slate-600 space-y-2 ml-4">
+                      <li>• Auditar órgãos federais</li>
+                      <li>• Instaurar Tomadas de Contas Especiais</li>
+                      <li>• Avaliar conformidade de despesas</li>
+                      <li>• Emitir Relatório e Certificado de Auditoria</li>
+                    </ul>
+                  </div>
+                  <a href="https://www.gov.br/cgu" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-red-600 hover:text-red-700 font-semibold">
+                    Acessar Portal CGU <ExternalLink className="w-4 h-4" />
+                  </a>
+                </div>
+              </Card>
+
+              {/* STF Card */}
+              <Card className="overflow-hidden border-l-4 border-l-amber-700 hover:shadow-xl transition-shadow">
+                <div className="bg-gradient-to-br from-amber-600 to-amber-700 p-8 text-white">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="w-16 h-16 bg-white rounded-lg flex items-center justify-center">
+                      <span className="text-2xl font-bold text-amber-700">STF</span>
+                    </div>
+                    <h3 className="text-2xl font-bold">Supremo Tribunal Federal</h3>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <p className="text-slate-700 mb-4 font-semibold">Instância Suprema do Poder Judiciário</p>
+                  <p className="text-slate-600 mb-6">Órgão máximo do Poder Judiciário responsável pela interpretação final da Constituição Federal.</p>
+                  <div className="space-y-3 mb-6">
+                    <p className="text-sm text-slate-600"><strong>Relevância para TCE:</strong></p>
+                    <ul className="text-sm text-slate-600 space-y-2 ml-4">
+                      <li>• Decisões sobre prescrição em TCE</li>
+                      <li>• Recurso administrativo de condenações</li>
+                      <li>• Interpretação constitucional de direitos</li>
+                      <li>• Garantias processuais em julgamentos</li>
+                    </ul>
+                  </div>
+                  <a href="https://www.stf.jus.br" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-amber-600 hover:text-amber-700 font-semibold">
+                    Acessar Portal STF <ExternalLink className="w-4 h-4" />
+                  </a>
+                </div>
+              </Card>
+
+              {/* TRF Card */}
+              <Card className="overflow-hidden border-l-4 border-l-green-700 hover:shadow-xl transition-shadow">
+                <div className="bg-gradient-to-br from-green-600 to-green-700 p-8 text-white">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="w-16 h-16 bg-white rounded-lg flex items-center justify-center">
+                      <span className="text-2xl font-bold text-green-700">TRF</span>
+                    </div>
+                    <h3 className="text-2xl font-bold">Tribunais Regionais Federais</h3>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <p className="text-slate-700 mb-4 font-semibold">Instância Regional do Poder Judiciário</p>
+                  <p className="text-slate-600 mb-6">Órgãos responsáveis por julgar recursos de decisões de primeira instância em matérias federais.</p>
+                  <div className="space-y-3 mb-6">
+                    <p className="text-sm text-slate-600"><strong>Relevância para TCE:</strong></p>
+                    <ul className="text-sm text-slate-600 space-y-2 ml-4">
+                      <li>• Recurso de condenações TCU</li>
+                      <li>• Análise de questões processuais</li>
+                      <li>• Garantias de direito de defesa</li>
+                      <li>• Revisão de decisões administrativas</li>
+                    </ul>
+                  </div>
+                  <a href="https://www.trf.jus.br" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-green-600 hover:text-green-700 font-semibold">
+                    Acessar Portal TRF <ExternalLink className="w-4 h-4" />
+                  </a>
+                </div>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* SOURCES SECTION */}
       <section className="py-16 bg-white border-t border-slate-200">
         <div className="container">
@@ -1073,6 +1199,113 @@ export default function Home() {
               <p className="text-slate-600 mb-6"><em>Foco: TCE • PRESCRIÇÃO • BAP</em></p>
             </div>
 
+            {/* COMPLETE LEGISLATION SECTION */}
+            <div className="mb-12 p-8 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg border-2 border-blue-200">
+              <h3 className="text-2xl font-bold text-slate-900 mb-6">Legislação Completa</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* Constitutional Framework */}
+                <div>
+                  <h4 className="font-bold text-slate-900 mb-3 text-lg flex items-center gap-2">
+                    <FileText className="w-5 h-5 text-blue-600" />
+                    Marco Constitucional
+                  </h4>
+                  <ul className="space-y-2 text-sm text-slate-700">
+                    <li className="pb-2 border-b border-blue-200">
+                      <strong>Constituição Federal de 1988</strong>
+                      <p className="text-xs text-slate-600 mt-1">Arts. 70 e 71 - Controle externo e Tribunal de Contas da União</p>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Federal Laws */}
+                <div>
+                  <h4 className="font-bold text-slate-900 mb-3 text-lg flex items-center gap-2">
+                    <FileText className="w-5 h-5 text-green-600" />
+                    Leis Federais
+                  </h4>
+                  <ul className="space-y-2 text-sm text-slate-700">
+                    <li className="pb-2 border-b border-green-200">
+                      <strong>Lei nº 8.443/1992</strong>
+                      <p className="text-xs text-slate-600 mt-1">Lei Orgânica do Tribunal de Contas da União</p>
+                    </li>
+                    <li>
+                      <strong>Lei nº 9.873/1999</strong>
+                      <p className="text-xs text-slate-600 mt-1">Prescrição de dívidas da União</p>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Normative Instructions */}
+                <div>
+                  <h4 className="font-bold text-slate-900 mb-3 text-lg flex items-center gap-2">
+                    <FileText className="w-5 h-5 text-amber-600" />
+                    Instruções Normativas (IN)
+                  </h4>
+                  <ul className="space-y-2 text-sm text-slate-700">
+                    <li className="pb-2 border-b border-amber-200">
+                      <strong>IN TCU nº 98/2024</strong> (vigência: 27/11/2024)
+                      <p className="text-xs text-slate-600 mt-1">Procedimentos de Tomada de Contas Especial</p>
+                      <a href="https://pesquisa.apps.tcu.gov.br" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline text-xs">Consultar no portal TCU →</a>
+                    </li>
+                    <li>
+                      <strong>IN TCU nº 71/2012</strong> (revogada)
+                      <p className="text-xs text-slate-600 mt-1">Norma anterior - referência histórica</p>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Portarias */}
+                <div>
+                  <h4 className="font-bold text-slate-900 mb-3 text-lg flex items-center gap-2">
+                    <FileText className="w-5 h-5 text-red-600" />
+                    Portarias
+                  </h4>
+                  <ul className="space-y-2 text-sm text-slate-700">
+                    <li className="pb-2 border-b border-red-200">
+                      <strong>Portaria TCU nº 121/2025</strong>
+                      <p className="text-xs text-slate-600 mt-1">Procedimentos operacionais do BAP</p>
+                    </li>
+                    <li>
+                      <strong>Portaria CGU nº 1.531/2021</strong>
+                      <p className="text-xs text-slate-600 mt-1">Procedimentos TCE no Poder Executivo Federal</p>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Resolutions and Decisions */}
+                <div>
+                  <h4 className="font-bold text-slate-900 mb-3 text-lg flex items-center gap-2">
+                    <FileText className="w-5 h-5 text-purple-600" />
+                    Resoluções e Decisões
+                  </h4>
+                  <ul className="space-y-2 text-sm text-slate-700">
+                    <li className="pb-2 border-b border-purple-200">
+                      <strong>Resolução TCU nº 344/2022</strong>
+                      <p className="text-xs text-slate-600 mt-1">Regulamenta prescrição quinquenal</p>
+                    </li>
+                    <li>
+                      <strong>DN TCU nº 217/2025</strong>
+                      <p className="text-xs text-slate-600 mt-1">Atualização de transferências voluntárias</p>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Informative Notes */}
+                <div>
+                  <h4 className="font-bold text-slate-900 mb-3 text-lg flex items-center gap-2">
+                    <FileText className="w-5 h-5 text-cyan-600" />
+                    Notas Informativas
+                  </h4>
+                  <ul className="space-y-2 text-sm text-slate-700">
+                    <li>
+                      <strong>Nota Informativa CGU nº 877/2021</strong>
+                      <p className="text-xs text-slate-600 mt-1">Procedimentos TCE na Administração Federal</p>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Card className="p-6 border-l-4 border-l-blue-700">
                 <h3 className="font-bold text-slate-900 mb-3">Documentos Normativos</h3>
@@ -1080,7 +1313,6 @@ export default function Home() {
                   <li>• Instrução Normativa TCU nº 98/2024</li>
                   <li>• Portaria TCU nº 121/2025</li>
                   <li>• Resolução TCU nº 344/2022</li>
-                  <li>• Decisão Normativa TCU nº 155/2016</li>
                   <li>• Decisão Normativa TCU nº 217/2025</li>
                 </ul>
               </Card>
@@ -1164,6 +1396,48 @@ export default function Home() {
                 <li><a href="https://www.tcu.gov.br/portaria-121-2025" target="_blank" rel="noopener noreferrer" className="hover:text-white">Portaria nº 121/2025</a></li>
                 <li><a href="https://www.tcu.gov.br/resolucao-344-2022" target="_blank" rel="noopener noreferrer" className="hover:text-white">Resolução nº 344/2022</a></li>
               </ul>
+            </div>
+          </div>
+
+          {/* INSTITUTIONAL CREDITS */}
+          <div className="border-t border-slate-700 pt-8 mb-8">
+            <h4 className="font-bold text-center mb-6 text-slate-300">Órgãos Responsáveis</h4>
+            <div className="flex flex-wrap justify-center items-center gap-8 mb-8">
+              {/* TCU Badge */}
+              <div className="text-center">
+                <div className="w-20 h-20 bg-blue-600 rounded-lg flex items-center justify-center mb-2 mx-auto hover:bg-blue-700 transition-colors">
+                  <span className="text-2xl font-bold text-white">TCU</span>
+                </div>
+                <p className="text-xs text-slate-400">Tribunal de Contas</p>
+                <p className="text-xs text-slate-400">da União</p>
+              </div>
+
+              {/* CGU Badge */}
+              <div className="text-center">
+                <div className="w-20 h-20 bg-red-600 rounded-lg flex items-center justify-center mb-2 mx-auto hover:bg-red-700 transition-colors">
+                  <span className="text-2xl font-bold text-white">CGU</span>
+                </div>
+                <p className="text-xs text-slate-400">Controladoria-Geral</p>
+                <p className="text-xs text-slate-400">da União</p>
+              </div>
+
+              {/* STF Badge */}
+              <div className="text-center">
+                <div className="w-20 h-20 bg-amber-600 rounded-lg flex items-center justify-center mb-2 mx-auto hover:bg-amber-700 transition-colors">
+                  <span className="text-2xl font-bold text-white">STF</span>
+                </div>
+                <p className="text-xs text-slate-400">Supremo Tribunal</p>
+                <p className="text-xs text-slate-400">Federal</p>
+              </div>
+
+              {/* TRF Badge */}
+              <div className="text-center">
+                <div className="w-20 h-20 bg-green-600 rounded-lg flex items-center justify-center mb-2 mx-auto hover:bg-green-700 transition-colors">
+                  <span className="text-2xl font-bold text-white">TRF</span>
+                </div>
+                <p className="text-xs text-slate-400">Tribunais Regionais</p>
+                <p className="text-xs text-slate-400">Federais</p>
+              </div>
             </div>
           </div>
 
