@@ -10,6 +10,7 @@ import { FAQSearch } from "@/components/FAQSearch";
 import { HeroSidebar } from "@/components/HeroSidebar";
 import { ImageModal } from "@/components/ImageModal";
 import { PortariaCard } from "@/components/PortariaCard";
+import { InteractiveFlowDiagram } from "@/components/InteractiveFlowDiagram";
 
 
 /**
@@ -1004,6 +1005,17 @@ export default function Home() {
 
             <div className="bg-white rounded-xl shadow-lg p-8 border border-blue-200">
               <PortariaCard />
+            </div>
+
+            {/* INTERACTIVE FLOW DIAGRAM */}
+            <div className="mt-16">
+              <div className="mb-8 text-center">
+                <h3 className="text-3xl font-bold text-slate-900 mb-4">Fluxo Interativo - 7 Etapas da COTCE</h3>
+                <p className="text-lg text-slate-600">Visualize o processo completo com interatividade: arraste, zoom e explore cada etapa</p>
+              </div>
+              <div className="bg-white rounded-xl shadow-lg overflow-hidden border-2 border-indigo-200">
+                <InteractiveFlowDiagram />
+              </div>
             </div>
           </div>
         </div>
