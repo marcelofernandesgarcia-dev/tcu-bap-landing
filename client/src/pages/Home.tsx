@@ -9,6 +9,7 @@ import { FlowDiagram } from "@/components/FlowDiagram";
 import { FAQSearch } from "@/components/FAQSearch";
 import { HeroSidebar } from "@/components/HeroSidebar";
 import { ImageModal } from "@/components/ImageModal";
+import { PortariaCard } from "@/components/PortariaCard";
 
 
 /**
@@ -986,6 +987,23 @@ export default function Home() {
                 <h3 className="font-bold text-slate-900 mb-2">Implementação Prática</h3>
                 <p className="text-sm text-slate-600">Passos operacionais para instauração e acompanhamento via sistema e-TCE</p>
               </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* PORTARIA 121/2025 DETAILED FLOW SECTION */}
+      <section className="py-20 bg-gradient-to-br from-blue-50 to-indigo-50">
+        <div className="container">
+          <div className="max-w-6xl mx-auto">
+            <div className="mb-12 text-center">
+              <h2 className="text-4xl font-bold text-slate-900 mb-4">Portaria TCU nº 121/2025 - Fluxo Detalhado</h2>
+              <p className="text-lg text-slate-600">Sistema e-TCE: 7 Etapas da COTCE com Normas, Prazos e Documentos</p>
+              <p className="text-sm text-slate-500 mt-2">Fase Interna Completa com Referências Normativas</p>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-lg p-8 border border-blue-200">
+              <PortariaCard />
             </div>
           </div>
         </div>
