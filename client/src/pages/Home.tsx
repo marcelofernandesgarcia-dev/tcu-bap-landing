@@ -11,6 +11,8 @@ import { HeroSidebar } from "@/components/HeroSidebar";
 import { ImageModal } from "@/components/ImageModal";
 import { PortariaCard } from "@/components/PortariaCard";
 import { InteractiveFlowDiagram } from "@/components/InteractiveFlowDiagram";
+import { FinancialAnalysisFlow } from "@/components/FinancialAnalysisFlow";
+import { JudgmentAccordFlow } from "@/components/JudgmentAccordFlow";
 
 
 /**
@@ -247,6 +249,7 @@ export default function Home() {
   const [showConsultModal, setShowConsultModal] = useState(false);
   const [showDocsModal, setShowDocsModal] = useState(false);
   const [isPlayingPodcast, setIsPlayingPodcast] = useState(false);
+  const [activeFlowTab, setActiveFlowTab] = useState<'cotce' | 'financial' | 'judgment'>('cotce');
 
   return (
     <div className="min-h-screen bg-white">
@@ -1007,14 +1010,66 @@ export default function Home() {
               <PortariaCard />
             </div>
 
-            {/* INTERACTIVE FLOW DIAGRAM */}
+            {/* INTERACTIVE FLOW DIAGRAMS - TABBED */}
             <div className="mt-16">
               <div className="mb-8 text-center">
-                <h3 className="text-3xl font-bold text-slate-900 mb-4">Fluxo Interativo - 7 Etapas da COTCE</h3>
-                <p className="text-lg text-slate-600">Visualize o processo completo com interatividade: arraste, zoom e explore cada etapa</p>
+                <h3 className="text-3xl font-bold text-slate-900 mb-4">Fluxos Interativos - Processo Completo</h3>
+                <p className="text-lg text-slate-600">Visualize os 3 fluxos principais com interatividade: arraste, zoom e explore cada etapa</p>
               </div>
-              <div className="bg-white rounded-xl shadow-lg overflow-hidden border-2 border-indigo-200">
-                <InteractiveFlowDiagram />
+              
+              {/* Tab Navigation */}
+              <div className="bg-white rounded-t-xl shadow-lg border-2 border-indigo-200 border-b-0">
+                <div className="flex flex-wrap">
+                  <button
+                    onClick={() => setActiveFlowTab('cotce')}
+                    className={`flex-1 px-6 py-4 font-semibold transition-all ${
+                      activeFlowTab === 'cotce'
+                        ? 'bg-indigo-600 text-white border-b-4 border-indigo-600'
+                        : 'bg-gray-100 text-slate-700 hover:bg-gray-200'
+                    }`}
+                  >
+                    📋 Fluxo COTCE (7 Etapas)
+                  </button>
+                  <button
+                    onClick={() => setActiveFlowTab('financial')}
+                    className={`flex-1 px-6 py-4 font-semibold transition-all ${
+                      activeFlowTab === 'financial'
+                        ? 'bg-green-600 text-white border-b-4 border-green-600'
+                        : 'bg-gray-100 text-slate-700 hover:bg-gray-200'
+                    }`}
+                  >
+                    💰 Análise Financeira
+                  </button>
+                  <button
+                    onClick={() => setActiveFlowTab('judgment')}
+                    className={`flex-1 px-6 py-4 font-semibold transition-all ${
+                      activeFlowTab === 'judgment'
+                        ? 'bg-blue-600 text-white border-b-4 border-blue-600'
+                        : 'bg-gray-100 text-slate-700 hover:bg-gray-200'
+                    }`}
+                  >
+                    ⚖️ Acordão de Julgamento
+                  </button>
+                </div>
+              </div>
+              
+              {/* Tab Content */}
+              <div className="bg-white rounded-b-xl shadow-lg overflow-hidden border-2 border-indigo-200 border-t-0">
+                {activeFlowTab === 'cotce' && (
+                  <div className="p-4">
+                    <InteractiveFlowDiagram />
+                  </div>
+                )}
+                {activeFlowTab === 'financial' && (
+                  <div className="p-4">
+                    <FinancialAnalysisFlow />
+                  </div>
+                )}
+                {activeFlowTab === 'judgment' && (
+                  <div className="p-4">
+                    <JudgmentAccordFlow />
+                  </div>
+                )}
               </div>
             </div>
           </div>
