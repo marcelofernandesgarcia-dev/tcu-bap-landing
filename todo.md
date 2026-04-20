@@ -548,3 +548,57 @@
 - [x] TypeScript compilando sem erros
 - [x] Dev server rodando normalmente
 - [x] Pronto para: PRODUCAO
+
+
+## Fase 24: Fluxo Interativo Visual - Portaria 121/2025 - CONCLUIDA
+- [x] Instalar React Flow para visualização interativa
+- [x] Criar componente InteractiveFlowDiagram com 7 nós (etapas COTCE)
+- [x] Implementar arestas animadas conectando as etapas
+- [x] Adicionar tooltips com informações de normas
+- [x] Implementar controles de zoom e pan
+- [x] Adicionar legenda colorida das etapas
+- [x] Integrar no Home.tsx após PortariaCard
+- [x] Manter cards expansíveis existentes
+- [x] Testar interatividade e responsividade
+- [x] TypeScript compilando sem erros
+- [x] Dev server rodando normalmente
+
+## Status Final - Fase 24
+- [x] Fluxo interativo implementado com React Flow
+- [x] 2 visualizações complementares: Cards + Fluxo Interativo
+- [x] Drag-and-drop, zoom e pan funcionando
+- [x] Tooltips com normas em cada etapa
+- [x] 214 testes passando (100%)
+- [x] TypeScript compilando sem erros
+- [x] Dev server rodando normalmente
+- [x] Pronto para: PRODUCAO
+
+
+## Fase 25: Expansão do Fluxo para 30+ Nós - CONCLUIDA
+- [x] Expandir InteractiveFlowDiagram de 7 nós para 30+ nós
+- [x] Detalhar cada etapa com sub-ações específicas
+- [x] Adicionar documentos obrigatórios em cada nó
+- [x] Incluir normas e referências legais
+- [x] Implementar tooltips ricos com 6 campos: Label, Descrição, Responsável, Norma, Duração, Documentos
+- [x] Organizar fluxo com arestas animadas (sólidas e tracejadas)
+- [x] Manter legenda colorida das 7 etapas
+- [x] Adicionar instruções de interatividade
+- [x] Testar responsividade e zoom
+- [x] 214 testes passando (100%)
+
+## Status Final - Fase 25
+- [x] InteractiveFlowDiagram expandido com 30+ nós
+- [x] Estrutura detalhada:
+  - Etapa 1: 4 nós (Disposições Preliminares)
+  - Etapa 2: 5 nós (Instauração e Pressupostos)
+  - Etapa 3: 6 nós (Organização e Documentação)
+  - Etapa 4: 5 nós (Quantificação do Débito)
+  - Etapa 5: 5 nós (Dispensa e Arquivamento)
+  - Etapa 6: 5 nós (Prescrição e BAP)
+  - Etapa 7: 4 nós (Segregação de Funções)
+- [x] Tooltips com informações completas
+- [x] Fluxo paralelo e condicional indicado
+- [x] 214 testes passando (100%)
+- [x] TypeScript compilando sem erros
+- [x] Dev server rodando normalmente
+- [x] Pronto para: PRODUCAO
