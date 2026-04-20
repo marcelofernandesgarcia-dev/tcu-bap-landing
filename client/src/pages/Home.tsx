@@ -1357,9 +1357,9 @@ export default function Home() {
             <div>
               <h4 className="font-bold mb-4">Suporte</h4>
               <ul className="space-y-2 text-sm text-slate-300">
+                <li><a href="/glossario" className="hover:text-white">Glossário Técnico</a></li>
+                <li><a href="/contato" className="hover:text-white">Fale Conosco</a></li>
                 <li><a href="mailto:stce@tcu.gov.br" className="hover:text-white">stce@tcu.gov.br</a></li>
-                <li><a href="https://www.tcu.gov.br/faq" target="_blank" rel="noopener noreferrer" className="hover:text-white">FAQ</a></li>
-                <li><a href="https://www.tcu.gov.br/contato" target="_blank" rel="noopener noreferrer" className="hover:text-white">Contato</a></li>
               </ul>
             </div>
 
