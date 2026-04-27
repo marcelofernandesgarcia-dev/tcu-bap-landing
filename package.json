@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "node dev-server-integrated.mjs",
     "dev-vite": "vite --host",
-    "build": "vite build && esbuild server/src/index.ts --platform=node --bundle --format=esm --outdir=dist --external:express --external:mysql2 --external:drizzle-orm --external:@trpc/server",
+    "build": "vite build && esbuild server/src/index.ts --platform=node --bundle --format=esm --outdir=dist --external:express --external:cors --external:body-parser --external:multer --external:mysql2 --external:drizzle-orm --external:@trpc/server --external:jose --external:superjson",
     "start": "NODE_ENV=production node dist/index.js",
     "preview": "vite preview --host",
     "check": "tsc --noEmit",
