@@ -8,7 +8,7 @@ import cors from 'cors';
 import analyzeRoute from './routes/analyzeRoute';
 
 const app: Express = express();
-const PORT = process.env.SERVER_PORT || 3001;
+const PORT = process.env.PORT || process.env.SERVER_PORT || 3000;
 
 // Middleware
 app.use(cors({
