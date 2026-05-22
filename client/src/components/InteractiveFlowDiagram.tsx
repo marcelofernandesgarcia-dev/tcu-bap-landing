@@ -939,7 +939,15 @@ export const InteractiveFlowDiagram: React.FC = () => {
   ];
 
   // Define edges connecting the nodes
-  const initialEdges: Edge[] = [
+  interface EdgeConfig {
+    source: string;
+    target: string;
+    animated?: boolean;
+    style?: any;
+    markerEnd?: any;
+  }
+
+  const initialEdges: EdgeConfig[] = [
     // Etapa 0 edges
     {source: '0-1', target: '0-2', animated: true },
     {source: '0-1', target: '0-3', animated: true },
@@ -1020,10 +1028,10 @@ export const InteractiveFlowDiagram: React.FC = () => {
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(
-    initialEdges.map(edge => ({
-      id: `${config.source}-${config.target}`,
-      source: config.source,
-      target: config.target,
+    initialEdges.map((edge, idx) => ({
+      id: `edge-${idx}`,
+      source: edge.source,
+      target: edge.target,
       animated: edge.animated || false,
       style: edge.style,
       markerEnd: edge.markerEnd || { type: MarkerType.ArrowClosed },
