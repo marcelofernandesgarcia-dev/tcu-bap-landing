@@ -1122,7 +1122,53 @@ export const InteractiveFlowDiagram: React.FC = () => {
   );
 
   return (
-    <div className="w-full h-screen bg-white">
+    <div className="w-full h-screen bg-white flex flex-col">
+      {/* Legend - Top Bar */}
+      <div className="bg-slate-50 border-b border-gray-300 p-3 overflow-x-auto shadow-sm">
+        <div className="flex items-center gap-6 min-w-max px-4">
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 bg-purple-200 border border-purple-700 rounded"></div>
+            <span className="text-xs whitespace-nowrap font-medium">Etapa 0</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 bg-blue-200 border border-blue-700 rounded"></div>
+            <span className="text-xs whitespace-nowrap font-medium">Etapa 1</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 bg-green-200 border border-green-700 rounded"></div>
+            <span className="text-xs whitespace-nowrap font-medium">Etapa 2</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 bg-orange-200 border border-orange-700 rounded"></div>
+            <span className="text-xs whitespace-nowrap font-medium">Etapa 3</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 bg-pink-200 border border-pink-700 rounded"></div>
+            <span className="text-xs whitespace-nowrap font-medium">Etapa 4</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 bg-teal-200 border border-teal-700 rounded"></div>
+            <span className="text-xs whitespace-nowrap font-medium">Etapa 5</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 bg-rose-200 border border-rose-700 rounded"></div>
+            <span className="text-xs whitespace-nowrap font-medium">Etapa 6</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 bg-indigo-200 border border-indigo-700 rounded"></div>
+            <span className="text-xs whitespace-nowrap font-medium">Etapa 7</span>
+          </div>
+          <div className="flex items-center gap-2 ml-6 pl-4 border-l border-gray-400">
+            <span className="text-xs text-slate-600">— Fluxo principal</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-slate-600">- - - Condicional</span>
+          </div>
+        </div>
+      </div>
+
+      {/* React Flow Container */}
+      <div className="flex-1 relative">
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -1133,9 +1179,10 @@ export const InteractiveFlowDiagram: React.FC = () => {
         <Background color="#aaa" gap={16} />
         <Controls />
       </ReactFlow>
+      </div>
 
-      {/* Legend */}
-      <div className="absolute bottom-4 left-4 bg-white p-4 rounded-lg shadow-lg border border-gray-200 text-sm max-w-xs">
+      {/* Legend - Hidden (kept for reference) */}
+      <div className="hidden absolute bottom-4 left-4 bg-white p-4 rounded-lg shadow-lg border border-gray-200 text-sm max-w-xs">
         <h3 className="font-bold mb-3 text-slate-900">Legenda das Etapas</h3>
         <div className="space-y-2">
           <div className="flex items-center gap-2">
