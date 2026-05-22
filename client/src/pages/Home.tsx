@@ -11,6 +11,7 @@ import { HeroSidebar } from "@/components/HeroSidebar";
 import { ImageModal } from "@/components/ImageModal";
 import { PortariaCard } from "@/components/PortariaCard";
 import { InteractiveFlowDiagram } from "@/components/InteractiveFlowDiagram";
+import { PedagogicalIntroduction } from "@/components/PedagogicalIntroduction";
 
 
 /**
@@ -1008,10 +1009,13 @@ export default function Home() {
             </div>
 
             {/* INTERACTIVE FLOW DIAGRAMS - TABBED */}
-            <div className="mt-16">
+            <div className="mt-16 space-y-12">
+              {/* PEDAGOGICAL INTRODUCTION */}
+              <PedagogicalIntroduction />
+
               <div className="mb-8 text-center">
-                <h3 className="text-3xl font-bold text-slate-900 mb-4">Fluxo Interativo - 7 Etapas da COTCE</h3>
-                <p className="text-lg text-slate-600">Visualize o processo completo com interatividade: arraste, zoom e explore cada etapa</p>
+                <h3 className="text-3xl font-bold text-slate-900 mb-4">Fluxo Interativo - 8 Etapas da COTCE</h3>
+                <p className="text-lg text-slate-600">Visualize o processo completo com interatividade: arraste, zoom e explore cada etapa. Inclui Medidas Administrativas com diligencias e edital.</p>
               </div>
               
               {/* INTERACTIVE FLOW DIAGRAM */}
