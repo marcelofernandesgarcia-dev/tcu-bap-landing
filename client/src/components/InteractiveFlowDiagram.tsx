@@ -24,9 +24,263 @@ interface FlowNode extends Node {
 }
 
 export const InteractiveFlowDiagram: React.FC = () => {
-  // Define nodes for the expanded COTCE flow with 30+ nodes
+  // Define nodes for the expanded COTCE flow with 40+ nodes (Etapa 0 + 7 Etapas)
   const initialNodes: FlowNode[] = [
-    // ETAPA 1: DISPOSIÇÕES PRELIMINARES
+    // ============ ETAPA 0: MEDIDAS ADMINISTRATIVAS ============
+    {
+      id: '0-1',
+      data: {
+        label: 'Medidas Administrativas',
+        description: 'Fase preliminar de caracterização do dano e adoção de medidas',
+        norm: 'IN TCU 98/2024, Arts. 5-9; Portaria TCU 121/2025',
+        duration: 'Variável conforme tipo',
+        responsible: 'Autoridade Administrativa / COTCE',
+      },
+      position: { x: 0, y: -200 },
+      style: {
+        background: '#f3e5f5',
+        border: '3px solid #7b1fa2',
+        borderRadius: '8px',
+        padding: '12px',
+        width: '200px',
+        fontSize: '11px',
+        fontWeight: 'bold',
+      },
+    },
+    {
+      id: '0-2',
+      data: {
+        label: 'Indício de Dano',
+        description: 'Identificação inicial do dano ao erário pela unidade de fiscalização',
+        norm: 'IN TCU 98/2024, Art. 5',
+        documents: ['Relatório de Fiscalização', 'Parecer Técnico'],
+        responsible: 'Unidade de Fiscalização',
+        duration: 'Imediato',
+      },
+      position: { x: -250, y: -80 },
+      style: {
+        background: '#e1bee7',
+        border: '2px solid #7b1fa2',
+        borderRadius: '6px',
+        padding: '10px',
+        width: '160px',
+        fontSize: '10px',
+      },
+    },
+    {
+      id: '0-3',
+      data: {
+        label: 'Caracterização do Dano',
+        description: 'Identificação do agente responsável, irregularidade, quantificação e nexo causal',
+        norm: 'IN TCU 98/2024, Art. 5',
+        documents: ['Parecer Jurídico', 'Cálculo do Dano'],
+        responsible: 'COTCE',
+        duration: 'Conforme tipo',
+      },
+      position: { x: -50, y: -80 },
+      style: {
+        background: '#e1bee7',
+        border: '2px solid #7b1fa2',
+        borderRadius: '6px',
+        padding: '10px',
+        width: '160px',
+        fontSize: '10px',
+      },
+    },
+    {
+      id: '0-4',
+      data: {
+        label: 'Prazos - Omissão Contas',
+        description: '120 dias contados do dia seguinte à data de vencimento',
+        norm: 'IN TCU 98/2024, Art. 5, I',
+        duration: '120 dias',
+        responsible: 'Autoridade Administrativa',
+      },
+      position: { x: 150, y: -80 },
+      style: {
+        background: '#e1bee7',
+        border: '2px solid #7b1fa2',
+        borderRadius: '6px',
+        padding: '10px',
+        width: '160px',
+        fontSize: '10px',
+      },
+    },
+    {
+      id: '0-5',
+      data: {
+        label: 'Prazos - Não Comprovação',
+        description: '360 dias contados da data de apresentação das contas',
+        norm: 'IN TCU 98/2024, Art. 5, II',
+        duration: '360 dias',
+        responsible: 'Autoridade Administrativa',
+      },
+      position: { x: 350, y: -80 },
+      style: {
+        background: '#e1bee7',
+        border: '2px solid #7b1fa2',
+        borderRadius: '6px',
+        padding: '10px',
+        width: '160px',
+        fontSize: '10px',
+      },
+    },
+    {
+      id: '0-6',
+      data: {
+        label: 'Prazos - Demais Casos',
+        description: '360 dias contados da ciência do fato pela Administração',
+        norm: 'IN TCU 98/2024, Art. 5, III',
+        duration: '360 dias',
+        responsible: 'Autoridade Administrativa',
+      },
+      position: { x: 550, y: -80 },
+      style: {
+        background: '#e1bee7',
+        border: '2px solid #7b1fa2',
+        borderRadius: '6px',
+        padding: '10px',
+        width: '160px',
+        fontSize: '10px',
+      },
+    },
+    {
+      id: '0-7',
+      data: {
+        label: 'Suspensão de Prazo',
+        description: 'Parcelamento do débito suspende o prazo de instauração',
+        norm: 'IN TCU 98/2024, Art. 5, § 2º',
+        duration: 'Conforme acordo',
+        responsible: 'Autoridade Administrativa',
+      },
+      position: { x: -250, y: 40 },
+      style: {
+        background: '#e1bee7',
+        border: '2px solid #7b1fa2',
+        borderRadius: '6px',
+        padding: '10px',
+        width: '160px',
+        fontSize: '10px',
+      },
+    },
+    {
+      id: '0-8',
+      data: {
+        label: 'Descumprimento de Prazo',
+        description: 'Multa aplicada por descumprimento do prazo de instauração',
+        norm: 'IN TCU 98/2024, Art. 5, § 3º',
+        duration: 'Imediato',
+        responsible: 'TCU',
+      },
+      position: { x: -50, y: 40 },
+      style: {
+        background: '#e1bee7',
+        border: '2px solid #7b1fa2',
+        borderRadius: '6px',
+        padding: '10px',
+        width: '160px',
+        fontSize: '10px',
+      },
+    },
+    {
+      id: '0-9',
+      data: {
+        label: 'Dispensa TCE - Prazo > 10 anos',
+        description: 'Prazo superior a 10 anos entre ocorrência e primeira notificação',
+        norm: 'IN TCU 98/2024, Art. 6, I',
+        duration: 'Análise',
+        responsible: 'COTCE',
+      },
+      position: { x: 150, y: 40 },
+      style: {
+        background: '#e1bee7',
+        border: '2px solid #7b1fa2',
+        borderRadius: '6px',
+        padding: '10px',
+        width: '160px',
+        fontSize: '10px',
+      },
+    },
+    {
+      id: '0-10',
+      data: {
+        label: 'Dispensa TCE - Débito < R$ 20 mil',
+        description: 'Débito inferior a R$ 20.000,00 - Adotar outras medidas de ressarcimento',
+        norm: 'IN TCU 98/2024, Art. 6, II',
+        duration: 'Imediato',
+        responsible: 'Autoridade Administrativa',
+      },
+      position: { x: 350, y: 40 },
+      style: {
+        background: '#e1bee7',
+        border: '2px solid #7b1fa2',
+        borderRadius: '6px',
+        padding: '10px',
+        width: '160px',
+        fontSize: '10px',
+      },
+    },
+    {
+      id: '0-11',
+      data: {
+        label: 'Banco de Débitos Inferiores',
+        description: 'Débito entre R$ 20 mil e R$ 120 mil - Cadastrar no e-TCE',
+        norm: 'IN TCU 98/2024, Art. 6, III',
+        duration: '5 dias úteis',
+        responsible: 'COTCE',
+        documents: ['Formulário e-TCE', 'Cálculo do Débito'],
+      },
+      position: { x: 550, y: 40 },
+      style: {
+        background: '#e1bee7',
+        border: '2px solid #7b1fa2',
+        borderRadius: '6px',
+        padding: '10px',
+        width: '160px',
+        fontSize: '10px',
+      },
+    },
+    {
+      id: '0-12',
+      data: {
+        label: 'Recolhimento Voluntário',
+        description: 'Débito atualizado sem juros moratórios, mas TCE deve ser instaurada',
+        norm: 'IN TCU 98/2024, Art. 7',
+        duration: 'Conforme acordo',
+        responsible: 'Responsável / COTCE',
+      },
+      position: { x: -250, y: 120 },
+      style: {
+        background: '#e1bee7',
+        border: '2px solid #7b1fa2',
+        borderRadius: '6px',
+        padding: '10px',
+        width: '160px',
+        fontSize: '10px',
+      },
+    },
+    {
+      id: '0-13',
+      data: {
+        label: 'Banco de Arquivamentos por Prescrição',
+        description: 'Processos paralisados > 5 anos devem ser cadastrados no BAP',
+        norm: 'IN TCU 98/2024, Art. 9; Resolução TCU 344/2022',
+        duration: 'Conforme marcos',
+        responsible: 'COTCE',
+        documents: ['Planilha BAP', 'Documentação Completa'],
+      },
+      position: { x: -50, y: 120 },
+      style: {
+        background: '#e1bee7',
+        border: '2px solid #7b1fa2',
+        borderRadius: '6px',
+        padding: '10px',
+        width: '160px',
+        fontSize: '10px',
+      },
+    },
+
+    // ============ ETAPA 1: DISPOSIÇÕES PRELIMINARES ============
     {
       id: '1-1',
       data: {
@@ -36,7 +290,7 @@ export const InteractiveFlowDiagram: React.FC = () => {
         duration: 'Fase Preparatória',
         responsible: 'COTCE',
       },
-      position: { x: 0, y: 0 },
+      position: { x: 0, y: 250 },
       style: {
         background: '#e3f2fd',
         border: '3px solid #1976d2',
@@ -55,7 +309,7 @@ export const InteractiveFlowDiagram: React.FC = () => {
         norm: 'Lei 8.443/1992, Art. 70-71',
         documents: ['Termo de Definição', 'Parecer Jurídico Inicial'],
       },
-      position: { x: 0, y: 80 },
+      position: { x: 0, y: 330 },
       style: {
         background: '#bbdefb',
         border: '2px solid #1976d2',
@@ -73,7 +327,7 @@ export const InteractiveFlowDiagram: React.FC = () => {
         norm: 'CGU - Portaria 1.531/2021',
         duration: 'Imediato',
       },
-      position: { x: 180, y: 80 },
+      position: { x: 180, y: 330 },
       style: {
         background: '#bbdefb',
         border: '2px solid #1976d2',
@@ -91,7 +345,7 @@ export const InteractiveFlowDiagram: React.FC = () => {
         norm: 'IN TCU 98/2024, Art. 4',
         duration: 'Negociação',
       },
-      position: { x: 360, y: 80 },
+      position: { x: 360, y: 330 },
       style: {
         background: '#bbdefb',
         border: '2px solid #1976d2',
@@ -102,223 +356,17 @@ export const InteractiveFlowDiagram: React.FC = () => {
       },
     },
 
-    // ETAPA 2: INSTAURAÇÃO E PRESSUPOSTOS
+    // ============ ETAPA 2: INSTAURAÇÃO E PRESSUPOSTOS ============
     {
       id: '2-1',
       data: {
         label: 'Instauração e Pressupostos',
-        description: 'Instauração formal via Sistema e-TCE',
-        norm: 'Portaria 121/2025, Art. 10',
+        description: 'Formalização e verificação de pressupostos legais',
+        norm: 'IN TCU 98/2024, Arts. 10-15',
         duration: '5 dias úteis',
         responsible: 'Autoridade Administrativa',
       },
-      position: { x: 0, y: 200 },
-      style: {
-        background: '#fff3e0',
-        border: '3px solid #f57c00',
-        borderRadius: '8px',
-        padding: '12px',
-        width: '180px',
-        fontSize: '11px',
-        fontWeight: 'bold',
-      },
-    },
-    {
-      id: '2-2',
-      data: {
-        label: 'Pressupostos: Dano + Responsáveis',
-        description: 'Existência do dano e identificação',
-        norm: 'IN TCU 98/2024, Art. 6',
-        documents: ['Comprovação do Dano', 'Identificação de Responsáveis'],
-      },
-      position: { x: 0, y: 280 },
-      style: {
-        background: '#ffe0b2',
-        border: '2px solid #f57c00',
-        borderRadius: '6px',
-        padding: '10px',
-        width: '160px',
-        fontSize: '10px',
-      },
-    },
-    {
-      id: '2-3',
-      data: {
-        label: 'Prazos de Instauração',
-        description: '120 dias (omissão) ou 360 dias (demais)',
-        norm: 'IN TCU 98/2024, Art. 6',
-        duration: 'Crítico',
-      },
-      position: { x: 180, y: 280 },
-      style: {
-        background: '#ffe0b2',
-        border: '2px solid #f57c00',
-        borderRadius: '6px',
-        padding: '10px',
-        width: '160px',
-        fontSize: '10px',
-      },
-    },
-    {
-      id: '2-4',
-      data: {
-        label: 'Inserir no Sistema e-TCE',
-        description: 'Registro obrigatório no sistema',
-        norm: 'Portaria 121/2025, Art. 15',
-        documents: ['Termo de Instauração', 'Senha Pessoal'],
-      },
-      position: { x: 360, y: 280 },
-      style: {
-        background: '#ffe0b2',
-        border: '2px solid #f57c00',
-        borderRadius: '6px',
-        padding: '10px',
-        width: '160px',
-        fontSize: '10px',
-      },
-    },
-    {
-      id: '2-5',
-      data: {
-        label: 'Emitir Declaração de Envio',
-        description: 'Confirmação do sistema e-TCE',
-        norm: 'Portaria 121/2025, Art. 10',
-      },
-      position: { x: 540, y: 280 },
-      style: {
-        background: '#ffe0b2',
-        border: '2px solid #f57c00',
-        borderRadius: '6px',
-        padding: '10px',
-        width: '160px',
-        fontSize: '10px',
-      },
-    },
-
-    // ETAPA 3: ORGANIZAÇÃO E DOCUMENTAÇÃO
-    {
-      id: '3-1',
-      data: {
-        label: 'Organização e Documentação',
-        description: 'Elaboração de documentos essenciais',
-        norm: 'Portaria 121/2025, Art. 13',
-        duration: 'Até 90 dias',
-        responsible: 'COTCE',
-      },
-      position: { x: 0, y: 400 },
-      style: {
-        background: '#f3e5f5',
-        border: '3px solid #7b1fa2',
-        borderRadius: '8px',
-        padding: '12px',
-        width: '180px',
-        fontSize: '11px',
-        fontWeight: 'bold',
-      },
-    },
-    {
-      id: '3-2',
-      data: {
-        label: 'Relatório do Tomador',
-        description: 'Identificação, conduta e quantificação',
-        norm: 'IN TCU 98/2024, Art. 8',
-        documents: ['Relatório Circunstanciado', 'Análise de Fatos'],
-      },
       position: { x: 0, y: 480 },
-      style: {
-        background: '#f0e6fa',
-        border: '2px solid #7b1fa2',
-        borderRadius: '6px',
-        padding: '10px',
-        width: '160px',
-        fontSize: '10px',
-      },
-    },
-    {
-      id: '3-3',
-      data: {
-        label: 'Certificado de Auditoria',
-        description: 'Emissão pela CGU',
-        norm: 'CGU - Portaria 1.531/2021',
-        duration: 'Paralelo',
-        documents: ['Certificado de Auditoria', 'Parecer Técnico'],
-      },
-      position: { x: 180, y: 480 },
-      style: {
-        background: '#f0e6fa',
-        border: '2px solid #7b1fa2',
-        borderRadius: '6px',
-        padding: '10px',
-        width: '160px',
-        fontSize: '10px',
-      },
-    },
-    {
-      id: '3-4',
-      data: {
-        label: 'Parecer do Controle Interno',
-        description: 'Análise jurídica e administrativa',
-        norm: 'IN TCU 98/2024, Art. 8',
-        documents: ['Parecer Jurídico', 'Análise Administrativa'],
-      },
-      position: { x: 360, y: 480 },
-      style: {
-        background: '#f0e6fa',
-        border: '2px solid #7b1fa2',
-        borderRadius: '6px',
-        padding: '10px',
-        width: '160px',
-        fontSize: '10px',
-      },
-    },
-    {
-      id: '3-5',
-      data: {
-        label: 'Pronunciamento Ministerial',
-        description: 'Atribuição da autoridade superior',
-        norm: 'Portaria 121/2025, Art. 13',
-        documents: ['Parecer Ministerial', 'Decisão Administrativa'],
-      },
-      position: { x: 540, y: 480 },
-      style: {
-        background: '#f0e6fa',
-        border: '2px solid #7b1fa2',
-        borderRadius: '6px',
-        padding: '10px',
-        width: '160px',
-        fontSize: '10px',
-      },
-    },
-    {
-      id: '3-6',
-      data: {
-        label: 'Fichas de Qualificação',
-        description: 'Dados detalhados dos responsáveis',
-        norm: 'IN TCU 98/2024, Art. 8',
-        documents: ['Fichas Individuais', 'Dados Pessoais/Jurídicos'],
-      },
-      position: { x: 720, y: 480 },
-      style: {
-        background: '#f0e6fa',
-        border: '2px solid #7b1fa2',
-        borderRadius: '6px',
-        padding: '10px',
-        width: '160px',
-        fontSize: '10px',
-      },
-    },
-
-    // ETAPA 4: QUANTIFICAÇÃO DO DÉBITO
-    {
-      id: '4-1',
-      data: {
-        label: 'Quantificação do Débito',
-        description: 'Cálculo preciso do dano ao erário',
-        norm: 'IN TCU 98/2024, Art. 7',
-        duration: 'Paralelo',
-        responsible: 'COTCE',
-      },
-      position: { x: 0, y: 600 },
       style: {
         background: '#e8f5e9',
         border: '3px solid #388e3c',
@@ -330,14 +378,15 @@ export const InteractiveFlowDiagram: React.FC = () => {
       },
     },
     {
-      id: '4-2',
+      id: '2-2',
       data: {
-        label: 'Método: Verificação',
-        description: 'Cálculo exato com matemática simples',
-        norm: 'IN TCU 98/2024, Art. 7',
-        documents: ['Memória de Cálculo', 'Documentação Comprobatória'],
+        label: 'Pressupostos Legais',
+        description: 'Verificação de: dano, responsável, valor mínimo (R$ 120 mil)',
+        norm: 'IN TCU 98/2024, Art. 10',
+        documents: ['Checklist de Pressupostos'],
+        duration: '5 dias',
       },
-      position: { x: 0, y: 680 },
+      position: { x: -200, y: 560 },
       style: {
         background: '#c8e6c9',
         border: '2px solid #388e3c',
@@ -348,14 +397,14 @@ export const InteractiveFlowDiagram: React.FC = () => {
       },
     },
     {
-      id: '4-3',
+      id: '2-3',
       data: {
-        label: 'Método: Estimativa',
-        description: 'Cálculo confiável com métodos estatísticos',
-        norm: 'IN TCU 98/2024, Art. 7',
-        documents: ['Análise Estatística', 'Justificativa Técnica'],
+        label: 'Prazos de Instauração',
+        description: 'Conforme tipo: omissão (120d), não comprovação (360d), outros (360d)',
+        norm: 'IN TCU 98/2024, Art. 5',
+        duration: 'Variável',
       },
-      position: { x: 180, y: 680 },
+      position: { x: 0, y: 560 },
       style: {
         background: '#c8e6c9',
         border: '2px solid #388e3c',
@@ -366,14 +415,15 @@ export const InteractiveFlowDiagram: React.FC = () => {
       },
     },
     {
-      id: '4-4',
+      id: '2-4',
       data: {
-        label: 'Marco Inicial do Débito',
-        description: 'Ordem bancária, pagamento ou ciência',
-        norm: 'IN TCU 98/2024, Art. 7',
-        duration: 'Crítico',
+        label: 'Sistema e-TCE',
+        description: 'Cadastramento no sistema eletrônico e-TCE',
+        norm: 'Portaria TCU 121/2025',
+        documents: ['Acesso e-TCE', 'Formulário de Cadastro'],
+        duration: '5 dias úteis',
       },
-      position: { x: 360, y: 680 },
+      position: { x: 200, y: 560 },
       style: {
         background: '#c8e6c9',
         border: '2px solid #388e3c',
@@ -384,14 +434,15 @@ export const InteractiveFlowDiagram: React.FC = () => {
       },
     },
     {
-      id: '4-5',
+      id: '2-5',
       data: {
-        label: 'Atualização: IPCA + Juros',
-        description: 'Correção monetária e juros de mora',
-        norm: 'Lei 9.250/1995; IBGE',
-        documents: ['Cálculo IPCA', 'Demonstrativo de Juros'],
+        label: 'Declaração de Instauração',
+        description: 'Notificação formal dos responsáveis e interessados',
+        norm: 'IN TCU 98/2024, Art. 15',
+        documents: ['Termo de Instauração', 'Notificação'],
+        duration: '5 dias',
       },
-      position: { x: 540, y: 680 },
+      position: { x: 400, y: 560 },
       style: {
         background: '#c8e6c9',
         border: '2px solid #388e3c',
@@ -402,20 +453,235 @@ export const InteractiveFlowDiagram: React.FC = () => {
       },
     },
 
-    // ETAPA 5: DISPENSA E ARQUIVAMENTO
+    // ============ ETAPA 3: ORGANIZAÇÃO E DOCUMENTAÇÃO ============
+    {
+      id: '3-1',
+      data: {
+        label: 'Organização e Documentação',
+        description: 'Coleta, organização e análise de documentação',
+        norm: 'IN TCU 98/2024, Arts. 16-20',
+        duration: '30-90 dias',
+        responsible: 'COTCE',
+      },
+      position: { x: 0, y: 710 },
+      style: {
+        background: '#fff3e0',
+        border: '3px solid #f57c00',
+        borderRadius: '8px',
+        padding: '12px',
+        width: '180px',
+        fontSize: '11px',
+        fontWeight: 'bold',
+      },
+    },
+    {
+      id: '3-2',
+      data: {
+        label: 'Relatório Circunstanciado',
+        description: 'Descrição detalhada dos fatos, irregularidades e dano',
+        norm: 'IN TCU 98/2024, Art. 16',
+        documents: ['Relatório Técnico Completo'],
+        duration: '30-60 dias',
+      },
+      position: { x: -300, y: 800 },
+      style: {
+        background: '#ffe0b2',
+        border: '2px solid #f57c00',
+        borderRadius: '6px',
+        padding: '10px',
+        width: '160px',
+        fontSize: '10px',
+      },
+    },
+    {
+      id: '3-3',
+      data: {
+        label: 'Certificado de Dano',
+        description: 'Comprovação técnica e quantificação do dano ao erário',
+        norm: 'IN TCU 98/2024, Art. 17',
+        documents: ['Certificado de Dano', 'Cálculos'],
+        duration: '15-30 dias',
+      },
+      position: { x: -100, y: 800 },
+      style: {
+        background: '#ffe0b2',
+        border: '2px solid #f57c00',
+        borderRadius: '6px',
+        padding: '10px',
+        width: '160px',
+        fontSize: '10px',
+      },
+    },
+    {
+      id: '3-4',
+      data: {
+        label: 'Parecer Jurídico',
+        description: 'Análise jurídica de responsabilidade e enquadramento legal',
+        norm: 'IN TCU 98/2024, Art. 18',
+        documents: ['Parecer Jurídico Fundamentado'],
+        duration: '15-30 dias',
+      },
+      position: { x: 100, y: 800 },
+      style: {
+        background: '#ffe0b2',
+        border: '2px solid #f57c00',
+        borderRadius: '6px',
+        padding: '10px',
+        width: '160px',
+        fontSize: '10px',
+      },
+    },
+    {
+      id: '3-5',
+      data: {
+        label: 'Pronunciamento do Responsável',
+        description: 'Direito de defesa do responsável acusado',
+        norm: 'IN TCU 98/2024, Art. 19',
+        documents: ['Notificação de Defesa', 'Peças de Defesa'],
+        duration: '30 dias',
+      },
+      position: { x: 300, y: 800 },
+      style: {
+        background: '#ffe0b2',
+        border: '2px solid #f57c00',
+        borderRadius: '6px',
+        padding: '10px',
+        width: '160px',
+        fontSize: '10px',
+      },
+    },
+    {
+      id: '3-6',
+      data: {
+        label: 'Fichas de Processamento',
+        description: 'Organização de fichas técnicas e documentação processual',
+        norm: 'IN TCU 98/2024, Art. 20',
+        documents: ['Fichas Técnicas', 'Índice Processual'],
+        duration: '10-15 dias',
+      },
+      position: { x: 500, y: 800 },
+      style: {
+        background: '#ffe0b2',
+        border: '2px solid #f57c00',
+        borderRadius: '6px',
+        padding: '10px',
+        width: '160px',
+        fontSize: '10px',
+      },
+    },
+
+    // ============ ETAPA 4: QUANTIFICAÇÃO DO DÉBITO ============
+    {
+      id: '4-1',
+      data: {
+        label: 'Quantificação do Débito',
+        description: 'Cálculo preciso do valor do dano ao erário',
+        norm: 'IN TCU 98/2024, Arts. 21-25',
+        duration: '15-30 dias',
+        responsible: 'COTCE',
+      },
+      position: { x: 0, y: 940 },
+      style: {
+        background: '#f3e5f5',
+        border: '3px solid #c2185b',
+        borderRadius: '8px',
+        padding: '12px',
+        width: '180px',
+        fontSize: '11px',
+        fontWeight: 'bold',
+      },
+    },
+    {
+      id: '4-2',
+      data: {
+        label: 'Método de Verificação',
+        description: 'Cálculo exato por operações matemáticas simples',
+        norm: 'IN TCU 98/2024, Art. 21',
+        documents: ['Planilha de Cálculo'],
+        duration: '5-10 dias',
+      },
+      position: { x: -200, y: 1030 },
+      style: {
+        background: '#f8bbd0',
+        border: '2px solid #c2185b',
+        borderRadius: '6px',
+        padding: '10px',
+        width: '160px',
+        fontSize: '10px',
+      },
+    },
+    {
+      id: '4-3',
+      data: {
+        label: 'Método de Estimativa',
+        description: 'Cálculo aproximado por métodos estatísticos confiáveis',
+        norm: 'IN TCU 98/2024, Art. 22',
+        documents: ['Relatório Estatístico'],
+        duration: '10-20 dias',
+      },
+      position: { x: 0, y: 1030 },
+      style: {
+        background: '#f8bbd0',
+        border: '2px solid #c2185b',
+        borderRadius: '6px',
+        padding: '10px',
+        width: '160px',
+        fontSize: '10px',
+      },
+    },
+    {
+      id: '4-4',
+      data: {
+        label: 'Marco Inicial e Atualização',
+        description: 'Data do dano e atualização monetária conforme IPCA',
+        norm: 'IN TCU 98/2024, Art. 23',
+        documents: ['Cálculo IPCA', 'Juros Moratórios'],
+        duration: '5 dias',
+      },
+      position: { x: 200, y: 1030 },
+      style: {
+        background: '#f8bbd0',
+        border: '2px solid #c2185b',
+        borderRadius: '6px',
+        padding: '10px',
+        width: '160px',
+        fontSize: '10px',
+      },
+    },
+    {
+      id: '4-5',
+      data: {
+        label: 'Débito Final Consolidado',
+        description: 'Valor total com IPCA + juros moratórios desde o dano',
+        norm: 'IN TCU 98/2024, Art. 24',
+        documents: ['Termo de Quantificação'],
+        duration: 'Imediato',
+      },
+      position: { x: 400, y: 1030 },
+      style: {
+        background: '#f8bbd0',
+        border: '2px solid #c2185b',
+        borderRadius: '6px',
+        padding: '10px',
+        width: '160px',
+        fontSize: '10px',
+      },
+    },
+
+    // ============ ETAPA 5: DISPENSA E ARQUIVAMENTO ============
     {
       id: '5-1',
       data: {
         label: 'Dispensa e Arquivamento',
-        description: 'Avaliação de racionalidade',
-        norm: 'IN TCU 98/2024, Art. 8',
-        duration: 'Análise Contínua',
+        description: 'Análise de critérios para dispensa ou arquivamento',
+        norm: 'IN TCU 98/2024, Arts. 6-9',
+        duration: 'Análise',
         responsible: 'COTCE',
       },
-      position: { x: 0, y: 800 },
+      position: { x: 0, y: 1170 },
       style: {
-        background: '#fce4ec',
-        border: '3px solid #c2185b',
+        background: '#e0f2f1',
+        border: '3px solid #00897b',
         borderRadius: '8px',
         padding: '12px',
         width: '180px',
@@ -426,15 +692,15 @@ export const InteractiveFlowDiagram: React.FC = () => {
     {
       id: '5-2',
       data: {
-        label: 'Limite: Débito < R$ 120 mil',
-        description: 'Dispensa de instauração',
-        norm: 'IN TCU 98/2024, Art. 8',
-        duration: 'Imediato',
+        label: 'Limites de Alçada',
+        description: 'Débito < R$ 20 mil: dispensa TCE; R$ 20-120 mil: Banco de Débitos',
+        norm: 'IN TCU 98/2024, Art. 6',
+        duration: 'Análise',
       },
-      position: { x: 0, y: 880 },
+      position: { x: -200, y: 1260 },
       style: {
-        background: '#f8bbd0',
-        border: '2px solid #c2185b',
+        background: '#b2dfdb',
+        border: '2px solid #00897b',
         borderRadius: '6px',
         padding: '10px',
         width: '160px',
@@ -445,14 +711,15 @@ export const InteractiveFlowDiagram: React.FC = () => {
       id: '5-3',
       data: {
         label: 'Banco de Débitos Inferiores',
-        description: 'Entre R$ 20 mil e R$ 120 mil',
-        norm: 'IN TCU 98/2024, Art. 8',
-        documents: ['Registro no Banco', 'Somatório de Débitos'],
+        description: 'Consolidação de débitos para atingir R$ 120 mil',
+        norm: 'IN TCU 98/2024, Art. 6, III',
+        documents: ['Registro e-TCE'],
+        duration: '5 dias',
       },
-      position: { x: 180, y: 880 },
+      position: { x: 0, y: 1260 },
       style: {
-        background: '#f8bbd0',
-        border: '2px solid #c2185b',
+        background: '#b2dfdb',
+        border: '2px solid #00897b',
         borderRadius: '6px',
         padding: '10px',
         width: '160px',
@@ -462,15 +729,15 @@ export const InteractiveFlowDiagram: React.FC = () => {
     {
       id: '5-4',
       data: {
-        label: 'Fator Tempo: > 10 anos',
-        description: 'Dispensa se sem notificação',
-        norm: 'IN TCU 98/2024, Art. 8',
-        duration: 'Crítico',
+        label: 'Fator Tempo: Prescrição',
+        description: 'Prazo de 5 anos para julgamento (Resolução TCU 344/2022)',
+        norm: 'Resolução TCU 344/2022',
+        duration: '5 anos',
       },
-      position: { x: 360, y: 880 },
+      position: { x: 200, y: 1260 },
       style: {
-        background: '#f8bbd0',
-        border: '2px solid #c2185b',
+        background: '#b2dfdb',
+        border: '2px solid #00897b',
         borderRadius: '6px',
         padding: '10px',
         width: '160px',
@@ -481,14 +748,15 @@ export const InteractiveFlowDiagram: React.FC = () => {
       id: '5-5',
       data: {
         label: 'Elísio do Dano',
-        description: 'Comprovação de não ocorrência',
-        norm: 'IN TCU 98/2024, Art. 8',
-        documents: ['Parecer de Elísio', 'Comprovação'],
+        description: 'Extinção da responsabilidade por prescrição ou outras causas',
+        norm: 'IN TCU 98/2024, Art. 9',
+        documents: ['Termo de Elísio'],
+        duration: 'Conforme análise',
       },
-      position: { x: 540, y: 880 },
+      position: { x: 400, y: 1260 },
       style: {
-        background: '#f8bbd0',
-        border: '2px solid #c2185b',
+        background: '#b2dfdb',
+        border: '2px solid #00897b',
         borderRadius: '6px',
         padding: '10px',
         width: '160px',
@@ -496,20 +764,20 @@ export const InteractiveFlowDiagram: React.FC = () => {
       },
     },
 
-    // ETAPA 6: PRESCRIÇÃO E BAP
+    // ============ ETAPA 6: PRESCRIÇÃO E BAP ============
     {
       id: '6-1',
       data: {
         label: 'Prescrição e BAP',
-        description: 'Monitoramento de prescrição',
-        norm: 'Resolução TCU 344/2022',
-        duration: 'Contínuo (5 anos)',
-        responsible: 'COTCE + Sistema',
+        description: 'Prevenção e cadastramento de processos prescritos',
+        norm: 'IN TCU 98/2024, Art. 9; Resolução TCU 344/2022',
+        duration: 'Conforme marcos',
+        responsible: 'COTCE',
       },
-      position: { x: 0, y: 1000 },
+      position: { x: 0, y: 1400 },
       style: {
-        background: '#e0f2f1',
-        border: '3px solid #00796b',
+        background: '#fce4ec',
+        border: '3px solid #d81b60',
         borderRadius: '8px',
         padding: '12px',
         width: '180px',
@@ -520,15 +788,15 @@ export const InteractiveFlowDiagram: React.FC = () => {
     {
       id: '6-2',
       data: {
-        label: 'Prescrição Geral: 5 anos',
-        description: 'Prazo para julgamento no TCU',
-        norm: 'Resolução TCU 344/2022',
-        duration: 'Crítico',
+        label: 'Prescrição Geral',
+        description: 'Prazo de 5 anos para julgamento da TCE pelo TCU',
+        norm: 'Resolução TCU 344/2022, Art. 1',
+        duration: '5 anos',
       },
-      position: { x: 0, y: 1080 },
+      position: { x: -200, y: 1490 },
       style: {
-        background: '#b2dfdb',
-        border: '2px solid #00796b',
+        background: '#f8bbd0',
+        border: '2px solid #d81b60',
         borderRadius: '6px',
         padding: '10px',
         width: '160px',
@@ -538,15 +806,15 @@ export const InteractiveFlowDiagram: React.FC = () => {
     {
       id: '6-3',
       data: {
-        label: 'Prescrição Intercorrente: 3 anos',
-        description: 'Paralisação sem movimentação',
-        norm: 'Resolução TCU 344/2022',
-        duration: 'Crítico',
+        label: 'Prescrição Intercorrente',
+        description: 'Suspensão por 2 anos sem movimentação relevante',
+        norm: 'Resolução TCU 344/2022, Art. 2',
+        duration: '2 anos',
       },
-      position: { x: 180, y: 1080 },
+      position: { x: 0, y: 1490 },
       style: {
-        background: '#b2dfdb',
-        border: '2px solid #00796b',
+        background: '#f8bbd0',
+        border: '2px solid #d81b60',
         borderRadius: '6px',
         padding: '10px',
         width: '160px',
@@ -556,15 +824,16 @@ export const InteractiveFlowDiagram: React.FC = () => {
     {
       id: '6-4',
       data: {
-        label: 'Banco de Arquivamentos (BAP)',
-        description: 'Processos paralisados > 5 anos',
-        norm: 'IN TCU 98/2024, Art. 9-10',
-        documents: ['Planilha BAP (13 campos)', 'Registro Automatizado'],
+        label: 'Banco de Arquivamentos por Prescrição',
+        description: 'Cadastramento de processos paralisados > 5 anos',
+        norm: 'IN TCU 98/2024, Art. 9',
+        documents: ['Planilha BAP', 'Documentação'],
+        duration: '5 dias',
       },
-      position: { x: 360, y: 1080 },
+      position: { x: 200, y: 1490 },
       style: {
-        background: '#b2dfdb',
-        border: '2px solid #00796b',
+        background: '#f8bbd0',
+        border: '2px solid #d81b60',
         borderRadius: '6px',
         padding: '10px',
         width: '160px',
@@ -574,15 +843,16 @@ export const InteractiveFlowDiagram: React.FC = () => {
     {
       id: '6-5',
       data: {
-        label: 'Sistema de Prevenção',
-        description: 'Monitoramento e alertas automáticos',
-        norm: 'IN TCU 98/2024, Art. 10',
-        documents: ['Notificações de Risco', 'Relatório de Monitoramento'],
+        label: 'Sistema de Prevenção à Prescrição',
+        description: 'Notificações automáticas e acompanhamento de prazos',
+        norm: 'IN TCU 98/2024, Art. 9, § 5º',
+        documents: ['Relatório de Alertas'],
+        duration: 'Contínuo',
       },
-      position: { x: 540, y: 1080 },
+      position: { x: 400, y: 1490 },
       style: {
-        background: '#b2dfdb',
-        border: '2px solid #00796b',
+        background: '#f8bbd0',
+        border: '2px solid #d81b60',
         borderRadius: '6px',
         padding: '10px',
         width: '160px',
@@ -590,20 +860,20 @@ export const InteractiveFlowDiagram: React.FC = () => {
       },
     },
 
-    // ETAPA 7: SEGREGAÇÃO DE FUNÇÕES
+    // ============ ETAPA 7: SEGREGAÇÃO DE FUNÇÕES ============
     {
       id: '7-1',
       data: {
         label: 'Segregação de Funções',
-        description: 'Garantir segregação entre análise e julgamento',
-        norm: 'Portaria 121/2025, Art. 2',
-        duration: 'Estrutural',
-        responsible: 'COTCE',
+        description: 'Separação de responsabilidades entre COTCE, DIVCONT e TCU',
+        norm: 'IN TCU 98/2024, Arts. 26-30',
+        duration: 'Conforme fluxo',
+        responsible: 'COTCE / DIVCONT',
       },
-      position: { x: 0, y: 1200 },
+      position: { x: 0, y: 1630 },
       style: {
-        background: '#fff9c4',
-        border: '3px solid #f9a825',
+        background: '#ede7f6',
+        border: '3px solid #512da8',
         borderRadius: '8px',
         padding: '12px',
         width: '180px',
@@ -614,15 +884,15 @@ export const InteractiveFlowDiagram: React.FC = () => {
     {
       id: '7-2',
       data: {
-        label: 'COTCE: Fase Patológica',
-        description: 'Instrução de TCE (FOCO)',
-        norm: 'Portaria 121/2025, Art. 2',
-        documents: ['Processo Instruído', 'Documentação Completa'],
+        label: 'Responsabilidade COTCE',
+        description: 'Análise, caracterização e quantificação do dano',
+        norm: 'IN TCU 98/2024, Art. 26',
+        duration: 'Fase Interna',
       },
-      position: { x: 0, y: 1280 },
+      position: { x: -200, y: 1720 },
       style: {
-        background: '#fff59d',
-        border: '2px solid #f9a825',
+        background: '#d1c4e9',
+        border: '2px solid #512da8',
         borderRadius: '6px',
         padding: '10px',
         width: '160px',
@@ -632,15 +902,15 @@ export const InteractiveFlowDiagram: React.FC = () => {
     {
       id: '7-3',
       data: {
-        label: 'DIVCONT: Registro Contábil',
-        description: 'Conformidade patrimonial',
-        norm: 'Portaria 121/2025, Art. 2',
-        documents: ['Registro Contábil', 'Conformidade Patrimonial'],
+        label: 'Responsabilidade DIVCONT',
+        description: 'Revisão técnica e jurídica antes do envio ao TCU',
+        norm: 'IN TCU 98/2024, Art. 27',
+        duration: '10-15 dias',
       },
-      position: { x: 180, y: 1280 },
+      position: { x: 0, y: 1720 },
       style: {
-        background: '#fff59d',
-        border: '2px solid #f9a825',
+        background: '#d1c4e9',
+        border: '2px solid #512da8',
         borderRadius: '6px',
         padding: '10px',
         width: '160px',
@@ -651,14 +921,15 @@ export const InteractiveFlowDiagram: React.FC = () => {
       id: '7-4',
       data: {
         label: 'Envio ao TCU',
-        description: 'Encaminhamento para Fase Externa',
-        norm: 'Portaria 121/2025, Art. 18',
-        documents: ['Processo Completo', 'Declaração de Envio'],
+        description: 'Encaminhamento do processo completo para julgamento',
+        norm: 'IN TCU 98/2024, Art. 28',
+        documents: ['Processo Completo', 'Parecer Final'],
+        duration: '5 dias',
       },
-      position: { x: 360, y: 1280 },
+      position: { x: 200, y: 1720 },
       style: {
-        background: '#fff59d',
-        border: '2px solid #f9a825',
+        background: '#d1c4e9',
+        border: '2px solid #512da8',
         borderRadius: '6px',
         padding: '10px',
         width: '160px',
@@ -669,176 +940,155 @@ export const InteractiveFlowDiagram: React.FC = () => {
 
   // Define edges connecting the nodes
   const initialEdges: Edge[] = [
-    // ETAPA 1 connections
-    { id: 'e1-1-1-2', source: '1-1', target: '1-2', animated: true, markerEnd: { type: MarkerType.ArrowClosed }, style: { stroke: '#1976d2', strokeWidth: 2 } },
-    { id: 'e1-1-1-3', source: '1-1', target: '1-3', animated: true, markerEnd: { type: MarkerType.ArrowClosed }, style: { stroke: '#1976d2', strokeWidth: 2 } },
-    { id: 'e1-1-1-4', source: '1-1', target: '1-4', animated: true, markerEnd: { type: MarkerType.ArrowClosed }, style: { stroke: '#1976d2', strokeWidth: 2 } },
-    
-    // ETAPA 1 to 2
-    { id: 'e1-4-2-1', source: '1-4', target: '2-1', animated: true, markerEnd: { type: MarkerType.ArrowClosed }, style: { stroke: '#666', strokeWidth: 2 } },
-    
-    // ETAPA 2 connections
-    { id: 'e2-1-2-2', source: '2-1', target: '2-2', animated: true, markerEnd: { type: MarkerType.ArrowClosed }, style: { stroke: '#f57c00', strokeWidth: 2 } },
-    { id: 'e2-1-2-3', source: '2-1', target: '2-3', animated: true, markerEnd: { type: MarkerType.ArrowClosed }, style: { stroke: '#f57c00', strokeWidth: 2 } },
-    { id: 'e2-1-2-4', source: '2-1', target: '2-4', animated: true, markerEnd: { type: MarkerType.ArrowClosed }, style: { stroke: '#f57c00', strokeWidth: 2 } },
-    { id: 'e2-4-2-5', source: '2-4', target: '2-5', animated: true, markerEnd: { type: MarkerType.ArrowClosed }, style: { stroke: '#f57c00', strokeWidth: 2 } },
-    
-    // ETAPA 2 to 3
-    { id: 'e2-5-3-1', source: '2-5', target: '3-1', animated: true, markerEnd: { type: MarkerType.ArrowClosed }, style: { stroke: '#666', strokeWidth: 2 } },
-    
-    // ETAPA 3 connections
-    { id: 'e3-1-3-2', source: '3-1', target: '3-2', animated: true, markerEnd: { type: MarkerType.ArrowClosed }, style: { stroke: '#7b1fa2', strokeWidth: 2 } },
-    { id: 'e3-1-3-3', source: '3-1', target: '3-3', animated: true, markerEnd: { type: MarkerType.ArrowClosed }, style: { stroke: '#7b1fa2', strokeWidth: 2 } },
-    { id: 'e3-1-3-4', source: '3-1', target: '3-4', animated: true, markerEnd: { type: MarkerType.ArrowClosed }, style: { stroke: '#7b1fa2', strokeWidth: 2 } },
-    { id: 'e3-1-3-5', source: '3-1', target: '3-5', animated: true, markerEnd: { type: MarkerType.ArrowClosed }, style: { stroke: '#7b1fa2', strokeWidth: 2 } },
-    { id: 'e3-1-3-6', source: '3-1', target: '3-6', animated: true, markerEnd: { type: MarkerType.ArrowClosed }, style: { stroke: '#7b1fa2', strokeWidth: 2 } },
-    
-    // ETAPA 4 connections (parallel)
-    { id: 'e2-1-4-1', source: '2-1', target: '4-1', animated: true, markerEnd: { type: MarkerType.ArrowClosed }, style: { stroke: '#666', strokeWidth: 1, strokeDasharray: '5,5' } },
-    { id: 'e4-1-4-2', source: '4-1', target: '4-2', animated: true, markerEnd: { type: MarkerType.ArrowClosed }, style: { stroke: '#388e3c', strokeWidth: 2 } },
-    { id: 'e4-1-4-3', source: '4-1', target: '4-3', animated: true, markerEnd: { type: MarkerType.ArrowClosed }, style: { stroke: '#388e3c', strokeWidth: 2 } },
-    { id: 'e4-1-4-4', source: '4-1', target: '4-4', animated: true, markerEnd: { type: MarkerType.ArrowClosed }, style: { stroke: '#388e3c', strokeWidth: 2 } },
-    { id: 'e4-1-4-5', source: '4-1', target: '4-5', animated: true, markerEnd: { type: MarkerType.ArrowClosed }, style: { stroke: '#388e3c', strokeWidth: 2 } },
-    
-    // ETAPA 5 connections (conditional)
-    { id: 'e3-5-5-1', source: '3-5', target: '5-1', animated: true, markerEnd: { type: MarkerType.ArrowClosed }, style: { stroke: '#666', strokeWidth: 1, strokeDasharray: '5,5' } },
-    { id: 'e5-1-5-2', source: '5-1', target: '5-2', animated: true, markerEnd: { type: MarkerType.ArrowClosed }, style: { stroke: '#c2185b', strokeWidth: 2 } },
-    { id: 'e5-1-5-3', source: '5-1', target: '5-3', animated: true, markerEnd: { type: MarkerType.ArrowClosed }, style: { stroke: '#c2185b', strokeWidth: 2 } },
-    { id: 'e5-1-5-4', source: '5-1', target: '5-4', animated: true, markerEnd: { type: MarkerType.ArrowClosed }, style: { stroke: '#c2185b', strokeWidth: 2 } },
-    { id: 'e5-1-5-5', source: '5-1', target: '5-5', animated: true, markerEnd: { type: MarkerType.ArrowClosed }, style: { stroke: '#c2185b', strokeWidth: 2 } },
-    
-    // ETAPA 6 connections (monitoring)
-    { id: 'e5-3-6-1', source: '5-3', target: '6-1', animated: true, markerEnd: { type: MarkerType.ArrowClosed }, style: { stroke: '#666', strokeWidth: 1, strokeDasharray: '5,5' } },
-    { id: 'e6-1-6-2', source: '6-1', target: '6-2', animated: true, markerEnd: { type: MarkerType.ArrowClosed }, style: { stroke: '#00796b', strokeWidth: 2 } },
-    { id: 'e6-1-6-3', source: '6-1', target: '6-3', animated: true, markerEnd: { type: MarkerType.ArrowClosed }, style: { stroke: '#00796b', strokeWidth: 2 } },
-    { id: 'e6-1-6-4', source: '6-1', target: '6-4', animated: true, markerEnd: { type: MarkerType.ArrowClosed }, style: { stroke: '#00796b', strokeWidth: 2 } },
-    { id: 'e6-1-6-5', source: '6-1', target: '6-5', animated: true, markerEnd: { type: MarkerType.ArrowClosed }, style: { stroke: '#00796b', strokeWidth: 2 } },
-    
-    // ETAPA 7 connections (segregation)
-    { id: 'e6-4-7-1', source: '6-4', target: '7-1', animated: true, markerEnd: { type: MarkerType.ArrowClosed }, style: { stroke: '#666', strokeWidth: 1, strokeDasharray: '5,5' } },
-    { id: 'e7-1-7-2', source: '7-1', target: '7-2', animated: true, markerEnd: { type: MarkerType.ArrowClosed }, style: { stroke: '#f9a825', strokeWidth: 2 } },
-    { id: 'e7-1-7-3', source: '7-1', target: '7-3', animated: true, markerEnd: { type: MarkerType.ArrowClosed }, style: { stroke: '#f9a825', strokeWidth: 2 } },
-    { id: 'e7-2-7-4', source: '7-2', target: '7-4', animated: true, markerEnd: { type: MarkerType.ArrowClosed }, style: { stroke: '#f9a825', strokeWidth: 2 } },
+    // Etapa 0 edges
+    {source: '0-1', target: '0-2', animated: true },
+    {source: '0-1', target: '0-3', animated: true },
+    {source: '0-2', target: '0-3', animated: false, style: { strokeDasharray: '5,5' } },
+    {source: '0-3', target: '0-4', animated: true },
+    {source: '0-3', target: '0-5', animated: true },
+    {source: '0-3', target: '0-6', animated: true },
+    {source: '0-4', target: '0-7', animated: false, style: { strokeDasharray: '5,5' } },
+    {source: '0-5', target: '0-7', animated: false, style: { strokeDasharray: '5,5' } },
+    {source: '0-6', target: '0-7', animated: false, style: { strokeDasharray: '5,5' } },
+    {source: '0-7', target: '0-8', animated: false, style: { strokeDasharray: '5,5' } },
+    {source: '0-3', target: '0-9', animated: true },
+    {source: '0-3', target: '0-10', animated: true },
+    {source: '0-3', target: '0-11', animated: true },
+    {source: '0-10', target: '0-12', animated: false, style: { strokeDasharray: '5,5' } },
+    {source: '0-11', target: '0-13', animated: false, style: { strokeDasharray: '5,5' } },
+    {source: '0-1', target: '1-1', animated: true, markerEnd: { type: MarkerType.ArrowClosed } },
+
+    // Etapa 1 edges
+    {source: '1-1', target: '1-2', animated: true },
+    {source: '1-1', target: '1-3', animated: true },
+    {source: '1-1', target: '1-4', animated: true },
+    {source: '1-4', target: '2-1', animated: true, markerEnd: { type: MarkerType.ArrowClosed } },
+
+    // Etapa 2 edges
+    {source: '2-1', target: '2-2', animated: true },
+    {source: '2-1', target: '2-3', animated: true },
+    {source: '2-1', target: '2-4', animated: true },
+    {source: '2-2', target: '2-5', animated: true },
+    {source: '2-3', target: '2-5', animated: true },
+    {source: '2-4', target: '2-5', animated: true },
+    {source: '2-5', target: '3-1', animated: true, markerEnd: { type: MarkerType.ArrowClosed } },
+
+    // Etapa 3 edges
+    {source: '3-1', target: '3-2', animated: true },
+    {source: '3-1', target: '3-3', animated: true },
+    {source: '3-1', target: '3-4', animated: true },
+    {source: '3-1', target: '3-5', animated: true },
+    {source: '3-1', target: '3-6', animated: true },
+    {source: '3-2', target: '3-3', animated: true },
+    {source: '3-3', target: '3-4', animated: true },
+    {source: '3-4', target: '3-5', animated: true },
+    {source: '3-5', target: '3-6', animated: true },
+    {source: '3-6', target: '4-1', animated: true, markerEnd: { type: MarkerType.ArrowClosed } },
+
+    // Etapa 4 edges
+    {source: '4-1', target: '4-2', animated: true },
+    {source: '4-1', target: '4-3', animated: true },
+    {source: '4-2', target: '4-4', animated: true },
+    {source: '4-3', target: '4-4', animated: true },
+    {source: '4-4', target: '4-5', animated: true },
+    {source: '4-5', target: '5-1', animated: true, markerEnd: { type: MarkerType.ArrowClosed } },
+
+    // Etapa 5 edges
+    {source: '5-1', target: '5-2', animated: true },
+    {source: '5-1', target: '5-3', animated: true },
+    {source: '5-1', target: '5-4', animated: true },
+    {source: '5-1', target: '5-5', animated: true },
+    {source: '5-2', target: '5-5', animated: false, style: { strokeDasharray: '5,5' } },
+    {source: '5-3', target: '6-1', animated: true, markerEnd: { type: MarkerType.ArrowClosed } },
+    {source: '5-4', target: '6-1', animated: true, markerEnd: { type: MarkerType.ArrowClosed } },
+
+    // Etapa 6 edges
+    {source: '6-1', target: '6-2', animated: true },
+    {source: '6-1', target: '6-3', animated: true },
+    {source: '6-1', target: '6-4', animated: true },
+    {source: '6-1', target: '6-5', animated: true },
+    {source: '6-2', target: '6-4', animated: false, style: { strokeDasharray: '5,5' } },
+    {source: '6-3', target: '6-4', animated: false, style: { strokeDasharray: '5,5' } },
+    {source: '6-4', target: '7-1', animated: true, markerEnd: { type: MarkerType.ArrowClosed } },
+
+    // Etapa 7 edges
+    {source: '7-1', target: '7-2', animated: true },
+    {source: '7-1', target: '7-3', animated: true },
+    {source: '7-2', target: '7-3', animated: true },
+    {source: '7-3', target: '7-4', animated: true },
   ];
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-
-  // Handle node hover to show tooltip
-  const [hoveredNode, setHoveredNode] = React.useState<string | null>(null);
-
-  const onNodeMouseEnter = useCallback((event: React.MouseEvent, nodeId: string) => {
-    setHoveredNode(nodeId);
-  }, []);
-
-  const onNodeMouseLeave = useCallback(() => {
-    setHoveredNode(null);
-  }, []);
+  const [edges, setEdges, onEdgesChange] = useEdgesState(
+    initialEdges.map(edge => ({
+      id: `${config.source}-${config.target}`,
+      source: config.source,
+      target: config.target,
+      animated: edge.animated || false,
+      style: edge.style,
+      markerEnd: edge.markerEnd || { type: MarkerType.ArrowClosed },
+    }))
+  );
 
   return (
-    <div className="w-full h-full bg-white rounded-lg overflow-hidden border border-gray-200">
-      <div className="h-[800px] relative">
-        <ReactFlow
-          nodes={nodes.map(node => ({
-            ...node,
-            data: {
-              ...node.data,
-              onMouseEnter: onNodeMouseEnter,
-              onMouseLeave: onNodeMouseLeave,
-            },
-          }))}
-          edges={edges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          fitView
-        >
-          <Background color="#aaa" gap={16} />
-          <Controls />
-        </ReactFlow>
-
-        {/* Tooltip */}
-        {hoveredNode && (
-          <div className="absolute top-4 right-4 bg-slate-900 text-white p-5 rounded-lg shadow-lg max-w-sm z-50">
-            <div className="text-sm font-bold mb-2">
-              {nodes.find(n => n.id === hoveredNode)?.data?.label}
-            </div>
-            <div className="text-xs text-gray-300 mb-2">
-              {nodes.find(n => n.id === hoveredNode)?.data?.description}
-            </div>
-            {nodes.find(n => n.id === hoveredNode)?.data?.responsible && (
-              <div className="text-xs text-cyan-300 mb-1">
-                <strong>Responsável:</strong> {nodes.find(n => n.id === hoveredNode)?.data?.responsible}
-              </div>
-            )}
-            {nodes.find(n => n.id === hoveredNode)?.data?.norm && (
-              <div className="text-xs text-blue-300 mb-1">
-                <strong>Norma:</strong> {nodes.find(n => n.id === hoveredNode)?.data?.norm}
-              </div>
-            )}
-            {nodes.find(n => n.id === hoveredNode)?.data?.duration && (
-              <div className="text-xs text-green-300 mb-1">
-                <strong>Duração:</strong> {nodes.find(n => n.id === hoveredNode)?.data?.duration}
-              </div>
-            )}
-            {nodes.find(n => n.id === hoveredNode)?.data?.documents && (
-              <div className="text-xs text-yellow-300">
-                <strong>Documentos:</strong>
-                <ul className="ml-3 mt-1">
-                  {nodes.find(n => n.id === hoveredNode)?.data?.documents?.map((doc, idx) => (
-                    <li key={idx}>• {doc}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
-        )}
-      </div>
+    <div className="w-full h-screen bg-white">
+      <ReactFlow
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        fitView
+      >
+        <Background color="#aaa" gap={16} />
+        <Controls />
+      </ReactFlow>
 
       {/* Legend */}
-      <div className="p-6 bg-gray-50 border-t border-gray-200 overflow-y-auto max-h-32">
-        <h4 className="font-bold text-slate-900 mb-3">Legenda das 7 Etapas</h4>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+      <div className="absolute bottom-4 left-4 bg-white p-4 rounded-lg shadow-lg border border-gray-200 text-sm max-w-xs">
+        <h3 className="font-bold mb-3 text-slate-900">Legenda das Etapas</h3>
+        <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <div className="w-5 h-5 bg-blue-100 border-2 border-blue-700 rounded"></div>
-            <span className="text-xs text-slate-600">1. Disposições Preliminares</span>
+            <div className="w-4 h-4 bg-purple-200 border-2 border-purple-700 rounded"></div>
+            <span className="text-xs">Etapa 0: Medidas Administrativas</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-5 h-5 bg-orange-100 border-2 border-orange-700 rounded"></div>
-            <span className="text-xs text-slate-600">2. Instauração e Pressupostos</span>
+            <div className="w-4 h-4 bg-blue-200 border-2 border-blue-700 rounded"></div>
+            <span className="text-xs">Etapa 1: Disposições Preliminares</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-5 h-5 bg-purple-100 border-2 border-purple-700 rounded"></div>
-            <span className="text-xs text-slate-600">3. Organização e Documentação</span>
+            <div className="w-4 h-4 bg-green-200 border-2 border-green-700 rounded"></div>
+            <span className="text-xs">Etapa 2: Instauração e Pressupostos</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-5 h-5 bg-green-100 border-2 border-green-700 rounded"></div>
-            <span className="text-xs text-slate-600">4. Quantificação do Débito</span>
+            <div className="w-4 h-4 bg-orange-200 border-2 border-orange-700 rounded"></div>
+            <span className="text-xs">Etapa 3: Organização e Documentação</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-5 h-5 bg-pink-100 border-2 border-pink-700 rounded"></div>
-            <span className="text-xs text-slate-600">5. Dispensa e Arquivamento</span>
+            <div className="w-4 h-4 bg-pink-200 border-2 border-pink-700 rounded"></div>
+            <span className="text-xs">Etapa 4: Quantificação do Débito</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-5 h-5 bg-teal-100 border-2 border-teal-700 rounded"></div>
-            <span className="text-xs text-slate-600">6. Prescrição e BAP</span>
+            <div className="w-4 h-4 bg-teal-200 border-2 border-teal-700 rounded"></div>
+            <span className="text-xs">Etapa 5: Dispensa e Arquivamento</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-5 h-5 bg-yellow-100 border-2 border-yellow-700 rounded"></div>
-            <span className="text-xs text-slate-600">7. Segregação de Funções</span>
+            <div className="w-4 h-4 bg-rose-200 border-2 border-rose-700 rounded"></div>
+            <span className="text-xs">Etapa 6: Prescrição e BAP</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-gray-600 rounded-full"></div>
-            <div className="w-4 border-t-2 border-dashed border-gray-600"></div>
-            <span className="text-xs text-slate-600">Fluxo Paralelo/Condicional</span>
+            <div className="w-4 h-4 bg-indigo-200 border-2 border-indigo-700 rounded"></div>
+            <span className="text-xs">Etapa 7: Segregação de Funções</span>
           </div>
         </div>
-      </div>
-
-      {/* Instructions */}
-      <div className="p-4 bg-blue-50 border-t border-blue-200">
-        <p className="text-xs text-blue-900">
-          💡 <strong>Dica:</strong> Arraste para mover o fluxo, use o scroll para fazer zoom, e passe o mouse sobre as caixas para ver detalhes das normas, documentos e responsáveis. O fluxo contém 30+ nós detalhando as 7 etapas da COTCE.
-        </p>
+        <div className="mt-3 pt-3 border-t border-gray-200 text-xs">
+          <p className="text-slate-600">
+            <strong>Linhas sólidas:</strong> Fluxo principal<br/>
+            <strong>Linhas tracejadas:</strong> Fluxo condicional/paralelo
+          </p>
+        </div>
+        <div className="mt-2 text-xs text-slate-500">
+          💡 Arraste para mover • Scroll para zoom • Clique nos nós para ver detalhes
+        </div>
       </div>
     </div>
   );
