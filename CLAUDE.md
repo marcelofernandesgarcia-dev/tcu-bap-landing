@@ -12,6 +12,18 @@ estrutura toda (`README.md`, `_TEMPLATE-ENTRADA.md`,
 `FICHA-REGISTRO-INPI.md`, 87 entradas de backfill) foi criada nesta
 sessão, junto com este arquivo.
 
+## Pendência: security-review ainda não rodado (item 7 do Dossiê Claude DTPAR)
+
+Quando o usuário retomar trabalho ativo neste projeto, rodar a skill
+`security-review` sobre o código antes de qualquer deploy — mesmo processo já
+aplicado no SIACT-MROSC em 07/09/2026, que achou e corrigiu uma
+vulnerabilidade real de broken access control em produção (ver memória
+`project_siact_mrosc_vuln_dashboard_corrigida`). Este projeto processa
+documento de TCE via OCR com mascaramento LGPD — mesma categoria de risco.
+Como não há mudança pendente aqui hoje (repo limpo, sem commit desde
+2026-05-22), não havia o que revisar; isso só se aplica quando houver código
+novo ou antes de reativar o deploy.
+
 ## Estado do projeto — confirmar antes de presumir
 
 O histórico de commits vai de 2026-03-27 a 2026-05-22, sem atividade
